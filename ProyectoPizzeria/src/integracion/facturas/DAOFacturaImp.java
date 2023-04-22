@@ -20,6 +20,7 @@ public class DAOFacturaImp implements DAOFactura {
 			return true;
 		}
 		else return false;
+		//cambio main...
 		
 		
 		
@@ -32,7 +33,7 @@ public class DAOFacturaImp implements DAOFactura {
 	}
 	
 	public int crearFactura(TFactura fact) {
-		return -1;
+		return -2;
 		
 		
 		
