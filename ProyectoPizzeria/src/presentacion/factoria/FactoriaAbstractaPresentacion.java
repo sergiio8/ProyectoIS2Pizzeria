@@ -15,5 +15,5 @@ public abstract class FactoriaAbstractaPresentacion { //singleton
 	}
 	
     abstract IGUI createVista(Evento e);
-	
+	//dsasd
 }
