@@ -31,24 +31,22 @@ public class SAIngredienteImp implements SAIngrediente{
 			}else {
 				System.out.println("No sabes crear un ingrediente retrasado");
 			}
-			
-			return nombre;
 		}catch(Exception e) {
 			System.out.println("No sabes crear un ingrediente retrasado");
-			
 		}
+		return nombre;
 	}
 
 
 	@Override
 	public Collection<TIngrediente> consultaTodos() {
-		DAOIngredientes ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngredientes();
+		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
 		return ingrediente.cogerTodosIngredientes();
 	}
 
 	@Override
 	public TIngrediente consulta(String nombre) {
-		DAOIngredientes ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngredientes();
+		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
 		return ingrediente.cogerIngrediente(nombre);
 	}
 

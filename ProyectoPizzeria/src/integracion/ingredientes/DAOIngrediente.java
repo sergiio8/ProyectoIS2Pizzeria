@@ -10,4 +10,5 @@ public interface DAOIngrediente {
 	TIngrediente coger(String name);
 	String insertarIngrediente(TIngrediente ingrediente);
 	Collection<TIngrediente> cogerTodosIngredientes();
+	TIngrediente cogerIngrediente(String nombre);
 }

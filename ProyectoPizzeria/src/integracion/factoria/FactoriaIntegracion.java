@@ -28,7 +28,6 @@ public class FactoriaIntegracion extends FactoriaAbstractaIntegracion {
 
 	@Override
 	public DAOIngrediente crearDAOIngrediente() {
-		// TODO Auto-generated method stub
 		return new DAOIngredienteImp();
 	}
 
