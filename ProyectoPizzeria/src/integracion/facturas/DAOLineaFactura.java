@@ -8,4 +8,5 @@ public interface DAOLineaFactura {
 	public TLineaFactura buscarLineaFactura(String id);
 	public void crearLineaFactura();
 	//cambio
+	//cambio2
 }

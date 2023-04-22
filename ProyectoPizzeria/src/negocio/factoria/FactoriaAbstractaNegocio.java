@@ -15,5 +15,7 @@ public abstract class FactoriaAbstractaNegocio {
 		
 		//metodos para crear SAs
 	
+	
+	
 	public abstract SAMesas crearSAMesas();
 }
