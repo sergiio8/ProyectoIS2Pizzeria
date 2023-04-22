@@ -7,5 +7,5 @@ public interface DAOLineaFactura {
 	public boolean modificarLineaFactura(TLineaFactura f);
 	public TLineaFactura buscarLineaFactura(String id);
 	public void crearLineaFactura();
-
+	//cambio
 }
