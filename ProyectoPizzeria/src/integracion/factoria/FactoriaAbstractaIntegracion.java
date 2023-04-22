@@ -2,6 +2,7 @@ package integracion.factoria;
 
 import integracion.facturas.DAOFactura;
 import integracion.mesas.DAOMesas;
+import integracion.producto.DAOPlato;
 
 public abstract class FactoriaAbstractaIntegracion { //singleton
 	
@@ -17,5 +18,6 @@ public abstract class FactoriaAbstractaIntegracion { //singleton
 		//metodos para crear DAOS
 	
 	public abstract DAOMesas crearDAOMesas();
+	public abstract DAOPlato crearDAOPlato();
 	public abstract DAOFactura crearDAOFactura();
 }
