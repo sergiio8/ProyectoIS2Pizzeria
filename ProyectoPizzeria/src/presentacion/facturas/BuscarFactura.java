@@ -15,6 +15,7 @@ public class BuscarFactura extends JFrame{
 	}
 	
 	private void initGUI() {
+		setTitle("Buscar factura");
 		setLayout(new BorderLayout());
 		JPanel panel1 = new JPanel(new FlowLayout());
 		JLabel ID = new JLabel("ID_factura: ");

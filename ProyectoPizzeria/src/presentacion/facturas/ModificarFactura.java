@@ -15,6 +15,7 @@ public class ModificarFactura extends JFrame{
 	}
 	
 	private void initGUI() {
+		setTitle("Modificar facturas");
 		setLayout(new BorderLayout());
 		JPanel panel1 = new JPanel(new FlowLayout());
 		JLabel ID = new JLabel("ID_factura: ");

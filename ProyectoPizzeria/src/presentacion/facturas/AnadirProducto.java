@@ -20,6 +20,7 @@ public class AnadirProducto extends JFrame{
 	}
 	
 	private void initGUI() {
+		setTitle("Añadir producto");
 		setLayout(new BorderLayout());
 		JPanel panel1 = new JPanel(new FlowLayout());
 		JLabel ID = new JLabel("ID_producto: ");

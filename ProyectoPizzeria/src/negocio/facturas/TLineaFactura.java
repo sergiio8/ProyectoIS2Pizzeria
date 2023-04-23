@@ -25,7 +25,7 @@ public class TLineaFactura {
 		return id_producto;
 	}
 	
-	public double getCantidad() {
+	public int getCantidad() {
 		return cantidad;
 	}
 	

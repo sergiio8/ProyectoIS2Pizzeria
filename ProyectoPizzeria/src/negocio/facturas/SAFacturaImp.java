@@ -35,8 +35,15 @@ public class SAFacturaImp implements SAFactura{
 			for (TLineaFactura f : carrito.getProductos()) {
 				TPlato plato = daop.obtenPlato(f.getIdProducto());
 				if (plato != null) {
+					if (plato.getStock() > f.getCantidad()) {
+						plato.setStock(plato.getStock() - f.getCantidad());
+					}
+					else {
+						f.setCantidad(plato.getStock());
+						plato.setStock(0);
+					}
 					id = f.getIdFactura();
-					precio_total += plato.getPrecio();
+					precio_total += plato.getPrecio() * f.getCantidad();
 					lineas.add(f);
 				}	
 			}
@@ -66,8 +73,6 @@ public class SAFacturaImp implements SAFactura{
 	public TFactura buscarFactura(String id) {
 		DAOFactura daof = FactoriaAbstractaIntegracion.getInstace().crearDAOFactura();
 		return daof.buscarFactura(id);
-		
-		
 	}
 
 	@Override
