@@ -2,18 +2,31 @@ package negocio.producto;
 
 import java.util.Collection;
 
+import integracion.factoria.FactoriaAbstractaIntegracion;
+import integracion.producto.DAOPlato;
+
 public class SAPlatoImp implements SAPlato {
 
 	@Override
 	public String alta(TPlato tp) {
+		String id = "";
 		
-		return null;
+		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
+		
+		if(tp != null) {
+			TPlato plato = daoPlato.obtenPlato(tp.getId());
+			if(plato == null) {
+				id = daoPlato.insertaPlato(tp);
+			}
+		}
+		
+		return id;
 	}
 
 	@Override
 	public TPlato consulta(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
+		return daoPlato.obtenPlato(id);
 	}
 
 	@Override
@@ -24,14 +37,14 @@ public class SAPlatoImp implements SAPlato {
 
 	@Override
 	public Boolean modificar(TPlato tp) {
-		// TODO Auto-generated method stub
-		return null;
+		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
+		return daoPlato.modificaPlato(tp);
 	}
 
 	@Override
 	public Boolean borrar(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
+		return daoPlato.daDeBajaPlato(id);
 	}
 
 }
