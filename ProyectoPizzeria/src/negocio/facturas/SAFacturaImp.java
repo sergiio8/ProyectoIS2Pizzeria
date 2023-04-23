@@ -7,6 +7,7 @@ import integracion.facturas.DAOFactura;
 import integracion.facturas.DAOFacturaImp;
 import integracion.facturas.DAOLineaFactura;
 import integracion.mesas.DAOMesas;
+import integracion.producto.DAOPlato;
 import negocio.mesas.TMesas;
 import negocio.producto.TPlato;
 
@@ -20,8 +21,8 @@ public class SAFacturaImp implements SAFactura{
 	public boolean crearFactura(TDatosCliente cliente, Carrito carrito) {
 		boolean valida = false;
 		DAOFactura daof = FactoriaAbstractaIntegracion.getInstace().crearDAOFactura();
-		DAOFactura daoc = FactoriaAbstractaIntegracion.getInstace().crearDAOCliente();
-		DAOFactura daop = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
+		DAOCliente daoc = FactoriaAbstractaIntegracion.getInstace().crearDAOCliente();
+		DAOPlato daop = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
 		TFactura fact;
 		TDatosVenta datos;
 		ArrayList<TLineaFactura> lineas;
@@ -30,9 +31,10 @@ public class SAFacturaImp implements SAFactura{
 		
 		if (buscarCliente(cliente.getid_cliente()) != null) {
 			for (TLineaFactura f : carrito.getProductos()) {
-				valida = buscarProducto(f.getIdProducto()) && stock > 0;
-				if (valida) {
-					if (stock < f.getCantidad()) {
+				TPlato plato = daop.obtenPlato(f.getIdProducto());
+				
+				if (plato != null) {
+					if (plato.get < f.getCantidad()) {
 						f.setCantidad(stock);
 						stock = 0;
 					}
@@ -40,7 +42,7 @@ public class SAFacturaImp implements SAFactura{
 						stock -= f.getCantidad();
 					}
 					id = f.getIdFactura();
-					precio_total += getPrecio();
+					precio_total += plato.getPrecio();
 					lineas.add(f);
 				}	
 			}
