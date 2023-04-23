@@ -1,5 +1,6 @@
 package integracion.factoria;
 
+import integracion.clientes.DAOClientes;
 import integracion.facturas.DAOFactura;
 import integracion.ingredientes.DAOIngrediente;
 import integracion.mesas.DAOMesas;
@@ -22,4 +23,6 @@ public abstract class FactoriaAbstractaIntegracion { //singleton
 	public abstract DAOPlato crearDAOPlato();
 	public abstract DAOFactura crearDAOFactura();
 	public abstract DAOIngrediente crearDAOIngrediente();
+	public abstract DAOClientes crearDAOCliente();
+	
 }
