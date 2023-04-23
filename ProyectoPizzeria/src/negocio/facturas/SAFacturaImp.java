@@ -84,13 +84,14 @@ public class SAFacturaImp implements SAFactura{
 	@Override
 	public void anadirProducto(int cantidad, TPlato p, TFactura f) {
 		DAOFactura daof = FactoriaAbstractaIntegracion.getInstace().crearDAOFactura();
+		DAOLineaFactura daol = FactoriaAbstractaIntegracion.getInstace().crearDAOLineaFactura();
 		ArrayList<TLineaFactura> productos = f.getProductos();
 		TLineaFactura linea = new TLineaFactura("nuevo_id", f.getId(), p.getId(), cantidad);
+		daol.crearLineaFactura(linea);
 		productos.add(linea);
 		f.setProductos(productos);
 		daof.modificarFactura(f);
 		// TODO Auto-generated method stub
-		
 	}
 	
 
