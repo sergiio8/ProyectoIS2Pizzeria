@@ -6,6 +6,6 @@ import negocio.facturas.TLineaFactura;
 public interface DAOLineaFactura {
 	public boolean modificarLineaFactura(TLineaFactura f);
 	public TLineaFactura buscarLineaFactura(String id);
-	public void crearLineaFactura();
+	public void crearLineaFactura(TLineaFactura f);
 	//Voy a cambiar daolineafactura
 }

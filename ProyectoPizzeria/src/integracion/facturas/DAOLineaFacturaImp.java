@@ -28,7 +28,7 @@ public class DAOLineaFacturaImp implements DAOLineaFactura{
 	}
 
 	@Override
-	public void crearLineaFactura() {
+	public void crearLineaFactura(TLineaFactura f) {
 		// TODO Auto-generated method stub
 		
 	}

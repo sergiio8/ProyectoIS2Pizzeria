@@ -4,6 +4,8 @@ import integracion.clientes.DAOClientes;
 import integracion.clientes.DAOClientesImp;
 import integracion.facturas.DAOFactura;
 import integracion.facturas.DAOFacturaImp;
+import integracion.facturas.DAOLineaFactura;
+import integracion.facturas.DAOLineaFacturaImp;
 import integracion.ingredientes.DAOIngrediente;
 import integracion.ingredientes.DAOIngredienteImp;
 import integracion.mesas.DAOMesas;
@@ -36,6 +38,10 @@ public class FactoriaIntegracion extends FactoriaAbstractaIntegracion {
 	
 	public DAOClientes crearDAOCliente() {
 		return new DAOClientesImp();
+	}
+	
+	public DAOLineaFactura crearDAOLineaFactura() {
+		return new DAOLineaFacturaImp();
 	}
 
 }
