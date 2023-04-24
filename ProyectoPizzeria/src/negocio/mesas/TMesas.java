@@ -5,6 +5,16 @@ public class TMesas { //transfer
 	private int id;
 	private Localizacion localizacion;
 	
+	public TMesas(int id, String localizacion) {
+		this.id = id;
+		if("interior".equals(localizacion)) {
+			this.localizacion = Localizacion.INTERIOR;
+		}
+		else {
+			this.localizacion = Localizacion.EXTERIOR;
+		}
+	}
+	
 	public int getId() {
 		return id;
 	}
