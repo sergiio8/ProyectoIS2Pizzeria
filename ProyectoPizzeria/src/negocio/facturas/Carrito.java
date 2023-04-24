@@ -1,6 +1,7 @@
 package negocio.facturas;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Carrito {
 	private ArrayList<TLineaFactura> lista_productos;
@@ -21,8 +22,8 @@ public class Carrito {
 		last_id--;
 	}
 	
-	public ArrayList<TLineaFactura> getProductos() {
-		return lista_productos;
+	public void cerrarVenta(TDatosVenta dt) {
+		dt.setProductos(lista_productos);
 	}
 	
 

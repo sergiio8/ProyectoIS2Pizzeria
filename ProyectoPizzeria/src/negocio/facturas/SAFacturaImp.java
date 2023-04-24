@@ -44,7 +44,6 @@ public class SAFacturaImp implements SAFactura{
                         daol.crearLineaFactura(f);
                     }
                     else if (plato.getStock() > 0){
-                        valida = true;
                         f.setCantidad(plato.getStock());
                         plato.setStock(0);
                         id = f.getIdFactura();
@@ -55,11 +54,12 @@ public class SAFacturaImp implements SAFactura{
                 }
             }
             fact = daof.buscarFactura(id);
-            if (fact == null) {
+            if (fact == null && !lineas.isEmpty()) {
                 fact = new TFactura(id, precio_total, datos, "fecha" , true);
                 daof.crearFactura(fact);
                 valida = true;
             }
+            else valida = false;
         }
         
         return valida;
@@ -88,11 +88,11 @@ public class SAFacturaImp implements SAFactura{
     }
 
     @Override
-    public void anadirProducto(int cantidad, TPlato p, TFactura f) {//se añade al transfer o a la base de datos
-        ArrayList<TLineaFactura> productos = f.getProductos();
-        TLineaFactura linea = new TLineaFactura("nuevo_id", f.getId(), p.getId(), cantidad);
-        productos.add(linea);
-        f.setProductos(productos);
+    public void anadirProducto(String ID, int cantidad, TPlato p, Carrito c) {//se añade al transfer o a la base de datos
+        
+        TLineaFactura linea = new TLineaFactura("nuevo_id",ID , p.getId(), cantidad);
+        c.anadirProducto(linea);
+       
         // TODO Auto-generated method stub
     }
     

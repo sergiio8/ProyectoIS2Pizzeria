@@ -43,9 +43,7 @@ public class DAOFacturaImp implements DAOFactura {
     }
     
     public TFactura buscarFactura(String id) {
-        //acceso a base de datos y lectura de datos qeu se pasan al transfer por parametro
-        TFactura factura = new TFactura(id, 0, null, id, false);
-        return factura;
+    	return null;
     }
     
     public int crearFactura(TFactura fact) {
