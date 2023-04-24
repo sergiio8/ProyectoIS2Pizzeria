@@ -26,6 +26,7 @@ public class DAOMesasImp implements DAOMesas {
 			ja = jsonInput.getJSONArray("ListaMesas");
 			JSONObject jo = new JSONObject();
 			jo.put("id", tm.getId());
+			id = tm.getId();
 			jo.put("localizacion", tm.getLocalizacion().toString());
 			ja.put(jo);
 		}
@@ -40,7 +41,7 @@ public class DAOMesasImp implements DAOMesas {
 			
 		}*/
 		
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Mesas.json"))){
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Mesas.json", false))){
 			JSONObject jo2 = new JSONObject();
 			jo2.put("ListaMesas", ja);
 			bw.write(jo2.toString());

@@ -103,6 +103,7 @@ public class VistaAnadirMesa extends JDialog implements IGUI{
 					throw new IllegalArgumentException();
 				}
 				Controlador.getInstance().accion(Evento.ALTA_MESA, new TMesas(id, localizacion));
+				
 			}
 			catch(NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(VistaAnadirMesa.this, "ERROR: El numero de mesa debe ser un entero positivo", "ERROR: El numero de mesa debe ser un entero positivo", JOptionPane.ERROR_MESSAGE);

@@ -12,19 +12,22 @@ public class ControladorImp extends Controlador { //implementacion
 	public void accion(Evento e, Object datos) {
 		switch(e) {
 		case ALTA_MESA_VISTA:
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_VISTA, null);;
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_VISTA, null);
+			break;
 		case ALTA_MESA:
+
 			TMesas tm = (TMesas) datos;
 			SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
 			
 			int res = saMesas.alta(tm);
 			
 			if(res == -1) {
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA).actualizar(Evento.ALTA_MESA_KO, res);
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_KO, res);
 			}
 			else {
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA).actualizar(Evento.ALTA_MESA_OK, res);
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_OK, res);
 			}
+			break;
 		}
 
 	}
