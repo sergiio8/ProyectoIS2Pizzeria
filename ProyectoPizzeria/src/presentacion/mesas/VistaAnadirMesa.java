@@ -133,15 +133,25 @@ public class VistaAnadirMesa extends JDialog implements IGUI{
 		//setPreferredSize(new Dimension(320, 500));
 		pack();
 		setResizable(false);
-		setVisible(true);
 		
 	}
 	
 
 	@Override
 	public void actualizar(Evento e, Object datos) {
-		// TODO Auto-generated method stub
-		
+		switch(e) {
+		case ALTA_MESA_VISTA:
+			setVisible(true);
+			break;
+		case ALTA_MESA_OK:
+			JOptionPane.showMessageDialog(this, "Mesa anadida con id: " + datos.toString(), "Mesa anadida con id: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
+			setVisible(false);
+			break;
+		case ALTA_MESA_KO:
+			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
+			setVisible(false);
+			break;
+		}
 	}
 
 }
