@@ -3,7 +3,6 @@ package negocio.clientes;
 public class TCliente {
 	
 	private String id;
-	private String contra;
 	private String nombre;
 	private String apellido;
 	
@@ -16,13 +15,6 @@ public class TCliente {
 		return this.id;
 	}
 	
-	public void setContra(String contra) {
-		this.contra = contra;
-	}
-	
-	public String getContra() {
-		return this.contra;
-	}
 	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
