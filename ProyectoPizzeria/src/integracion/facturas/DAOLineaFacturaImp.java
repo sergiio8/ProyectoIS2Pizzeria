@@ -32,6 +32,11 @@ public class DAOLineaFacturaImp implements DAOLineaFactura{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void listarLineaFactura() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 

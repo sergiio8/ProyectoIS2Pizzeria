@@ -5,9 +5,9 @@ import negocio.clientes.TCliente;
 public class DAOClientesImp implements DAOClientes{
 
 	@Override
-	public int insertarCliente(TCliente cliente) {
+	public String insertarCliente(TCliente cliente) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override

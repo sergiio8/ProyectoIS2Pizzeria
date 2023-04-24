@@ -16,7 +16,10 @@ public class ModificarFactura extends JFrame{
 	
 	private void initGUI() {
 		setTitle("Modificar facturas");
-		setLayout(new BorderLayout());
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
+		setContentPane(mainPanel);
+
 		JPanel panel1 = new JPanel(new FlowLayout());
 		JLabel ID = new JLabel("ID_factura: ");
 		JTextField text1 = new JTextField();
@@ -24,7 +27,7 @@ public class ModificarFactura extends JFrame{
 		panel1.add(ID);
 		panel1.add(text1);
 		
-		add(panel1, BorderLayout.CENTER);
+		mainPanel.add(panel1, BorderLayout.CENTER);
 	
 		
 		JPanel panel3 = new JPanel(new FlowLayout());
@@ -37,7 +40,7 @@ public class ModificarFactura extends JFrame{
 	    panel3.add(modificar);
 	    panel3.add(cancelar);
 		
-		add(panel3, BorderLayout.CENTER);
+		mainPanel.add(panel3, BorderLayout.CENTER);
 	}
 	
 	private void modificar() {

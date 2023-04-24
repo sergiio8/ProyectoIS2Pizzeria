@@ -16,7 +16,10 @@ public class CerrarVenta extends JFrame{
 	
 	private void initGUI() {
 		setTitle("Cerrar venta");
-		setLayout(new BorderLayout());
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
+		setContentPane(mainPanel);
+		
 		JPanel panel1 = new JPanel(new FlowLayout());
 		JLabel ID = new JLabel("ID_cliente: ");
 		JTextField text1 = new JTextField();
@@ -24,7 +27,7 @@ public class CerrarVenta extends JFrame{
 		panel1.add(ID);
 		panel1.add(text1);
 		
-		add(panel1, BorderLayout.CENTER);
+		mainPanel.add(panel1, BorderLayout.CENTER);
 		
 		JPanel panel2 = new JPanel(new FlowLayout());
 		JLabel ID_vendedor = new JLabel("ID_vendedor: ");
@@ -33,7 +36,7 @@ public class CerrarVenta extends JFrame{
 		panel2.add(ID_vendedor);
 		panel2.add(text2);
 		
-		add(panel2, BorderLayout.CENTER);
+		mainPanel.add(panel2, BorderLayout.CENTER);
 		
 		JPanel panel3 = new JPanel(new FlowLayout());
 		
@@ -46,7 +49,7 @@ public class CerrarVenta extends JFrame{
 	    panel3.add(cerrar);
 	    panel3.add(cancelar);
 		
-		add(panel3, BorderLayout.CENTER);
+		mainPanel.add(panel3, BorderLayout.CENTER);
 	}
 	
 	private void cerrar() {
