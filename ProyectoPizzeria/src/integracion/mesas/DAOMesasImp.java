@@ -62,8 +62,52 @@ public class DAOMesasImp implements DAOMesas {
 
 	@Override
 	public Boolean daDeBajaMesa(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		JSONArray ja = null;
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Mesas.json"))){ //idea mandar excepciones y tratarlas en controlador
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaMesas");
+		}
+		catch(Exception e1) {
+			return false;
+		}
+		/*
+		catch(IOException ie) {
+			
+		}
+		catch(JSONException je) {
+			
+		}*/
+		
+		int i = 0;
+		while(i < ja.length() && ja.getJSONObject(i).getInt("id") != id) {
+			i++;
+		}
+		if(i == ja.length()) {
+			return false;
+		}
+		else {
+			ja.remove(i);
+			try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Mesas.json", false))){
+				JSONObject jo2 = new JSONObject();
+				jo2.put("ListaMesas", ja);
+				bw.write(jo2.toString());
+				
+			} 
+			catch(Exception e2) {
+				return false;
+			}
+		}
+		
+		
+		/*catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		*/
+		
+		
+		return true;
 	}
 
 	@Override
