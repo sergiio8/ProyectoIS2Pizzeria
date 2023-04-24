@@ -13,12 +13,15 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import negocio.mesas.TMesas;
 import presentacion.Evento;
 import presentacion.IGUI;
+import presentacion.controlador.Controlador;
 
 public class VistaAnadirMesa extends JDialog implements IGUI{
 	
@@ -31,8 +34,7 @@ public class VistaAnadirMesa extends JDialog implements IGUI{
 	private JRadioButton exteriorButton;
 	private JButton okButton;
 	private JButton cancelButton;
-	private JRadioButton pbButton;
-	private JRadioButton p1Button;
+	
 	
 	public VistaAnadirMesa(Frame parent) {
 		super(parent, true);
@@ -86,10 +88,37 @@ public class VistaAnadirMesa extends JDialog implements IGUI{
 		mainPanel.add(buttonsPanel);
 		
 		this.okButton = new JButton("OK");
-		
+		this.okButton.addActionListener((e) ->{
+			int id;
+			String localizacion;
+			try {
+				id = Integer.parseInt(idMesaField.getText());
+				if(interiorButton.isSelected()) {
+					localizacion = "interior";
+				}
+				else if(exteriorButton.isSelected()) {
+					localizacion = "exterior";
+				}
+				else {
+					throw new IllegalArgumentException();
+				}
+				Controlador.getInstance().accion(Evento.ALTA_MESA, new TMesas(id, localizacion));
+			}
+			catch(NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(VistaAnadirMesa.this, "ERROR: El numero de mesa debe ser un entero positivo", "ERROR: El numero de mesa debe ser un entero positivo", JOptionPane.ERROR_MESSAGE);
+			}
+			catch(IllegalArgumentException iae) {
+				JOptionPane.showMessageDialog(VistaAnadirMesa.this, "ERROR: Seleccione localizacion", "ERROR: Seleccione localizacion", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			
+		});
 		
 		
 		this.cancelButton = new JButton("Cancelar");
+		this.cancelButton.addActionListener((e)->{
+			this.setVisible(false);
+		});
 		
 		
 		
