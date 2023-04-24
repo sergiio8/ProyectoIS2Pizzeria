@@ -2,7 +2,7 @@ package presentacion.controlador;
 
 import presentacion.Evento;
 
-public abstract class Controlador { //singleton
+public abstract class Controlador { //singletonn
 	
 	private static Controlador instancia = null;
 	
