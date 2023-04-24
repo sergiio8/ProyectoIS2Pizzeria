@@ -1,5 +1,7 @@
 package integracion.producto;
 
+import java.util.Collection;
+
 import negocio.producto.TPlato;
 
 public interface DAOPlato {
@@ -7,5 +9,6 @@ public interface DAOPlato {
 	public String insertaPlato(TPlato tp);
 	public Boolean daDeBajaPlato(String id);
 	public TPlato obtenPlato(String id);
-	Boolean modificaPlato(TPlato tp);
+	public Collection<TPlato> obtenTodosPlatos();
+	public Boolean modificaPlato(TPlato tp);
 }

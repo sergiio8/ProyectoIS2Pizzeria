@@ -1,5 +1,7 @@
 package integracion.producto;
 
+import java.util.Collection;
+
 import negocio.producto.TPlato;
 
 public class DAOPlatoImp implements DAOPlato {
@@ -28,4 +30,9 @@ public class DAOPlatoImp implements DAOPlato {
 		return null;
 	}
 
+	@Override
+	public Collection<TPlato> obtenTodosPlatos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
