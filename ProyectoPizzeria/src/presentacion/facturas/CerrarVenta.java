@@ -4,14 +4,20 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class CerrarVenta extends JFrame{
-	public CerrarVenta() {
+import presentacion.Evento;
+import presentacion.IGUI;
+
+public class CerrarVenta extends JDialog implements IGUI{
+	public CerrarVenta(JFrame parent) {
+		super(parent, true);
 		initGUI();
+		//cambio
 	}
 	
 	private void initGUI() {
@@ -58,6 +64,12 @@ public class CerrarVenta extends JFrame{
 	}
 	
 	private void cancelar() {
+		
+	}
+
+	@Override
+	public void actualizar(Evento e, Object datos) {
+		// TODO Auto-generated method stub
 		
 	}
 

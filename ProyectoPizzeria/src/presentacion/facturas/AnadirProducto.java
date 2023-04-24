@@ -2,20 +2,26 @@ package presentacion.facturas;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class AnadirProducto extends JFrame{
+import presentacion.Evento;
+import presentacion.IGUI;
+
+public class AnadirProducto extends JDialog implements IGUI{
 	
 
 	private static final long serialVersionUID = 1L;
 
-	public AnadirProducto() {
+	public AnadirProducto(Frame parent) {
+		super(parent, true);
 		initGUI();
 	}
 	
@@ -63,6 +69,12 @@ public class AnadirProducto extends JFrame{
 	}
 	
 	private void cancelar() {
+		
+	}
+
+	@Override
+	public void actualizar(Evento e, Object datos) {
+		// TODO Auto-generated method stub
 		
 	}
 
