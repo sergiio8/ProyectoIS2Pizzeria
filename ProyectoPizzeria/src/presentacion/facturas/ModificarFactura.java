@@ -4,13 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ModificarFactura extends JFrame{
-	public ModificarFactura() {
+import presentacion.Evento;
+import presentacion.IGUI;
+
+public class ModificarFactura extends JDialog implements IGUI{
+	public ModificarFactura(JFrame parent) {
+		super(parent, true);
 		initGUI();
 	}
 	
@@ -48,6 +53,12 @@ public class ModificarFactura extends JFrame{
 	}
 	
 	private void cancelar() {
+		
+	}
+
+	@Override
+	public void actualizar(Evento e, Object datos) {
+		// TODO Auto-generated method stub
 		
 	}
 

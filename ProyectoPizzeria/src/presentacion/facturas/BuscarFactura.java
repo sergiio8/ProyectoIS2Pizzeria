@@ -4,13 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class BuscarFactura extends JFrame{
-	public BuscarFactura() {
+import presentacion.Evento;
+import presentacion.IGUI;
+
+public class BuscarFactura extends JDialog implements IGUI{
+	public BuscarFactura(JFrame parent) {
+		super(parent, true);
 		initGUI();
 	}
 	
@@ -49,6 +54,12 @@ public class BuscarFactura extends JFrame{
 	}
 	
 	private void cancelar() {
+		
+	}
+
+	@Override
+	public void actualizar(Evento e, Object datos) {
+		// TODO Auto-generated method stub
 		
 	}
 	
