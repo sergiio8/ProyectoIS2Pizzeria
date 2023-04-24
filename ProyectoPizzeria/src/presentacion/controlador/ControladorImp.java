@@ -14,6 +14,7 @@ public class ControladorImp extends Controlador { //implementacion
 	public void accion(Evento e, Object datos) {
 		switch(e) {
 		case ALTA_MESA_VISTA:
+			
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_VISTA, null);
 			break;
 		case ALTA_MESA:
@@ -30,6 +31,19 @@ public class ControladorImp extends Controlador { //implementacion
 				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_OK, res);
 			}
 			break;
+		case BAJA_MESA_VISTA:
+			
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_MESA_VISTA).actualizar(Evento.BAJA_MESA_VISTA, null);
+			break;
+			
+		case BAJA_MESA:
+			
+			int id = Integer.parseInt(datos.toString());
+			SAMesas saMesas2 = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
+			boolean res2 = saMesas2.borrar(id);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_MESA_VISTA).actualizar(Evento.BAJA_MESA_RES, res2);
+			break;
+			
 		case ALTA_FACTURA:
 	    	TDatosVenta td = (TDatosVenta) datos;
             SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
