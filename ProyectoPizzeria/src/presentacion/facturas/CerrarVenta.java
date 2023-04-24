@@ -17,6 +17,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 	public CerrarVenta(JFrame parent) {
 		super(parent, true);
 		initGUI();
+		//cambio
 	}
 	
 	private void initGUI() {
