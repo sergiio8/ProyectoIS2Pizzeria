@@ -46,6 +46,7 @@ public class ModificarFactura extends JDialog implements IGUI{
 	    panel3.add(cancelar);
 		
 		mainPanel.add(panel3, BorderLayout.CENTER);
+		//hh
 	}
 	
 	private void modificar() {
