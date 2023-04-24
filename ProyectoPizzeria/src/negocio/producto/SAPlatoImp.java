@@ -31,8 +31,8 @@ public class SAPlatoImp implements SAPlato {
 
 	@Override
 	public Collection<TPlato> consultaTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
+		return daoPlato.obtenTodosPlatos();
 	}
 
 	@Override
