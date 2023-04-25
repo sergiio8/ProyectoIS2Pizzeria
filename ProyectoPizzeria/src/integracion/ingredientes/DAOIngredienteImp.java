@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.json.JSONArray;
@@ -74,12 +75,6 @@ public class DAOIngredienteImp implements DAOIngrediente{
 	}
 
 	@Override
-	public TIngrediente coger(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String insertarIngrediente(TIngrediente ingrediente) {
 		String nombre= "";
 		JSONArray ja = null;
@@ -129,14 +124,68 @@ public class DAOIngredienteImp implements DAOIngrediente{
 
 	@Override
 	public Collection<TIngrediente> cogerTodosIngredientes() {
-		// TODO Auto-generated method stub
-		return null;
+		JSONArray ja = null;
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Ingredientes.json"))){ //idea mandar excepciones y tratarlas en controlador
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaIngredientes");
+		}
+		catch(Exception e1) {
+			return null;
+		}
+		/*
+		catch(IOException ie) {
+			
+		}
+		catch(JSONException je) {
+			
+		}*/
+		Collection<TIngrediente> l = new ArrayList<TIngrediente>();
+		for(int k = 0; k<ja.length(); k++) {
+			String aux="";
+		    for (int j=1; j<ja.getJSONObject(k).getString("platos").length()-1;j++) {
+		       aux+=ja.getJSONObject(k).getString("platos").charAt(j);
+		    }
+		    String[] platos= aux.split(",");
+		    TIngrediente ingrediente = new TIngrediente(ja.getJSONObject(k).getString("nombre"), ja.getJSONObject(k).getInt("cantidad"), platos);
+		    l.add(ingrediente);
+		}
+		return l;
 	}
 
 	@Override
 	public TIngrediente cogerIngrediente(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		JSONArray ja = null;
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Ingredientes.json"))){ //idea mandar excepciones y tratarlas en controlador
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaIngredientes");
+		}
+		catch(Exception e1) {
+			return null;
+		}
+		/*
+		catch(IOException ie) {
+			
+		}
+		catch(JSONException je) {
+			
+		}*/
+		
+		int i = 0;
+		while(i < ja.length() && ja.getJSONObject(i).getString("nombre") != nombre) {
+			i++;
+		}
+		if(i == ja.length()) {
+			return null;
+		}
+		else {
+			String aux="";
+	        for (int j=1; j<ja.getJSONObject(i).getString("platos").length()-1;j++) {
+	            aux+=ja.getJSONObject(i).getString("platos").charAt(j);
+	        }
+	        String[] platos= aux.split(",");
+			TIngrediente ingrediente = new TIngrediente(nombre, ja.getJSONObject(i).getInt("cantidad"), platos);
+			return ingrediente;
+		}
 	}
 
 }
