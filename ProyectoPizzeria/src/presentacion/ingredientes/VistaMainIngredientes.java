@@ -26,6 +26,7 @@ public class VistaMainIngredientes extends JDialog{
 		setContentPane(mainPanel);
 		
 		JLabel titulo = new JLabel("Seleccione una opción");
+		titulo.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(titulo, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel(new FlowLayout());
@@ -44,7 +45,7 @@ public class VistaMainIngredientes extends JDialog{
 		mainPanel.add(panel, BorderLayout.CENTER);
 		
 		JButton botonCancelar = new JButton("CANCELAR");
-		botonCancelar.addActionListener((e) -> cancelar());
+		botonCancelar.addActionListener((e) -> { setVisible(false); });
 		mainPanel.add(botonCancelar, BorderLayout.SOUTH);
 		
 		pack();
@@ -53,14 +54,10 @@ public class VistaMainIngredientes extends JDialog{
 	}
 	
 	void listar() {
-		VistaListar vl = new VistaListar(ctrl);
 	}
 	void eliminar() {
-		VistaEliminar vl = new VistaEliminar(ctrl);
 	}
 	void modificar() {
-	}
-	void cancelar() {
 	}
 	void crear() {
 	}

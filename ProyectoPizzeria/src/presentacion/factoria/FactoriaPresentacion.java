@@ -15,6 +15,9 @@ import presentacion.facturas.BuscarFactura;
 import presentacion.facturas.CerrarVenta;
 import presentacion.facturas.ListarFacturas;
 import presentacion.facturas.ModificarFactura;
+import presentacion.ingredientes.VistaAnadirIngrediente;
+import presentacion.ingredientes.VistaEliminar;
+import presentacion.ingredientes.VistaModificarIngrediente;
 
 public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 	
@@ -34,6 +37,9 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 	private IGUI vistaBuscarFactura = null;
 	private IGUI vistaAnadirProducto = null;
 	private IGUI vistaListarFacturas = null;
+	private IGUI vistaEliminarIngrediente = null;
+	private IGUI vistaAnadirIngrediente = null;
+	private IGUI vistaModificarIngrediente = null;
 
 	@Override
 	public IGUI createVista(Evento e) {
@@ -99,6 +105,18 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 				vistaAnadirProducto = new AnadirProducto(null);
 			}
 			return vistaAnadirProducto;
+		case BAJA_INGREDIENTE_VISTA:
+			if(vistaEliminarIngrediente == null) {
+				vistaEliminarIngrediente = new VistaEliminar();
+			}
+		case ALTA_INGREDIENTE_VISTA:
+			if(vistaAnadirIngrediente == null) {
+				vistaAnadirIngrediente = new VistaAnadirIngrediente();
+			}
+		case MODIFICAR_INGREDIENTE_VISTA:
+			if(vistaModificarIngrediente == null) {
+				vistaModificarIngrediente = new VistaModificarIngrediente();
+			}
 		default:
 			return null;
 		}
