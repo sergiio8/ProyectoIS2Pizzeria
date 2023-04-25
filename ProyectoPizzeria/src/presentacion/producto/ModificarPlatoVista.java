@@ -3,106 +3,191 @@ package presentacion.producto;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import negocio.ingredientes.TIngrediente;
+import negocio.producto.TEntrante;
+import negocio.producto.TPizza;
+import negocio.producto.TPostre;
 import presentacion.Evento;
 import presentacion.IGUI;
+import presentacion.controlador.Controlador;
 
 public class ModificarPlatoVista extends JDialog implements IGUI {
-	
 	private static final long serialVersionUID = 1L;
 
 	public ModificarPlatoVista(Frame parent) {
 		super(parent, true);
 		initGUI();
 	}
-
+	
 	private void initGUI() {
 		setTitle("Modificar plato");
-		setLayout(new BorderLayout());
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
+		setContentPane(mainPanel);
+		
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		Box contenedor = Box.createVerticalBox();
 		
 		//ID
-		JPanel panel1 = new JPanel(new FlowLayout());
-		JLabel ID = new JLabel("ID_plato: ");
-		JTextField textID = new JTextField();
+		JPanel idPanel = new JPanel();
+		JLabel idLabel = new JLabel("ID_plato: ");
+		JTextField idText = new JTextField();
 		
-		panel1.add(ID);
-		panel1.add(textID);
+		idPanel.add(idLabel);
+		idPanel.add(idText);
 		
-		add(panel1, BorderLayout.CENTER);
+		contenedor.add(idPanel);
 		
 		//Nombre
-		JPanel panel2 = new JPanel(new FlowLayout());
-		JLabel cantidad = new JLabel("Nombre: ");
-		JTextField textCantidad = new JTextField();
+		JPanel namePanel = new JPanel(new FlowLayout());
+		JLabel nameLabel = new JLabel("Nombre: ");
+		JTextField nameText = new JTextField();
 		
-		panel2.add(cantidad);
-		panel2.add(textCantidad);
+		namePanel.add(nameLabel);
+		namePanel.add(nameText);
 		
-		add(panel2, BorderLayout.CENTER);
+		contenedor.add(namePanel);
 		
 		//Precio
-		JPanel panel3 = new JPanel(new FlowLayout());
-		JLabel precio = new JLabel("Precio: ");
-		JTextField textPrecio = new JTextField();
+		JPanel pricePanel = new JPanel(new FlowLayout());
+		JLabel priceLabel = new JLabel("Precio: ");
+		JTextField priceText = new JTextField();
 		
-		panel3.add(precio);
-		panel3.add(textPrecio);
+		pricePanel.add(priceLabel);
+		pricePanel.add(priceText);
 		
-		add(panel3, BorderLayout.CENTER);
+		contenedor.add(pricePanel);
 		
 		//Ingredientes
-		JPanel panel4 = new JPanel(new FlowLayout());
-		JLabel ingredientes = new JLabel("Ingredientes: ");
-		JTextField textIngredientes = new JTextField();
+		JPanel ingredientsPanel = new JPanel(new FlowLayout());
+		JLabel ingredientsLabel = new JLabel("Ingredientes: ");
+		JTextField ingredientsText = new JTextField();
 		
-		panel4.add(ingredientes);
-		panel4.add(textIngredientes);
+		pricePanel.add(ingredientsLabel);
+		ingredientsPanel.add(ingredientsText);
 		
-		add(panel4, BorderLayout.CENTER);
+		contenedor.add(ingredientsPanel);
 
 		//Descripcion
-		JPanel panel5 = new JPanel(new FlowLayout());
-		JLabel descripcion = new JLabel("Descripcion: ");
-		JTextField textDescripcion = new JTextField();
+		JPanel descriptionPanel= new JPanel(new FlowLayout());
+		JLabel descriptionLabel = new JLabel("Descripcion: ");
+		JTextField descriptionText = new JTextField();
 		
-		panel5.add(descripcion);
-		panel5.add(textDescripcion);
+		descriptionPanel.add(descriptionLabel);
+		descriptionPanel.add(descriptionText);
 		
-		add(panel5, BorderLayout.CENTER);
+		contenedor.add(descriptionPanel);
 		
-		//Stock??
+		//Tipo
+		JPanel typePanel = new JPanel();
+		JLabel typeLabel = new JLabel("Tipo: ");
 		
-		JPanel endPanel = new JPanel(new FlowLayout());
+		JPanel typeButtonPanel = new JPanel();
+		typeButtonPanel.setLayout(new BoxLayout(typeButtonPanel, BoxLayout.Y_AXIS));
+		JRadioButton entranteButton = new JRadioButton("Entrante");
+		JRadioButton pizzaButton = new JRadioButton("Pizza");
+		JRadioButton postreButton = new JRadioButton("Postre");
+		ButtonGroup bGroup = new ButtonGroup();
 		
-		JButton modificar = new JButton("Modificar");
-		modificar.addActionListener((e) -> modificar());
-		JButton cancelar = new JButton("Cancelar");
-	    cancelar.addActionListener((e) -> cancelar());
-	    endPanel.add(modificar);
-	    endPanel.add(cancelar);
+		typeButtonPanel.add(entranteButton);
+		typeButtonPanel.add(pizzaButton);
+		typeButtonPanel.add(postreButton);
 		
-		add(panel3, BorderLayout.CENTER);
+		typePanel.add(typeLabel);
+		typePanel.add(typeButtonPanel);
+		
+		contenedor.add(typePanel);
+		
+		
+		//Botones
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setAlignmentX(CENTER_ALIGNMENT);
+		
+		JButton okButton = new JButton("OK");
+		okButton.addActionListener((e) ->{
+			String id;
+			String nombre;
+			double precio;
+			ArrayList<TIngrediente> ingredientes = new ArrayList<TIngrediente>();
+			String descripcion;
+			try {
+				id = idText.getText();
+				nombre = nameText.getText();
+				precio = Double.parseDouble(priceText.getText());
+				String[] aux = ingredientsText.getText().trim().split(",");
+				for(String s : aux)
+					ingredientes.add(new TIngrediente(s.trim()));
+				descripcion = descriptionText.getText();
+				if(precio <= 0) {
+					throw new NumberFormatException();
+				}
+				if(entranteButton.isSelected()) {
+					Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, new TEntrante(id, nombre,precio,ingredientes,descripcion));
+				}
+				else if(pizzaButton.isSelected()) {
+					Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, new TPizza(id, nombre,precio,ingredientes,descripcion));
+				}
+				else if(postreButton.isSelected()) {
+					Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, new TPostre(id, nombre,precio,ingredientes,descripcion));
+				}
+				else {
+					throw new IllegalArgumentException();
+				}				
+			}
+			catch(NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(ModificarPlatoVista.this, "ERROR: El precio del plato debe ser un numero positivo", "ERROR: El precio del plato debe ser un numero positivo", JOptionPane.ERROR_MESSAGE);
+			}
+			catch(IllegalArgumentException iae) {
+				JOptionPane.showMessageDialog(ModificarPlatoVista.this, "ERROR: Seleccione tipo de plato", "ERROR: Seleccione tipo de plato", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		
+		
+		JButton cancelButton = new JButton("Cancelar");
+		cancelButton.addActionListener((e)-> setVisible(false));
+		
+		
+		
+		buttonsPanel.add(okButton);
+		buttonsPanel.add(cancelButton);
+		
+		contenedor.add(buttonsPanel);
+		
+		mainPanel.add(contenedor, BorderLayout.CENTER);
+		
+		pack();
+		setResizable(false);
+		
 	}
 	
-	private void modificar() {
-		
-		
-	}
-	
-	private void cancelar() {
-		
-	}
-
-
 	@Override
 	public void actualizar(Evento e, Object datos) {
-		// TODO Auto-generated method stub
-		
+		switch(e) {
+		case MODIFICAR_PLATO_VISTA:
+			setVisible(true);
+			break;
+		case MODIFICAR_PLATO_OK:
+			JOptionPane.showMessageDialog(this, "Plato con id: " + datos.toString() + " modificado", "Plato con id: " + datos.toString() + " modificado", JOptionPane.INFORMATION_MESSAGE);
+			setVisible(false);
+			break;
+		case MODIFICAR_PLATO_KO:
+			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
+			setVisible(false);
+			break;
+		}
 	}
 }

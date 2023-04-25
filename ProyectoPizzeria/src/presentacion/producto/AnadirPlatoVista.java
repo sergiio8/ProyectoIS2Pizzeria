@@ -187,13 +187,12 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 		case ALTA_PLATO_OK:
 			JOptionPane.showMessageDialog(this, "Plato anadido con id: " + datos.toString(), "Plato anadido con id: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
 			setVisible(false);
+			initGUI();
 			break;
 		case ALTA_PLATO_KO:
 			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
 			setVisible(false);
 			break;
 		}
-		
 	}
-
 }
