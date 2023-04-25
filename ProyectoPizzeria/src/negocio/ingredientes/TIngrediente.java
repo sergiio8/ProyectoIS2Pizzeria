@@ -8,6 +8,11 @@ public class TIngrediente {
 	//boolean activo;
 	
 	
+	//Necesito un constructor solo con el nombre xd
+	public TIngrediente(String nombre) {
+		this.nombre = nombre;
+	}
+	
 	public TIngrediente(String nombre, int cantidad, String[] platos) {
 		this.platos = platos;
 		this.cantidad = cantidad;
