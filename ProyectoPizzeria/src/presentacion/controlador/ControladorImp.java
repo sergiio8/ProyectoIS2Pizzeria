@@ -17,6 +17,7 @@ import negocio.ingredientes.TIngrediente;
 import presentacion.Evento;
 import presentacion.factoria.FactoriaAbstractaPresentacion;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import org.json.JSONArray;
@@ -64,6 +65,12 @@ public class ControladorImp extends Controlador { //implementacion
 		case BUSCAR_MESA:
 			
 			buscaMesa(datos);
+			break;
+		
+		case LISTAR_MESAS:
+			
+			Collection<TMesas> mesas = listarMesas();
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_MESAS).actualizar(Evento.LISTAR_MESAS, mesas);
 			break;
 			
         case ALTA_FACTURA_VISTA:
@@ -220,6 +227,12 @@ public class ControladorImp extends Controlador { //implementacion
 		TMesas busqueda = saMesas.consulta(id);
 		
 		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_MESA_VISTA).actualizar(Evento.BUSCAR_MESA_RES, busqueda);
+	}
+	
+	private Collection<TMesas> listarMesas() {
+		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
+		Collection<TMesas> mesas = saMesas.consultaTodos();
+		return mesas;
 	}
 	
 	private void altaPlato(Object datos) {

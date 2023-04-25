@@ -5,7 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
-
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -177,6 +178,28 @@ public class DAOMesasImp implements DAOMesas {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public Collection<TMesas> consultaTodos() {
+		Collection<TMesas> resultado = new ArrayList<TMesas>();
+		JSONArray ja = null;
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Mesas.json"))){ //idea mandar excepciones y tratarlas en controlador
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaMesas");
+			
+		}
+		catch(Exception e1) {
+			return null;
+		}
+		
+		int i = 0;
+
+		while(i < ja.length()) {
+			resultado.add( new TMesas(ja.getJSONObject(i).getInt("id"), ja.getJSONObject(i).getString("localizacion").toLowerCase()));
+			i++;
+		}
+		return resultado;
 	}
 
 }
