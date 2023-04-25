@@ -29,7 +29,7 @@ public class FactoriaIntegracion extends FactoriaAbstractaIntegracion {
 	public DAOPlato crearDAOPlato() {
 		// TODO Auto-generated method stub
 		return new DAOPlatoImp();
-	}//cambio
+	}
 
 	@Override
 	public DAOIngrediente crearDAOIngrediente() {
@@ -42,6 +42,6 @@ public class FactoriaIntegracion extends FactoriaAbstractaIntegracion {
 	
 	public DAOLineaFactura crearDAOLineaFactura() {
 		return new DAOLineaFacturaImp();
-	}//cambios
+	}
 
 }

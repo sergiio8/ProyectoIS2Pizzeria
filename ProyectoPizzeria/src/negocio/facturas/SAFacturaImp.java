@@ -88,7 +88,7 @@ public class SAFacturaImp implements SAFactura{
     }
 
     @Override
-    public void anadirProducto(TLineaFactura linea, Carrito c) {//se añade al transfer o a la base de datos
+    public void anadirProducto(TLineaFactura linea, Carrito c) {
         c.anadirProducto(linea);
        
         // TODO Auto-generated method stub
