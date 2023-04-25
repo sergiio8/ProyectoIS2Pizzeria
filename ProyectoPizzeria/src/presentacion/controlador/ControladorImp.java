@@ -12,6 +12,8 @@ import negocio.facturas.SAFactura;
 import negocio.facturas.TDatosVenta;
 import negocio.facturas.TFactura;
 import negocio.facturas.TLineaFactura;
+import negocio.ingredientes.SAIngrediente;
+import negocio.ingredientes.TIngrediente;
 import presentacion.Evento;
 import presentacion.factoria.FactoriaAbstractaPresentacion;
 
@@ -166,7 +168,16 @@ public class ControladorImp extends Controlador { //implementacion
             break;
 	}
 }
-	private void altaIngrediente(Object datos) {	
+	private void altaIngrediente(Object datos) {
+		TIngrediente ingrediente= (TIngrediente) datos;
+		SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
+		String nombre= saIngrediente.crear(ingrediente);
+		if(nombre.equals(null)) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_MESA_KO, nombre);
+		}
+		else {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_MESA_OK, nombre);
+		}
 	}
 	private void bajaIngrediente(Object datos) {	
 	}

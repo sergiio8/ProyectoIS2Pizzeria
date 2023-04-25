@@ -4,6 +4,8 @@ import negocio.clientes.SAClientes;
 import negocio.clientes.SAClientesImp;
 import negocio.facturas.SAFactura;
 import negocio.facturas.SAFacturaImp;
+import negocio.ingredientes.SAIngrediente;
+import negocio.ingredientes.SAIngredienteImp;
 import negocio.mesas.SAMesas;
 import negocio.mesas.SAMesasImp;
 import negocio.producto.SAPlato;
@@ -26,6 +28,11 @@ public class FactoriaNegocio extends FactoriaAbstractaNegocio {
 	
 	public SAClientes crearSAClientes() {
 		return new SAClientesImp();
+	}
+
+	@Override
+	public SAIngrediente crearSAIngrediente() {
+		return new SAIngredienteImp();
 	}
 
 }
