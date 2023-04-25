@@ -4,21 +4,19 @@ import java.util.ArrayList;
 
 import negocio.ingredientes.TIngrediente;
 
-public class TPlato {
+public abstract class TPlato {
 	private String id;
 	private String nombre;
 	private double precio;
 	private ArrayList<TIngrediente> ingredientes;
 	private String descripcion;
-	private int stock;
 	
-	public TPlato(String id, String nombre, double precio, ArrayList<TIngrediente> ingredientes, String descripcion, int stock){
+	public TPlato(String id, String nombre, double precio, ArrayList<TIngrediente> ingredientes, String descripcion){
 		this.id = id;
 		this.nombre = nombre;
 		this.precio = precio;
 		this.ingredientes = ingredientes;
 		this.descripcion = descripcion;
-		this.stock = stock;
 	}
 	
 	public String getId() {
@@ -59,13 +57,5 @@ public class TPlato {
 	
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-	
-	public int getStock() {
-		return stock;
-	}
-	
-	public void setStock(int stock) {
-		this.stock = stock;
 	}
 }
