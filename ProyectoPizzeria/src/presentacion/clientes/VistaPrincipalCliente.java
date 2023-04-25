@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import negocio.clientes.SAClientes;
 import presentacion.*;
 import presentacion.controlador.Controlador;
 
@@ -21,6 +22,7 @@ public class VistaPrincipalCliente extends JFrame implements IGUI{
 	private JLabel lid;
 	private JTextField tid;
 	private JButton ok;
+	private JButton cancel;
 	private JLabel lcuenta;
 	private JButton register;
 	
@@ -32,22 +34,26 @@ public class VistaPrincipalCliente extends JFrame implements IGUI{
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		
 		
-		JPanel lp1 = new JPanel();
-		lp1.setAlignmentX(CENTER_ALIGNMENT);
+		JPanel labelp1 = new JPanel();
+		labelp1.setAlignmentX(CENTER_ALIGNMENT);
 		
 		lid = new JLabel();
 		lid.setText("Introduzca su id de usuario(NIF):");
-		lp1.add(lid);
-		mainPanel.add(lp1);
+		labelp1.add(lid);
+		mainPanel.add(labelp1);
 		
 		
-		JPanel tp1 = new JPanel();
-		tp1.setAlignmentX(CENTER_ALIGNMENT);
+		JPanel textp1 = new JPanel();
+		textp1.setAlignmentX(CENTER_ALIGNMENT);
 		
 		tid = new JTextField();
 		tid.setAlignmentX(CENTER_ALIGNMENT);
 		tid.setMaximumSize(new Dimension(300, 50));
-		tp1.add(tid);
+		textp1.add(tid);
+		mainPanel.add(textp1);
+		
+		JPanel buttonp1 = new JPanel();
+		buttonp1.setAlignmentX(CENTER_ALIGNMENT);
 		
 		ok = new JButton();
 		ok.setText("OK");
@@ -57,12 +63,25 @@ public class VistaPrincipalCliente extends JFrame implements IGUI{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				String id = tid.getText();
+				Controlador.getInstance().accion(Evento.BUSCA_CLIENTE, id);
 			}
 			
 		});
-		tp1.add(ok);
-		mainPanel.add(tp1);
+		buttonp1.add(ok);
+		
+		cancel = new JButton();
+		cancel.setText("Cancelar");
+		
+		cancel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				VistaPrincipalCliente.this.setVisible(false);
+			}
+			
+		});
 		
 		
 		JPanel lp2 = new JPanel();
@@ -73,16 +92,26 @@ public class VistaPrincipalCliente extends JFrame implements IGUI{
 		lp2.add(lcuenta);
 		mainPanel.add(lp2);
 		
-		JPanel bp1 = new JPanel();
-		bp1.setAlignmentX(CENTER_ALIGNMENT);
+		JPanel buttonp2 = new JPanel();
+		buttonp2.setAlignmentX(CENTER_ALIGNMENT);
 		
 		register = new JButton();
 		register.setText("Regístrate");
 		register.setSize(new Dimension(300, 50));
-		bp1.add(register);
-		mainPanel.add(bp1);
+		register.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Controlador.getInstance().accion(Evento.VISTA_REGISTRO_DE_CLIENTE, null);
+			}
+			
+		});
+		buttonp2.add(register);
+		mainPanel.add(buttonp2);
 		
-		
+		pack();
+		setResizable(false);
 	}
 	
 	
@@ -91,6 +120,9 @@ public class VistaPrincipalCliente extends JFrame implements IGUI{
 	@Override
 	public void actualizar(Evento e, Object datos) {
 		// TODO Auto-generated method stub
-		
+		if(this.isVisible()) {
+			this.setVisible(false);
+		}
+		else this.setVisible(true);
 	}
 }

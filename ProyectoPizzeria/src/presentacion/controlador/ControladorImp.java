@@ -1,5 +1,7 @@
 package presentacion.controlador;
 
+import negocio.clientes.SAClientes;
+import negocio.clientes.TCliente;
 import negocio.factoria.FactoriaAbstractaNegocio;
 import negocio.mesas.SAMesas;
 import negocio.mesas.TMesas;
@@ -102,7 +104,23 @@ public class ControladorImp extends Controlador { //implementacion
 		case ABRIR_VENTA:
 			carrito = new Carrito();
 			break;
+		case BUSCA_CLIENTE:
+			SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
+			TCliente c = infoCliente.consulta((String)datos);
+			if (c == null) {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.CLIENTE_NO_REGISTRADO).actualizar(Evento.CLIENTE_NO_REGISTRADO, datos);
+			}
+			else {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.CLIENTE_REGISTRADO).actualizar(Evento.CLIENTE_REGISTRADO, datos);
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ACTUALIZAR_VISTA_CLIENTES).actualizar(Evento.ACTUALIZAR_VISTA_CLIENTES, datos);
+				
+			}
+			
+		case VISTA_REGISTRO_DE_CLIENTE:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_REGISTRO_DE_CLIENTE).actualizar(Evento.ACTUALIZAR_VISTA_CLIENTES, datos);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ACTUALIZAR_VISTA_CLIENTES).actualizar(Evento.ACTUALIZAR_VISTA_CLIENTES, datos);
 		}
+		
 	}
 
 }

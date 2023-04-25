@@ -6,7 +6,7 @@ import integracion.clientes.DAOClientes;
 import integracion.factoria.FactoriaAbstractaIntegracion;
 
 public class SAClientesImp implements SAClientes{
-
+	
 	@Override
 	public String alta(TCliente c) {// si cliente ya existía devuelve null
 		
