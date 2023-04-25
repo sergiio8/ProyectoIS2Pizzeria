@@ -5,14 +5,14 @@ public class TIngrediente {
 	private String nombre;
 	private int cantidad;
 	private String[] platos;
-	boolean activo;
+	//boolean activo;
 	
 	
 	public TIngrediente(String nombre, int cantidad, String[] platos) {
 		this.platos = platos;
 		this.cantidad = cantidad;
 		this.nombre = nombre;
-		activo = true;
+		//activo = true;
 	}
 	
 	public String getNombre() {
@@ -24,9 +24,9 @@ public class TIngrediente {
 	public String[] getPlatos() {
 		return platos;
 	}
-	public boolean getActivo() {
+	/*public boolean getActivo() {
 		return activo;
-	}
+	}*/
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
@@ -36,8 +36,8 @@ public class TIngrediente {
 	public void setPlatos(String[] platos) {
 		this.platos = platos;
 	}
-	public void setActivo(boolean activo) {
+	/*public void setActivo(boolean activo) {
 		this.activo = activo;
-	}
+	}*/
 
 }
