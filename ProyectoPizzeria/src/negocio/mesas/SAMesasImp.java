@@ -37,8 +37,16 @@ public class SAMesasImp implements SAMesas{
 
 	@Override
 	public Boolean modificar(TMesas tm) {
-		DAOMesas daoMesas = FactoriaAbstractaIntegracion.getInstace().crearDAOMesas();
-		return daoMesas.modificaMesa(tm);
+		if(tm != null) {
+			DAOMesas daoMesas = FactoriaAbstractaIntegracion.getInstace().crearDAOMesas();
+			return daoMesas.modificaMesa(tm);
+		}
+		else {
+			return false;
+		}
+		
+		
+		
 	}
 
 	@Override

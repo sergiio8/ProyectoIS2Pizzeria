@@ -4,12 +4,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -118,7 +116,43 @@ public class DAOMesasImp implements DAOMesas {
 
 	@Override
 	public Boolean modificaMesa(TMesas tm) {
-		// TODO Auto-generated method stub
+		
+		int id = tm.getId();
+		
+		JSONArray ja = null;
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Mesas.json"))){ //idea mandar excepciones y tratarlas en controlador
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaMesas");
+			
+		}
+		catch(Exception e1) {
+			return false;
+		}
+		
+		int i = 0;
+		while(i < ja.length() && ja.getJSONObject(i).getInt("id") != id) {
+			i++;
+		}
+		if(i == ja.length()) {
+			return false;
+		}
+		
+		ja.remove(i);
+		JSONObject jo = new JSONObject();
+		jo.put("id", id);
+		jo.put("localizacion", tm.getLocalizacion());
+		ja.put(jo);
+		
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Mesas.json", false))){
+			JSONObject jo2 = new JSONObject();
+			jo2.put("ListaMesas", ja);
+			bw.write(jo2.toString());
+			
+		} 
+		catch(Exception e2) {
+			id = -1;
+		}
+		
 		return null;
 	}
 

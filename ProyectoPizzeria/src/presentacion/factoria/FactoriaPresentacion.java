@@ -22,6 +22,7 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 	
 	private IGUI vistaAnadirMesa = null;
 	private IGUI vistaBorrarMesa = null;
+	private IGUI vistaModificarMesa = null;
 	private IGUI vistaClienteLogueado = null;
 	private IGUI vistaClienteNoRegistrado = null;
 	private IGUI vistaPrincipalClientes = null;
@@ -30,6 +31,7 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 	private IGUI vistaBuscarFactura = null;
 	private IGUI vistaAnadirProducto = null;
 	private IGUI vistaListarFacturas = null;
+
 	@Override
 	public IGUI createVista(Evento e) {
 		switch(e) {
@@ -44,6 +46,11 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 				vistaBorrarMesa = new VistaBorrarMesa(null);
 			}
 			return vistaBorrarMesa;
+		case MODIFICAR_MESA_VISTA:
+			if(vistaModificarMesa == null) {
+				vistaModificarMesa = new VistaBorrarMesa(null);
+			}
+			return vistaModificarMesa;
 		case CLIENTE_NO_REGISTRADO:
 			if(vistaClienteNoRegistrado == null) {
 				vistaClienteNoRegistrado = new VistaClienteNoRegistrado(null);
@@ -84,7 +91,6 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 				vistaAnadirProducto = new AnadirProducto(null);
 			}
 			return vistaAnadirProducto;
-		
 		default:
 			return null;
 		}
