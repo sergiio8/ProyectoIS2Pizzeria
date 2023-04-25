@@ -28,9 +28,6 @@ public class VistaListar extends JDialog{
 		//String[][] data = new String[arraydeingrediestes.size()][3]
 		//for de i(recorrer la lista de ingredientes) j(las tres columnas) para rellenar el data
 		
-		tbl= new JTable(data,columnNames);
-		JScrollPane scb= new JScrollPane(tbl);
-		this.getContentPane().add(scb,BorderLayout.CENTER);
 		//tabla para listar
 		
 		pack();

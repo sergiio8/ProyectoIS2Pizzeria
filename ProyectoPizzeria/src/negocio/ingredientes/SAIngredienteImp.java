@@ -25,7 +25,7 @@ public class SAIngredienteImp implements SAIngrediente{
 		String nombre ="";
 		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
 		try {
-			TIngrediente ing= ingrediente.coger(nuevoIngrediente.getNombre());
+			TIngrediente ing= ingrediente.cogerIngrediente(nuevoIngrediente.getNombre());
 			if(ing!=null) {
 				nombre=ingrediente.insertarIngrediente(nuevoIngrediente);
 			}else {

@@ -162,9 +162,32 @@ public class ControladorImp extends Controlador { //implementacion
 		case BUSCAR_PLATO:
 			buscaPlato(datos);
 			break;
+		case ALTA_INGREDIENTE_VISTA:
+            FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_VISTA, null);
+            break;
+        case ALTA_INGREDIENTE:
+            altaIngrediente(datos);
+            break;
+        case BAJA_INGREDIENTE_VISTA:
+            FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_INGREDIENTE_VISTA).actualizar(Evento.BAJA_INGREDIENTE_VISTA, null);
+            break;
+        case BAJA_INGREDIENTE:
+            bajaIngrediente(datos);
+            break;
+        case MODIFICAR_INGREDIENTE_VISTA:
+            FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_INGREDIENTE_VISTA).actualizar(Evento.MODIFICAR_INGREDIENTE_VISTA, null);
+            break;
+        case MODIFICAR_INGREDIENTE:
+            modificarIngrediente(datos);
+            break;
 	}
 }
-
+	private void altaIngrediente(Object datos) {	
+	}
+	private void bajaIngrediente(Object datos) {	
+	}
+	private void modificarIngrediente(Object datos) {	
+	}
 	private void altaMesa(Object datos) {
 		TMesas tm = (TMesas) datos;
 		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
