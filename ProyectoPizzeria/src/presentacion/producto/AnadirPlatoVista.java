@@ -134,7 +134,7 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 				precio = Double.parseDouble(priceText.getText());
 				String[] aux = ingredientsText.getText().trim().split(",");
 				for(String s : aux)
-					ingredientes.add(new TIngrediente(s));
+					ingredientes.add(new TIngrediente(s.trim()));
 				descripcion = descriptionText.getText();
 				if(precio <= 0) {
 					throw new NumberFormatException();
@@ -158,8 +158,6 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 			catch(IllegalArgumentException iae) {
 				JOptionPane.showMessageDialog(AnadirPlatoVista.this, "ERROR: Seleccione tipo de plato", "ERROR: Seleccione tipo de plato", JOptionPane.ERROR_MESSAGE);
 			}
-			
-			
 		});
 		
 		
@@ -187,7 +185,7 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 			setVisible(true);
 			break;
 		case ALTA_PLATO_OK:
-			JOptionPane.showMessageDialog(this, "Plato anadid con id: " + datos.toString(), "Plato anadido con id: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Plato anadido con id: " + datos.toString(), "Plato anadido con id: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
 			setVisible(false);
 			break;
 		case ALTA_PLATO_KO:
