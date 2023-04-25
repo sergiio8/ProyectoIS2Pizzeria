@@ -31,8 +31,8 @@ public class SAMesasImp implements SAMesas{
 
 	@Override
 	public Collection<TMesas> consultaTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		DAOMesas daoMesas = FactoriaAbstractaIntegracion.getInstace().crearDAOMesas();
+		return daoMesas.consultaTodos();
 	}
 
 	@Override
