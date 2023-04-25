@@ -29,19 +29,10 @@ public class ControladorImp extends Controlador { //implementacion
 			
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_VISTA, null);
 			break;
+			
 		case ALTA_MESA:
 
-			TMesas tm = (TMesas) datos;
-			SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
-			
-			int res = saMesas.alta(tm);
-			
-			if(res == -1) {
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_KO, res);
-			}
-			else {
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_OK, res);
-			}
+			altaMesa(datos);
 			break;
 
 		case BAJA_MESA_VISTA:
@@ -51,11 +42,18 @@ public class ControladorImp extends Controlador { //implementacion
 			
 		case BAJA_MESA:
 			
-			int id = Integer.parseInt(datos.toString());
-			SAMesas saMesas2 = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
-			boolean res2 = saMesas2.borrar(id);
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_MESA_VISTA).actualizar(Evento.BAJA_MESA_RES, res2);
+			bajaMesa(datos);
 			break;
+		
+		case MODIFICAR_MESA_VISTA:
+			
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_MESA_VISTA).actualizar(Evento.MODIFICAR_MESA_VISTA, null);
+			break;
+		
+		case MODIFICAR_MESA:
+			modificaMesa(datos);
+			break;
+			
         case ALTA_FACTURA_VISTA:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA, null);
 			break;
@@ -121,6 +119,36 @@ public class ControladorImp extends Controlador { //implementacion
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ACTUALIZAR_VISTA_CLIENTES).actualizar(Evento.ACTUALIZAR_VISTA_CLIENTES, datos);
 		}
 		
+	}
+	
+	private void altaMesa(Object datos) {
+		TMesas tm = (TMesas) datos;
+		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
+		
+		int res = saMesas.alta(tm);
+		
+		if(res == -1) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_KO, res);
+		}
+		else {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_OK, res);
+		}
+	}
+	
+	private void bajaMesa(Object datos) {
+		int id = Integer.parseInt(datos.toString());
+		SAMesas saMesas2 = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
+		boolean res2 = saMesas2.borrar(id);
+		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_MESA_VISTA).actualizar(Evento.BAJA_MESA_RES, res2);
+	}
+	
+	private void modificaMesa(Object datos) {
+		TMesas tm = (TMesas) datos;
+		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
+		
+		boolean res = saMesas.modificar(tm);
+		
+		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_MESA_VISTA).actualizar(Evento.MODIFICAR_MESA_RES, res);
 	}
 
 }
