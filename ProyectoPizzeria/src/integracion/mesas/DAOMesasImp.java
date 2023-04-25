@@ -110,8 +110,31 @@ public class DAOMesasImp implements DAOMesas {
 
 	@Override
 	public TMesas obtenMesa(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		JSONArray ja = null;
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Mesas.json"))){ //idea mandar excepciones y tratarlas en controlador
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaMesas");
+		}
+		catch(Exception e1) {
+			return null;
+		}
+		
+		int i = 0;
+		while(i < ja.length() && ja.getJSONObject(i).getInt("id") != id) {
+			i++;
+		}
+		if(i == ja.length()) {
+			return null;
+		}
+		else {
+			try {
+				return new TMesas(ja.getJSONObject(i).getInt("id"), ja.getJSONObject(i).getString("localizacion").toLowerCase());
+			}
+			catch(Exception e) {
+				return null;
+			}
+			
+		}
 	}
 
 	@Override

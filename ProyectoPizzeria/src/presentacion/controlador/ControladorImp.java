@@ -54,6 +54,16 @@ public class ControladorImp extends Controlador { //implementacion
 			modificaMesa(datos);
 			break;
 			
+		case BUSCAR_MESA_VISTA:
+			
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_MESA_VISTA).actualizar(Evento.BUSCAR_MESA_VISTA, null);
+			break;
+			
+		case BUSCAR_MESA:
+			
+			buscaMesa(datos);
+			break;
+			
         case ALTA_FACTURA_VISTA:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA, null);
 			break;
@@ -149,6 +159,16 @@ public class ControladorImp extends Controlador { //implementacion
 		boolean res = saMesas.modificar(tm);
 		
 		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_MESA_VISTA).actualizar(Evento.MODIFICAR_MESA_RES, res);
+	}
+	
+	private void buscaMesa(Object datos) {
+		int id = Integer.parseInt(datos.toString());
+		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
+		
+		TMesas busqueda = saMesas.consulta(id);
+		
+		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_MESA_VISTA).actualizar(Evento.BUSCAR_MESA_RES, busqueda);
+		
 	}
 
 }
