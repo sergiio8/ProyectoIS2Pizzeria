@@ -168,7 +168,6 @@ public class DAOFacturaImp implements DAOFactura {
             jo2.put("ListaFacturas", ja);
             bw.write(jo2.toString());
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
         
