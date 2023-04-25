@@ -5,6 +5,7 @@ import negocio.clientes.TCliente;
 import negocio.factoria.FactoriaAbstractaNegocio;
 import negocio.mesas.SAMesas;
 import negocio.mesas.TMesas;
+import negocio.producto.SAPlato;
 import negocio.producto.TPlato;
 import negocio.facturas.Carrito;
 import negocio.facturas.SAFactura;
@@ -64,7 +65,7 @@ public class ControladorImp extends Controlador { //implementacion
 			buscaMesa(datos);
 			break;
 			
-                case ALTA_FACTURA_VISTA:
+        case ALTA_FACTURA_VISTA:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA, null);
 			break;
 		case MODIFICAR_FACTURA_VISTA:
@@ -123,14 +124,47 @@ public class ControladorImp extends Controlador { //implementacion
 				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ACTUALIZAR_VISTA_CLIENTES).actualizar(Evento.ACTUALIZAR_VISTA_CLIENTES, datos);
 				
 			}
+			break;
 			
 		case VISTA_REGISTRO_DE_CLIENTE:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_REGISTRO_DE_CLIENTE).actualizar(Evento.ACTUALIZAR_VISTA_CLIENTES, datos);
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ACTUALIZAR_VISTA_CLIENTES).actualizar(Evento.ACTUALIZAR_VISTA_CLIENTES, datos);
-		}
+			break;
+			
+		case ALTA_PLATO_VISTA:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_VISTA, null);
+			break;
+			
+		case ALTA_PLATO:
+			altaPlato(datos);
+			break;
+
+		case BAJA_PLATO_VISTA:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_PLATO_VISTA).actualizar(Evento.BAJA_PLATO_VISTA, null);
+			break;
+			
+		case BAJA_PLATO:
+			bajaPlato(datos);
+			break;
 		
+		case MODIFICAR_PLATO_VISTA:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_VISTA, null);
+			break;
+		
+		case MODIFICAR_PLATO:
+			modificaPlato(datos);
+			break;
+			
+		case BUSCAR_PLATO_VISTA:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_PLATO_VISTA).actualizar(Evento.BUSCAR_PLATO_VISTA, null);
+			break;
+			
+		case BUSCAR_PLATO:
+			buscaPlato(datos);
+			break;
 	}
-	
+}
+
 	private void altaMesa(Object datos) {
 		TMesas tm = (TMesas) datos;
 		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
@@ -168,8 +202,60 @@ public class ControladorImp extends Controlador { //implementacion
 		TMesas busqueda = saMesas.consulta(id);
 		
 		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_MESA_VISTA).actualizar(Evento.BUSCAR_MESA_RES, busqueda);
+	}
+	
+	private void altaPlato(Object datos) {
+		TPlato tp = (TPlato) datos;
+		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
 		
+		String nombre = saPlato.alta(tp);
+		
+		if(nombre == "") {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_KO, nombre);
+		}
+		else {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_OK, nombre);
+		}
+	}
+	
+	private void bajaPlato(Object datos) {
+		String id = datos.toString();
+		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
+		boolean resultado = saPlato.borrar(id);
+		if (resultado == true) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_PLATO_VISTA).actualizar(Evento.BAJA_PLATO_OK, resultado);
+		}
+		else {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_PLATO_VISTA).actualizar(Evento.BAJA_PLATO_KO, resultado);
+		}
 	}
 
+	private void modificaPlato(Object datos) {
+		TPlato tp = (TPlato) datos;
+		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
+		
+		boolean resultado = saPlato.modificar(tp);
+		
+		if(resultado == true) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_OK, resultado);
+		}
+		else {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_KO, resultado);
+		}
+	}
+	
+	private void buscaPlato(Object datos) {
+		String id = datos.toString();
+		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
+		
+		TPlato buscar = saPlato.consulta(id);
+		
+		if(buscar == null) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_PLATO_VISTA).actualizar(Evento.BUSCAR_PLATO_KO, buscar);
+		}
+		else {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_PLATO_VISTA).actualizar(Evento.BUSCAR_PLATO_OK, buscar);
+		}
+	}
 }
 
