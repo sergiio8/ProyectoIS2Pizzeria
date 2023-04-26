@@ -22,17 +22,15 @@ public class SAIngredienteImp implements SAIngrediente{
 
 	@Override
 	public String crear(TIngrediente nuevoIngrediente) {
-		String nombre ="";
+		String nombre =null;
 		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
 		try {
-			TIngrediente ing= ingrediente.coger(nuevoIngrediente.getNombre());
+			TIngrediente ing= ingrediente.cogerIngrediente(nuevoIngrediente.getNombre());
 			if(ing!=null) {
 				nombre=ingrediente.insertarIngrediente(nuevoIngrediente);
-			}else {
-				System.out.println("No sabes crear un ingrediente retrasado");
 			}
 		}catch(Exception e) {
-			System.out.println("No sabes crear un ingrediente retrasado");
+			
 		}
 		return nombre;
 	}

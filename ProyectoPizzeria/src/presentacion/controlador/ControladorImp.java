@@ -12,9 +12,12 @@ import negocio.facturas.SAFactura;
 import negocio.facturas.TDatosVenta;
 import negocio.facturas.TFactura;
 import negocio.facturas.TLineaFactura;
+import negocio.ingredientes.SAIngrediente;
+import negocio.ingredientes.TIngrediente;
 import presentacion.Evento;
 import presentacion.factoria.FactoriaAbstractaPresentacion;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import org.json.JSONArray;
@@ -24,8 +27,13 @@ public class ControladorImp extends Controlador { //implementacion
 
 	@Override
 	public void accion(Evento e, Object datos) {
-		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
 		switch(e) {
+		case MAIN_WINDOW:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MAIN_WINDOW);
+			break;
+		case VISTA_PRINCIPAL_MESA:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_MESA);
+			break;
 		case ALTA_MESA_VISTA:
 			
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_VISTA, null);
@@ -64,6 +72,12 @@ public class ControladorImp extends Controlador { //implementacion
 			
 			buscaMesa(datos);
 			break;
+		
+		case LISTAR_MESAS:
+			
+			Collection<TMesas> mesas = listarMesas();
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_MESAS).actualizar(Evento.LISTAR_MESAS, mesas);
+			break;
 			
         case ALTA_FACTURA_VISTA:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA, null);
@@ -81,37 +95,22 @@ public class ControladorImp extends Controlador { //implementacion
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_FACTURAS_VISTA).actualizar(Evento.LISTAR_FACTURAS_VISTA, null);
 			break;
 		case ALTA_FACTURA:
-			TDatosVenta dt = (TDatosVenta) datos;
-			carrito.cerrarVenta(dt);
-            boolean sol = saFact.crearFactura(dt);
-            if (sol) {
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, sol);
-			}
-		    else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, sol);
+			altaFactura(datos);
             break;
 		case BUSCAR_FACTURA:
-			TFactura tf = saFact.buscarFactura((String) datos);
-			if (tf != null) FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_FACTURA_VISTA).actualizar(Evento.BUSCAR_FACTURA_VISTA_OK, tf);
-			else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_FACTURA_VISTA).actualizar(Evento.BUSCAR_FACTURA_VISTA_WR, tf);
+			buscarFactura(datos);
 			break;
 		case MODIFICAR_FACTURA:
-			boolean sol3 = saFact.modificarFactura((TLineaFactura) datos);
-			if (sol3) FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_FACTURA_VISTA).actualizar(Evento.MODIFICAR_FACTURA_VISTA_OK, sol3);
-			else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_FACTURA_VISTA).actualizar(Evento.MODIFICAR_FACTURA_VISTA_WR, sol3);
+			modificarFactura(datos);
 			break;
 		case LISTAR_FACTURAS:
-			saFact.mostrarFacturas();
+			listarFacturas(datos);
 			break;
 		case ANADIR_PRODUCTO:
-			TLineaFactura tf2 = (TLineaFactura) datos;
-			if (tf2 != null) {
-				saFact.anadirProducto(tf2, carrito);
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_OK, null);
-			}
-			else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_WR, null);
+			anadirProducto(datos);
 			break;
 		case ABRIR_VENTA:
-			carrito = new Carrito();
+			abrirVenta(datos);
 			break;
 		case BUSCA_CLIENTE:
 			SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
@@ -162,9 +161,41 @@ public class ControladorImp extends Controlador { //implementacion
 		case BUSCAR_PLATO:
 			buscaPlato(datos);
 			break;
+		case ALTA_INGREDIENTE_VISTA:
+            FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_VISTA, null);
+            break;
+        case ALTA_INGREDIENTE:
+            altaIngrediente(datos);
+            break;
+        case BAJA_INGREDIENTE_VISTA:
+            FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_INGREDIENTE_VISTA).actualizar(Evento.BAJA_INGREDIENTE_VISTA, null);
+            break;
+        case BAJA_INGREDIENTE:
+            bajaIngrediente(datos);
+            break;
+        case MODIFICAR_INGREDIENTE_VISTA:
+            FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_INGREDIENTE_VISTA).actualizar(Evento.MODIFICAR_INGREDIENTE_VISTA, null);
+            break;
+        case MODIFICAR_INGREDIENTE:
+            modificarIngrediente(datos);
+            break;
 	}
 }
-
+	private void altaIngrediente(Object datos) {
+		TIngrediente ingrediente= (TIngrediente) datos;
+		SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
+		String nombre= saIngrediente.crear(ingrediente);
+		if(nombre.equals(null)) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_MESA_KO, nombre);
+		}
+		else {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_MESA_OK, nombre);
+		}
+	}
+	private void bajaIngrediente(Object datos) {	
+	}
+	private void modificarIngrediente(Object datos) {	
+	}
 	private void altaMesa(Object datos) {
 		TMesas tm = (TMesas) datos;
 		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
@@ -202,6 +233,12 @@ public class ControladorImp extends Controlador { //implementacion
 		TMesas busqueda = saMesas.consulta(id);
 		
 		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_MESA_VISTA).actualizar(Evento.BUSCAR_MESA_RES, busqueda);
+	}
+	
+	private Collection<TMesas> listarMesas() {
+		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
+		Collection<TMesas> mesas = saMesas.consultaTodos();
+		return mesas;
 	}
 	
 	private void altaPlato(Object datos) {
@@ -257,5 +294,51 @@ public class ControladorImp extends Controlador { //implementacion
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_PLATO_VISTA).actualizar(Evento.BUSCAR_PLATO_OK, buscar);
 		}
 	}
+	
+	private void altaFactura(Object datos) {
+		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
+		TDatosVenta dt = (TDatosVenta) datos;
+		carrito.cerrarVenta(dt);
+        boolean sol = saFact.crearFactura(dt);
+        if (sol) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, sol);
+	    }
+        else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, sol);
+	}
+	
+	private void buscarFactura(Object datos) {
+		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
+		TFactura tf = saFact.buscarFactura((String) datos);
+		if (tf != null) FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_FACTURA_VISTA).actualizar(Evento.BUSCAR_FACTURA_VISTA_OK, tf);
+		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_FACTURA_VISTA).actualizar(Evento.BUSCAR_FACTURA_VISTA_WR, tf);
+	}
+	
+	private void modificarFactura(Object datos) {
+		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
+		boolean sol3 = saFact.modificarFactura((TLineaFactura) datos);
+		if (sol3) FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_FACTURA_VISTA).actualizar(Evento.MODIFICAR_FACTURA_VISTA_OK, sol3);
+		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_FACTURA_VISTA).actualizar(Evento.MODIFICAR_FACTURA_VISTA_WR, sol3);
+	}
+	
+	private void listarFacturas(Object datos) {
+		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
+		saFact.mostrarFacturas();
+	}
+	
+	private void anadirProducto(Object datos) {
+		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
+		TLineaFactura tf2 = (TLineaFactura) datos;
+		if (tf2 != null) {
+			saFact.anadirProducto(tf2, carrito);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_OK, null);
+		}
+		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_WR, null);
+	}
+	
+	private void abrirVenta(Object datos) {
+		carrito = new Carrito();
+	}
+
+		
 }
 
