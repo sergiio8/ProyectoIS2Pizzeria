@@ -9,7 +9,7 @@ public class TPizza extends TPlato {
 	
 	public TPizza(String id, String nombre, double precio, ArrayList<TIngrediente> ingredientes, 
 			String descripcion) {
-		super(id, nombre, precio, ingredientes, descripcion);
+		super(id, "Pizza", nombre, precio, ingredientes, descripcion);
 	}
 /*
 	public Tamano getTamano() {
