@@ -136,6 +136,8 @@ public class VistaAnadirMesa extends JDialog implements IGUI{
 		
 		//setPreferredSize(new Dimension(320, 500));
 		pack();
+		setLocationRelativeTo(parent);
+		
 		setResizable(false);
 		
 	}

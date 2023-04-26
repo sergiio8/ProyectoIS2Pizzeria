@@ -28,6 +28,12 @@ public class ControladorImp extends Controlador { //implementacion
 	@Override
 	public void accion(Evento e, Object datos) {
 		switch(e) {
+		case MAIN_WINDOW:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MAIN_WINDOW);
+			break;
+		case VISTA_PRINCIPAL_MESA:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_MESA);
+			break;
 		case ALTA_MESA_VISTA:
 			
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_MESA_VISTA).actualizar(Evento.ALTA_MESA_VISTA, null);

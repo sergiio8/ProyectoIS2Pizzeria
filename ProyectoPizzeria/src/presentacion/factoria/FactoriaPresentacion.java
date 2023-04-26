@@ -2,6 +2,9 @@ package presentacion.factoria;
 
 import java.awt.Frame;
 
+import javax.swing.SwingUtilities;
+
+
 import presentacion.Evento;
 
 import presentacion.IGUI;
@@ -10,6 +13,7 @@ import presentacion.mesas.VistaBorrarMesa;
 import presentacion.mesas.VistaBuscarMesa;
 import presentacion.mesas.VistaListarMesas;
 import presentacion.mesas.VistaModificarMesa;
+import presentacion.mesas.VistaPrincipalMesas;
 import presentacion.clientes.*;
 import presentacion.facturas.AnadirProducto;
 import presentacion.facturas.BuscarFactura;
@@ -26,6 +30,7 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 		
 	}
 	
+	private IGUI vistaPrincipalMesa = null;
 	private IGUI vistaAnadirMesa = null;
 	private IGUI vistaBorrarMesa = null;
 	private IGUI vistaModificarMesa = null;
@@ -46,30 +51,36 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 	@Override
 	public IGUI createVista(Evento e) {
 		switch(e) {
+		case MAIN_WINDOW:
+			return new presentacion.MainWindow();
+		case VISTA_PRINCIPAL_MESA:
+			this.vistaPrincipalMesa = new VistaPrincipalMesas();
+			return vistaPrincipalMesa;
+			
 		case ALTA_MESA_VISTA:
 			
 			if(vistaAnadirMesa == null) {
-				vistaAnadirMesa = new VistaAnadirMesa(null);
+				vistaAnadirMesa = new VistaAnadirMesa((Frame) vistaPrincipalMesa);
 			}
 			return vistaAnadirMesa;
 		case BAJA_MESA_VISTA:
 			if(vistaBorrarMesa == null) {
-				vistaBorrarMesa = new VistaBorrarMesa(null);
+				vistaBorrarMesa = new VistaBorrarMesa((Frame) vistaPrincipalMesa);
 			}
 			return vistaBorrarMesa;
 		case MODIFICAR_MESA_VISTA:
 			if(vistaModificarMesa == null) {
-				vistaModificarMesa = new VistaModificarMesa(null);
+				vistaModificarMesa = new VistaModificarMesa((Frame) vistaPrincipalMesa);
 			}
 			return vistaModificarMesa;
 		case BUSCAR_MESA_VISTA:
 			if(vistaBuscarMesa == null) {
-				vistaBuscarMesa = new VistaBuscarMesa(null);
+				vistaBuscarMesa = new VistaBuscarMesa((Frame) vistaPrincipalMesa);
 			}
 			return vistaBuscarMesa;
 		case LISTAR_MESAS:
 			if(vistaListarMesa == null) {
-				vistaListarMesa = new VistaListarMesas(null);
+				vistaListarMesa = new VistaListarMesas((Frame) vistaPrincipalMesa);
 			}
 			return vistaListarMesa;
 		case CLIENTE_NO_REGISTRADO:

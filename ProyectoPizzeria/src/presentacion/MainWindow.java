@@ -1,4 +1,4 @@
-package launcher;
+package presentacion;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,7 +11,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class MainWindow extends JFrame{
+import presentacion.Evento;
+import presentacion.IGUI;
+import presentacion.controlador.Controlador;
+
+public class MainWindow extends JFrame implements IGUI{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -42,6 +46,10 @@ public class MainWindow extends JFrame{
 		buttonsPanel.setPreferredSize(new Dimension(110, 300));
 		
 		mesasButton = new JButton("Subsistema Mesas");
+		mesasButton.addActionListener((e)->{
+			Controlador.getInstance().accion(Evento.VISTA_PRINCIPAL_MESA, null);
+			this.dispose();
+		});
 		buttonsPanel.add(mesasButton);
 		
 		clientesButton = new JButton("Subsistema Clientes");
@@ -67,6 +75,12 @@ public class MainWindow extends JFrame{
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		
+	}
+
+	@Override
+	public void actualizar(Evento e, Object datos) {
+		// TODO Auto-generated method stub
 		
 	}
 	
