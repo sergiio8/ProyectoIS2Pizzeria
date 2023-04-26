@@ -9,7 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 		//Controlador.getInstance().accion(Evento.ALTA_MESA_VISTA, null);
 		
-		Controlador.getInstance().accion(Evento.LISTAR_MESAS, null);
+		new MainWindow();
 		//hola
 	}
 }
