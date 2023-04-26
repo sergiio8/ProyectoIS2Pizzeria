@@ -118,8 +118,8 @@ public class DAOFacturaImp implements DAOFactura {
 				for (int j = 0; j < obj.getJSONArray("lineas").length(); ++j) {
 					lineas.add(daol.buscarLineaFactura(obj.getJSONArray("lineas").getJSONObject(j).getString("id")));
 				}
-				TDatosVenta dt = new TDatosVenta(lineas, obj.get("id").toString(), obj.get("id_vendedor").toString(), obj.get("id_cliente").toString());
-				return new TFactura(obj.getString("id"), obj.getDouble("precio"), dt, obj.getString("fecha"), obj.getBoolean("activa"));
+				TDatosVenta dt = new TDatosVenta(lineas, obj.get("id").toString(), obj.get("id_vendedor").toString(), obj.get("id_cliente").toString(), obj.getString("fecha"));
+				return new TFactura(obj.getString("id"), obj.getDouble("precio"), dt, obj.getBoolean("activa"));
 			}
 			catch(Exception e) {
 				return null;
@@ -200,9 +200,9 @@ public class DAOFacturaImp implements DAOFactura {
 				TLineaFactura l = daol.buscarLineaFactura(ja.getJSONObject(i).getJSONArray("lineas").getJSONObject(j).getString("id"));
 				productos.add(l);
 			}
-			TDatosVenta dt = new TDatosVenta(productos, ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getString("id_vendedor"), ja.getJSONObject(i).getString("id_cliente"));
+			TDatosVenta dt = new TDatosVenta(productos, ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getString("id_vendedor"), ja.getJSONObject(i).getString("id_cliente"), ja.getJSONObject(i).getString("fecha"));
 			
-			resultado.add( new TFactura(ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getDouble("precio"), dt, ja.getJSONObject(i).getString("fecha"),ja.getJSONObject(i).getBoolean("activo")));
+			resultado.add( new TFactura(ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getDouble("precio"), dt,ja.getJSONObject(i).getBoolean("activo")));
 			i++;
 		}
 		return resultado;

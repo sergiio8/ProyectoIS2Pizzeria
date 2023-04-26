@@ -25,6 +25,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 	JTextField text1;
 	JTextField text2;
 	JTextField text3;
+	JTextField text4;
 	
 	public CerrarVenta(JFrame parent) {
 		super(parent, true);
@@ -66,30 +67,41 @@ public class CerrarVenta extends JDialog implements IGUI{
 		mainPanel.add(panel3, BorderLayout.CENTER);
 		
 		JPanel panel4 = new JPanel(new FlowLayout());
+		JLabel fecha = new JLabel("Fecha: ");
+		text4 = new JTextField();
+		
+		panel4.add(fecha);
+		panel4.add(text4);
+		
+		mainPanel.add(panel4, BorderLayout.CENTER);
+		
+		JPanel panel5 = new JPanel(new FlowLayout());
 		
 
 		JButton cerrar = new JButton("Cerrar venta");
 		cerrar.addActionListener((e) -> cerrar());
 		JButton cancelar = new JButton("Cancelar");
 	    cancelar.addActionListener((e) -> cancelar());
-	    panel4.add(cerrar);
-	    panel4.add(cancelar);
+	    panel5.add(cerrar);
+	    panel5.add(cancelar);
 		
-		mainPanel.add(panel4, BorderLayout.CENTER);
+		mainPanel.add(panel5, BorderLayout.CENTER);
 	}
 	
 	private void cerrar() {
 		String ID_factura;
 		String ID_cliente;
 		String ID_vendedor;
+		String fecha;
 		try {
 			ID_factura = text1.getText();
 			ID_cliente = text2.getText();
 			ID_vendedor = text3.getText();
+			fecha = text4.getText();
 			if(ID_cliente == null || ID_vendedor == null) {
 				throw new IllegalArgumentException();
 			}
-			Controlador.getInstance().accion(Evento.ALTA_FACTURA, new TDatosVenta(new ArrayList<TLineaFactura>(), ID_factura, ID_cliente, ID_vendedor));
+			Controlador.getInstance().accion(Evento.ALTA_FACTURA, new TDatosVenta(new ArrayList<TLineaFactura>(), ID_factura, ID_cliente, ID_vendedor, fecha));
 			
 		}
 		catch(IllegalArgumentException iae) {

@@ -6,20 +6,17 @@ public class TFactura {
 	private String id;
 	private TDatosVenta datos;
 	private double precio_total;
-	private String fecha;
 	private boolean activo;
 	
-	public TFactura(String Id, double total, TDatosVenta datos, String Fecha, boolean Activo) {
+	public TFactura(String Id, double total, TDatosVenta datos, boolean Activo) {
 		id = Id;
 		precio_total = total;
 		this.datos = datos;
-		fecha = Fecha;
 		activo = Activo;
 	}
 	
 	public String getId() {
 		return id;
-		
 	}
 	
 	public String getIdCliente() {
@@ -35,7 +32,7 @@ public class TFactura {
 	}
 	
 	public String getFecha() {
-		return fecha;
+		return datos.getFecha();
 	}
 	
 	public boolean getActivo() {
@@ -64,7 +61,7 @@ public class TFactura {
 	}
 	
 	public void getFecha(String Fecha) {
-		fecha = Fecha;
+		datos.setFecha(Fecha);
 	}
 	
 	public void setActivo(boolean Activo) {

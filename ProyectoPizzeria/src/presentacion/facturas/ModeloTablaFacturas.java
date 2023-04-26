@@ -52,7 +52,7 @@ private static final long serialVersionUID = 1L;
 		else if (columnIndex == 4) {
 			String productos = "";
 			for (int i = 0; i < facturas.get(rowIndex).getProductos().size(); ++i) {
-				productos += facturas.get(rowIndex).getProductos().get(i).getIdProducto() + " - " + facturas.get(rowIndex).getProductos().get(i).getCantidad() + '\n';
+				productos += facturas.get(rowIndex).getProductos().get(i).getIdProducto() + ": " + facturas.get(rowIndex).getProductos().get(i).getCantidad() + "unidades" + '\n';
 			}
 			return productos;
 		}

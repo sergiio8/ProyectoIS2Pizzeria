@@ -7,12 +7,14 @@ public class TDatosVenta {
 	private String id_factura;
 	private String id_vendedor;
 	private String id_cliente;
+	private String fecha;
 	
-	public TDatosVenta(ArrayList<TLineaFactura> productos, String Id_factura, String Id_vendedor, String Id_cliente) {
+	public TDatosVenta(ArrayList<TLineaFactura> productos, String Id_factura, String Id_vendedor, String Id_cliente, String fecha) {
 	    this.productos = productos;
 	    id_factura = Id_factura;
 		id_vendedor = Id_vendedor;
 		id_cliente = Id_cliente;
+		this.fecha = fecha;
 	}
 	
 	public ArrayList<TLineaFactura>  getProductos(){
@@ -31,6 +33,10 @@ public class TDatosVenta {
 		return id_factura;
 	}
 	
+	public String getFecha() {
+		return fecha;
+	}
+	
 	public void setProductos(ArrayList<TLineaFactura> prod) {
 		this.productos = prod;
 	}
@@ -45,6 +51,10 @@ public class TDatosVenta {
 	
 	public void getid_factura(String ID_factura) {
 		id_factura = ID_factura;
+	}
+	
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
 	}
 	
 

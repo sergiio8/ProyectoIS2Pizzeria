@@ -17,9 +17,16 @@ import negocio.facturas.TLineaFactura;
 import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
+import negocio.facturas.TFactura;
 
 public class BuscarFactura extends JDialog implements IGUI{
 	JTextField text1;
+	JLabel ID;
+	JButton buscar;
+	JButton cancelar;
+	JPanel panel3;
+	JPanel data;
+	
 	public BuscarFactura(JFrame parent) {
 		super(parent, true);
 		initGUI();
@@ -31,22 +38,27 @@ public class BuscarFactura extends JDialog implements IGUI{
 		mainPanel.setLayout(new BorderLayout());
 		setContentPane(mainPanel);
 		
+		data = new JPanel();
+		data.setLayout(new BorderLayout());
+		
 		JPanel panel1 = new JPanel(new FlowLayout());
-		JLabel ID = new JLabel("ID_factura: ");
+		ID = new JLabel("ID_factura: ");
 		text1 = new JTextField();
 		
 		panel1.add(ID);
 		panel1.add(text1);
 		
-		mainPanel.add(panel1, BorderLayout.CENTER);
+		data.add(panel1);
+		
+		mainPanel.add(data, BorderLayout.CENTER);
 	
 		
-		JPanel panel3 = new JPanel(new FlowLayout());
+		panel3 = new JPanel(new FlowLayout());
 		
 		
-		JButton buscar = new JButton("Buscar");
+		buscar = new JButton("Buscar");
 		buscar.addActionListener((e) -> buscar());
-		JButton cancelar = new JButton("Cancelar");
+		cancelar = new JButton("Cancelar");
 	    cancelar.addActionListener((e) -> cancelar());
 	    panel3.add(buscar);
 	    panel3.add(cancelar);
@@ -83,6 +95,35 @@ public class BuscarFactura extends JDialog implements IGUI{
 			break;
 		case BUSCAR_FACTURA_VISTA_OK:
 			JOptionPane.showMessageDialog(this,"Factura con ID: " + datos.toString() + " encontrada con exito" ,"Factura con ID: " + datos.toString() + " encontrada con exito" , JOptionPane.INFORMATION_MESSAGE);
+			TFactura tf = (TFactura) datos;
+			this.ID = new JLabel("ID: " + tf.getId());
+			text1.setEnabled(false);
+			panel3.removeAll();
+			JLabel precio = new JLabel("precio:" + tf.getPrecio_total());
+			JLabel id_cliente = new JLabel("id_cliente" + tf.getIdCliente());
+			JLabel id_vendedor = new JLabel("id_vendedor" + tf.getIdVendedor());
+			String productos = "";
+			for (int i = 0; i < tf.getProductos().size(); ++i) {
+				productos += tf.getProductos().get(i).getIdProducto() + ": " + tf.getProductos().get(i).getCantidad() + " unidades" + '\n';
+			}
+			JLabel productos_label = new JLabel("productos:" + productos);
+			JLabel fecha = new JLabel("fecha: " + tf.getFecha());
+			
+			data.add(precio);
+			data.add(id_cliente);
+			data.add(id_vendedor);
+			data.add(productos_label);
+			data.add(fecha);
+				
+		
+			JButton confirmButton = new JButton("Confirmar");
+			confirmButton.addActionListener((event)->{
+				setVisible(false);
+			});
+			this.panel3.add(confirmButton);
+			revalidate();
+			repaint();
+			pack();
 			setVisible(false);
 			
 			break;

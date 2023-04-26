@@ -55,7 +55,7 @@ public class SAFacturaImp implements SAFactura{
             }
             fact = daof.buscarFactura(id);
             if (fact == null && !lineas.isEmpty()) {
-                fact = new TFactura(id, precio_total, datos, "fecha" , true);
+                fact = new TFactura(id, precio_total, datos, true);
                 daof.crearFactura(fact);
                 valida = true;
             }
