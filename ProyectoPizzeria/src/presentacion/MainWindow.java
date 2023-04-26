@@ -62,6 +62,10 @@ public class MainWindow extends JFrame implements IGUI{
 		buttonsPanel.add(ingredientesButton);
 		
 		facturasButton = new JButton("Subsistema Facturas");
+		facturasButton.addActionListener((e) -> {
+			Controlador.getInstance().accion(null, null);
+			this.dispose();
+		});
 		buttonsPanel.add(facturasButton);
 		
 		proveedorButton = new JButton("Subsistema Proveedor");
