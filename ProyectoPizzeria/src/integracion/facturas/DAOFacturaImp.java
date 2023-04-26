@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +18,7 @@ import integracion.factoria.FactoriaAbstractaIntegracion;
 import org.json.JSONObject;
 import negocio.facturas.TFactura;
 import negocio.facturas.TLineaFactura;
+import negocio.mesas.TMesas;
 import negocio.facturas.TDatosVenta;
 
 public class DAOFacturaImp implements DAOFactura {
@@ -35,7 +37,7 @@ public class DAOFacturaImp implements DAOFactura {
     	
 		
 		JSONArray ja = null;
-		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Facturas.json"))){ //idea mandar excepciones y tratarlas en controlador
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Facturas.json"))){ 
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaFacturas");
 			
@@ -63,7 +65,7 @@ public class DAOFacturaImp implements DAOFactura {
 		
 		DAOLineaFactura daol = FactoriaAbstractaIntegracion.getInstace().crearDAOLineaFactura();
 		daol.modificarLineaFactura(l);
-		if (l.getIdProducto() != null) {
+		if (l.getIdProducto() != jo.getString("producto")) {
 			jo.remove("producto");
 			jo.put("producto", l.getIdProducto());
 		}
@@ -112,8 +114,9 @@ public class DAOFacturaImp implements DAOFactura {
 			try {
 				JSONObject obj =  ja.getJSONObject(i);
 				ArrayList<TLineaFactura> lineas = new ArrayList();
+				DAOLineaFactura daol = FactoriaAbstractaIntegracion.getInstace().crearDAOLineaFactura();
 				for (int j = 0; j < obj.getJSONArray("lineas").length(); ++j) {
-					lineas.add((TLineaFactura) obj.getJSONArray("lineas").get(j));
+					lineas.add(daol.buscarLineaFactura(obj.getJSONArray("lineas").getJSONObject(j).getString("id")));
 				}
 				TDatosVenta dt = new TDatosVenta(lineas, obj.get("id").toString(), obj.get("id_vendedor").toString(), obj.get("id_cliente").toString());
 				return new TFactura(obj.getString("id"), obj.getDouble("precio"), dt, obj.getString("fecha"), obj.getBoolean("activa"));
@@ -176,8 +179,33 @@ public class DAOFacturaImp implements DAOFactura {
 
 
     @Override
-    public void mostrarFacturas() {
-        // TODO Auto-generated method stub
+    public Collection<TFactura> mostrarFacturas() {
+    	Collection<TFactura> resultado = new ArrayList<TFactura>();
+		JSONArray ja = null;
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Facturas.json"))){ 
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaFacturas");
+			
+		}
+		catch(Exception e1) {
+			return null;
+		}
+		
+		int i = 0;
+
+		while(i < ja.length()) {
+			ArrayList<TLineaFactura> productos = new ArrayList<>();
+			DAOLineaFactura daol = FactoriaAbstractaIntegracion.getInstace().crearDAOLineaFactura();
+			for (int j = 0; j < ja.getJSONObject(i).getJSONArray("lineas").length(); ++j){
+				TLineaFactura l = daol.buscarLineaFactura(ja.getJSONObject(i).getJSONArray("lineas").getJSONObject(j).getString("id"));
+				productos.add(l);
+			}
+			TDatosVenta dt = new TDatosVenta(productos, ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getString("id_vendedor"), ja.getJSONObject(i).getString("id_cliente"));
+			
+			resultado.add( new TFactura(ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getDouble("precio"), dt, ja.getJSONObject(i).getString("fecha"),ja.getJSONObject(i).getBoolean("activo")));
+			i++;
+		}
+		return resultado;
         
     }
     

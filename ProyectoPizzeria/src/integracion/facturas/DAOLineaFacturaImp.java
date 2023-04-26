@@ -48,12 +48,17 @@ public class DAOLineaFacturaImp implements DAOLineaFactura{
 			return false;
 		}
 		
+		JSONObject jo = ja.getJSONObject(i);
 		ja.remove(i);
-		JSONObject jo = new JSONObject();
-		jo.put("id_factura", linea.getIdFactura());
-		jo.put("id", linea.getId());
-		jo.put("producto", linea.getIdProducto());
-		jo.put("cantidad", linea.getCantidad());
+		if (linea.getIdProducto() != jo.getString("producto")) {
+			jo.remove("producto");
+			jo.put("producto", linea.getIdProducto());
+		}
+		if (linea.getCantidad() != jo.getInt("cantidad")){
+			jo.remove("cantidad");
+			jo.put("cantidad", linea.getCantidad());
+			
+		}
 		ja.put(jo);
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Facturass.json", false))){
