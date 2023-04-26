@@ -96,7 +96,7 @@ public class VistaBorrarMesa extends JDialog implements IGUI{
 		//setPreferredSize(new Dimension(320, 500));
 		pack();
 		setResizable(false);
-		
+		setLocationRelativeTo(parent);
 	}
 	@Override
 	public void actualizar(Evento e, Object datos) {
@@ -105,17 +105,12 @@ public class VistaBorrarMesa extends JDialog implements IGUI{
 			setVisible(true);
 			break;
 		case BAJA_MESA_RES:
-			StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-			String clase = elements[2].getClassName();
-			String method = elements[2].getMethodName();
-			System.out.println(clase + " " + method);
 			boolean res = Boolean.parseBoolean(datos.toString());
 			if(res) {
-				System.out.println("hola");
 				JOptionPane.showMessageDialog(this, "Mesa borrada correctamente", "Mesa borrada correctamente", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				//JOptionPane.showMessageDialog(this, "ERROR: NO SE HA PODIDO BORRAR LA MESA", "ERROR: NO SE HA PODIDO BORRAR LA MESA", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "ERROR: NO SE HA PODIDO BORRAR LA MESA", "ERROR: NO SE HA PODIDO BORRAR LA MESA", JOptionPane.ERROR_MESSAGE);
 			}
 			setVisible(false);
 			break;

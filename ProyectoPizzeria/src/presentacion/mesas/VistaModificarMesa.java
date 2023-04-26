@@ -133,6 +133,7 @@ private static final long serialVersionUID = 1L;
 		
 		//setPreferredSize(new Dimension(320, 500));
 		pack();
+		setLocationRelativeTo(parent);
 		setResizable(false);
 		
 	}

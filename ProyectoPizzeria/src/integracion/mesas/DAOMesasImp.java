@@ -174,10 +174,10 @@ public class DAOMesasImp implements DAOMesas {
 			
 		} 
 		catch(Exception e2) {
-			id = -1;
+			return false;
 		}
 		
-		return null;
+		return true;
 	}
 
 	@Override

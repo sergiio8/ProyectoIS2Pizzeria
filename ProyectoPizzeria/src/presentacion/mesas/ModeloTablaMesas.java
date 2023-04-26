@@ -16,13 +16,14 @@ public class ModeloTablaMesas extends AbstractTableModel{
 
 	@Override
 	public int getRowCount() {
+		return mesas == null ? 0 : mesas.size();
 		
-		return header.length;
 	}
 
 	@Override
 	public int getColumnCount() {
-		return mesas == null ? 0 : mesas.size();
+		
+		return header.length;
 	}
 	
 	@Override

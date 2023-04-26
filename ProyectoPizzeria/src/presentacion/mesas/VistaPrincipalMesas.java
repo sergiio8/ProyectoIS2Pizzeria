@@ -2,6 +2,7 @@ package presentacion.mesas;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.WindowEvent;
@@ -73,17 +74,24 @@ public class VistaPrincipalMesas extends JFrame implements IGUI{
 		
 		modificarButton = new JButton("Modificar Mesa");
 		modificarButton.addActionListener((e)->{
-			Controlador.getInstance().accion(Evento.MODIFICAR_MESA, null);
+			Controlador.getInstance().accion(Evento.MODIFICAR_MESA_VISTA, null);
 		});
 		buttonsPanel.add(modificarButton);
+		
+		JPanel volverPanel = new JPanel();
+		volverPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		volverPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
 		
 		volverButton = new JButton("Volver");
 		volverButton.addActionListener((e)->{
 			Controlador.getInstance().accion(Evento.MAIN_WINDOW, null);
 			this.dispose();
 		});
-		volverButton.setAlignmentX(LEFT_ALIGNMENT);
-		mainPanel.add(volverButton, BorderLayout.SOUTH);
+		volverButton.setPreferredSize(new Dimension(100, 45));
+		
+		volverPanel.add(volverButton);
+		
+		mainPanel.add(volverPanel, BorderLayout.SOUTH);
 		
 		addWindowListener(new WindowListener() {
 

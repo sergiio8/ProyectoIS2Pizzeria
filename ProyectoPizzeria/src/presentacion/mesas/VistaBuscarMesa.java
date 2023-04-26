@@ -105,7 +105,7 @@ public class VistaBuscarMesa extends JDialog implements IGUI{
 		//setPreferredSize(new Dimension(320, 500));
 		pack();
 		setResizable(false);
-		
+		setLocationRelativeTo(parent);
 	}
 	
 

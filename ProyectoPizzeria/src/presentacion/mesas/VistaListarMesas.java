@@ -59,7 +59,7 @@ public class VistaListarMesas extends JDialog implements IGUI{
 		
 		this.setPreferredSize(new Dimension(300,300));
 		pack();
-		
+		setLocationRelativeTo(parent);
 		
 	}
 	
