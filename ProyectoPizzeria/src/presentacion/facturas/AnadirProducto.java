@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -41,52 +43,55 @@ public class AnadirProducto extends JDialog implements IGUI{
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		setContentPane(mainPanel);
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		Box contenedor = Box.createVerticalBox();
 		
 		JPanel panel1 = new JPanel(new FlowLayout());
 		JLabel ID_factura = new JLabel("ID_factura: ");
-		text1 = new JTextField();
+		text1 = new JTextField(10);
 		
 		panel1.add(ID_factura);
 		panel1.add(text1);
 		
-		mainPanel.add(panel1, BorderLayout.CENTER);
+		contenedor.add(panel1);
+		
+		
 		
 		JPanel panel5 = new JPanel(new FlowLayout());
 		JLabel ID_linea = new JLabel("ID_linea_factura: ");
-		text3 = new JTextField();
+		text3 = new JTextField(10);
 		
 		panel5.add(ID_linea);
 		panel5.add(text3);
 		
-		mainPanel.add(panel5, BorderLayout.CENTER);
+		contenedor.add(panel5);
+		
 		
 		
 		JPanel panel2 = new JPanel(new FlowLayout());
 		JLabel ID = new JLabel("ID_producto: ");
-		text2 = new JTextField();
+		text2 = new JTextField(10);
 		
 		panel2.add(ID);
 		panel2.add(text2);
 		
-		mainPanel.add(panel2, BorderLayout.CENTER);
+		contenedor.add(panel2);
 		
 		
 		JPanel panel3 = new JPanel(new FlowLayout());
 		JLabel cantidad = new JLabel("Cantidad: ");
 		cant = new JSpinner();
-		cantidad.setPreferredSize(new Dimension(50, 5));
-		cantidad.setMinimumSize(new Dimension(60, 7));
-		cantidad.setMaximumSize(new Dimension(60, 7));
+		cant.setPreferredSize(new Dimension(100, 25));
+		cant.setMinimumSize(new Dimension(100, 25));
+		cant.setMaximumSize(new Dimension(100, 25));
 		
 		panel3.add(cantidad);
 		panel3.add(cant);
 		
-		mainPanel.add(panel3, BorderLayout.CENTER);
+		contenedor.add(panel3);
 		
 		JPanel panel4 = new JPanel(new FlowLayout());
 		
-		
-
 		JButton anadir = new JButton("Añadir");
 		anadir.addActionListener((e) -> anadir());
 		JButton cancelar = new JButton("Cancelar");
@@ -94,7 +99,15 @@ public class AnadirProducto extends JDialog implements IGUI{
 	    panel4.add(anadir);
 	    panel4.add(cancelar);
 		
-		mainPanel.add(panel4, BorderLayout.CENTER);
+		contenedor.add(panel4);
+		
+		mainPanel.add(contenedor, BorderLayout.CENTER);
+		
+		pack();
+		setLocationRelativeTo(null);
+		
+		setResizable(false);
+		
 	}
 	
 	private void anadir() {

@@ -1,6 +1,7 @@
 package negocio.facturas;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import integracion.clientes.DAOClientes;
 import integracion.factoria.FactoriaAbstractaIntegracion;
@@ -82,9 +83,11 @@ public class SAFacturaImp implements SAFactura{
     }
 
     @Override
-    public void mostrarFacturas() {
+    public Collection<TFactura> mostrarFacturas() {
         DAOFactura daof = FactoriaAbstractaIntegracion.getInstace().crearDAOFactura();
-        daof.mostrarFacturas();
+        Collection<TFactura> facts = daof.mostrarFacturas();
+        return facts;
+        
     }
 
     @Override

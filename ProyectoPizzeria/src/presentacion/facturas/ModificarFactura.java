@@ -3,8 +3,11 @@ package presentacion.facturas;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -30,7 +33,7 @@ public class ModificarFactura extends JDialog implements IGUI{
 	JTextField text3;
 	JSpinner cantidad;
 	
-	public ModificarFactura(JFrame parent) {
+	public ModificarFactura(Frame parent) {
 		super(parent, true);
 		initGUI();
 	}
@@ -40,47 +43,49 @@ public class ModificarFactura extends JDialog implements IGUI{
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		setContentPane(mainPanel);
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		Box contenedor = Box.createVerticalBox();
 
 		JPanel panel1 = new JPanel(new FlowLayout());
 		JLabel ID_factura = new JLabel("ID_factura: ");
-		text1 = new JTextField();
+		text1 = new JTextField(10);
 		
 		panel1.add(ID_factura);
 		panel1.add(text1);
 		
-		mainPanel.add(panel1, BorderLayout.CENTER);
+		contenedor.add(panel1);
 		
 		JPanel panel2 = new JPanel(new FlowLayout());
 		JLabel ID_Lineafact = new JLabel("ID_linea_factura: ");
-		text2 = new JTextField();
+		text2 = new JTextField(10);
 		
 		panel2.add(ID_Lineafact);
 		panel2.add(text2);
 		
-		mainPanel.add(panel2, BorderLayout.CENTER);
+		contenedor.add(panel2);
 	
 		
 		JPanel panel3 = new JPanel(new FlowLayout());
 		JLabel ID_producto = new JLabel("ID_producto: ");
-		text3 = new JTextField();
+		text3 = new JTextField(10);
 		
 		panel3.add(ID_producto);
 		panel3.add(text3);
 		
-		mainPanel.add(panel3, BorderLayout.CENTER);
+		contenedor.add(panel3);
 	
 		
 		JPanel panel4 = new JPanel(new FlowLayout());
 		JLabel cant = new JLabel("Cantidad: ");
 		cantidad = new JSpinner();
-		cantidad.setPreferredSize(new Dimension(50, 5));
-		cantidad.setMinimumSize(new Dimension(60, 7));
-		cantidad.setMaximumSize(new Dimension(60, 7));
+		cantidad.setPreferredSize(new Dimension(100, 25));
+		cantidad.setMinimumSize(new Dimension(100, 25));
+		cantidad.setMaximumSize(new Dimension(100, 25));
 		
 		panel4.add(cant);
 		panel4.add(cantidad);
 		
-		mainPanel.add(panel4, BorderLayout.CENTER);
+		contenedor.add(panel4);
 	
 		
 		JPanel panel5 = new JPanel(new FlowLayout());
@@ -93,7 +98,13 @@ public class ModificarFactura extends JDialog implements IGUI{
 	    panel5.add(modificar);
 	    panel5.add(cancelar);
 		
-		mainPanel.add(panel5, BorderLayout.CENTER);
+		contenedor.add(panel5);
+		mainPanel.add(contenedor, BorderLayout.CENTER);
+		
+		pack();
+		setLocationRelativeTo(null);
+		
+		setResizable(false);
 
 	}
 	

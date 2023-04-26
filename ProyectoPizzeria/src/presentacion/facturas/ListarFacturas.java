@@ -27,7 +27,7 @@ private static final long serialVersionUID = 1L;
 	private JPanel buttonPanel;
 	private ModeloTablaFacturas tableModel;
 	
-	public ListarFacturas(JFrame parent) {
+	public ListarFacturas(Frame parent) {
 		super(parent, true);
 		initGUI();
 
@@ -58,6 +58,8 @@ private static final long serialVersionUID = 1L;
 		});
 		buttonPanel.add(confirmButton);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+		
+		
 		
 		this.setPreferredSize(new Dimension(300,300));
 		pack();

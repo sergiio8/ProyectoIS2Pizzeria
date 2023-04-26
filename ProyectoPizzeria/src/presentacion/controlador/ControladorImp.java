@@ -78,7 +78,9 @@ public class ControladorImp extends Controlador { //implementacion
 			Collection<TMesas> mesas = listarMesas();
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_MESAS).actualizar(Evento.LISTAR_MESAS, mesas);
 			break;
-			
+		case VISTA_PRINCIPAL_FACTURA:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_FACTURA);
+			break;
         case ALTA_FACTURA_VISTA:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA, null);
 			break;
@@ -297,11 +299,13 @@ public class ControladorImp extends Controlador { //implementacion
 	
 	private void altaFactura(Object datos) {
 		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
+		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
 		TDatosVenta dt = (TDatosVenta) datos;
 		carrito.cerrarVenta(dt);
         boolean sol = saFact.crearFactura(dt);
         if (sol) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, sol);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, dt.getid_factura());
+			
 	    }
         else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, sol);
 	}
@@ -309,20 +313,22 @@ public class ControladorImp extends Controlador { //implementacion
 	private void buscarFactura(Object datos) {
 		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
 		TFactura tf = saFact.buscarFactura((String) datos);
-		if (tf != null) FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_FACTURA_VISTA).actualizar(Evento.BUSCAR_FACTURA_VISTA_OK, tf);
+		if (tf != null) FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_FACTURA_VISTA).actualizar(Evento.BUSCAR_FACTURA_VISTA_OK, (String) datos);
 		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_FACTURA_VISTA).actualizar(Evento.BUSCAR_FACTURA_VISTA_WR, tf);
 	}
 	
 	private void modificarFactura(Object datos) {
 		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
-		boolean sol3 = saFact.modificarFactura((TLineaFactura) datos);
-		if (sol3) FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_FACTURA_VISTA).actualizar(Evento.MODIFICAR_FACTURA_VISTA_OK, sol3);
+		TLineaFactura linea = (TLineaFactura) datos;
+		boolean sol3 = saFact.modificarFactura(linea);
+		if (sol3) FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_FACTURA_VISTA).actualizar(Evento.MODIFICAR_FACTURA_VISTA_OK, linea.getIdFactura());
 		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_FACTURA_VISTA).actualizar(Evento.MODIFICAR_FACTURA_VISTA_WR, sol3);
 	}
 	
-	private void listarFacturas(Object datos) {
+	private Collection<TFactura> listarFacturas(Object datos) {
 		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
-		saFact.mostrarFacturas();
+		Collection<TFactura> facturas = saFact.mostrarFacturas();
+		return facturas;
 	}
 	
 	private void anadirProducto(Object datos) {
@@ -330,15 +336,16 @@ public class ControladorImp extends Controlador { //implementacion
 		TLineaFactura tf2 = (TLineaFactura) datos;
 		if (tf2 != null) {
 			saFact.anadirProducto(tf2, carrito);
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_OK, null);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_OK, tf2.getIdFactura());
 		}
-		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_WR, null);
+		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_WR, tf2.getIdFactura());
 	}
 	
 	private void abrirVenta(Object datos) {
 		carrito = new Carrito();
 	}
-
+	
+	
 		
 }
 

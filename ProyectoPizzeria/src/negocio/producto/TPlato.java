@@ -9,7 +9,10 @@ public abstract class TPlato {
 	private String nombre;
 	private double precio;
 	private ArrayList<TIngrediente> ingredientes;
-	private String descripcion;
+    private String descripcion;
+    //private boolean puede_hacerse;
+    private int stock;
+
 	
 	public TPlato(String id, String nombre, double precio, ArrayList<TIngrediente> ingredientes, String descripcion){
 		this.id = id;
@@ -17,6 +20,8 @@ public abstract class TPlato {
 		this.precio = precio;
 		this.ingredientes = ingredientes;
 		this.descripcion = descripcion;
+		stock = 10;
+		//puede_hacerse = true;
 	}
 	
 	public String getId() {
@@ -39,6 +44,14 @@ public abstract class TPlato {
 		return precio;
 	}
 	
+	public int getStock() {
+		return stock;
+	}
+	
+	/*public boolean getPuedeHacerse() {
+		return puede_hacerse;
+	}*/
+	
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
@@ -58,4 +71,11 @@ public abstract class TPlato {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+	/*public void setPuedeHacerse(boolean puede) {
+		puede_hacerse = puede;
+	}*/
 }

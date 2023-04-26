@@ -2,8 +2,11 @@ package presentacion.facturas;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -27,7 +30,7 @@ public class BuscarFactura extends JDialog implements IGUI{
 	JPanel panel3;
 	JPanel data;
 	
-	public BuscarFactura(JFrame parent) {
+	public BuscarFactura(Frame parent) {
 		super(parent, true);
 		initGUI();
 	}
@@ -37,20 +40,23 @@ public class BuscarFactura extends JDialog implements IGUI{
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		setContentPane(mainPanel);
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		Box contenedor = Box.createVerticalBox();
+		
 		
 		data = new JPanel();
 		data.setLayout(new BorderLayout());
 		
 		JPanel panel1 = new JPanel(new FlowLayout());
 		ID = new JLabel("ID_factura: ");
-		text1 = new JTextField();
+		text1 = new JTextField(10);
 		
 		panel1.add(ID);
 		panel1.add(text1);
 		
 		data.add(panel1);
 		
-		mainPanel.add(data, BorderLayout.CENTER);
+		contenedor.add(data);
 	
 		
 		panel3 = new JPanel(new FlowLayout());
@@ -63,7 +69,13 @@ public class BuscarFactura extends JDialog implements IGUI{
 	    panel3.add(buscar);
 	    panel3.add(cancelar);
 		
-		mainPanel.add(panel3, BorderLayout.CENTER);
+		contenedor.add(panel3);
+		mainPanel.add(contenedor, BorderLayout.CENTER);
+		
+		pack();
+		setLocationRelativeTo(null);
+		
+		setResizable(false);
 	}
 	
 	private void buscar() {

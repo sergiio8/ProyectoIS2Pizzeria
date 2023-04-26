@@ -16,10 +16,9 @@ import javax.swing.JPanel;
 import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
-import presentacion.mesas.VistaPrincipalMesas;
 
 public class VistaPrincipalFacturas extends JFrame implements IGUI {
-private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
 
 	private JButton abrirButton;
@@ -29,6 +28,7 @@ private static final long serialVersionUID = 1L;
 	private JButton buscarButton;
 	private JButton modificarButton;
 	private JButton volverButton;
+	private JButton anadirButton;
 
 	public VistaPrincipalFacturas() {
 		super("Facturas");
@@ -58,6 +58,12 @@ private static final long serialVersionUID = 1L;
 		esta_abierta = new JLabel("Factura sin iniciar");
 		buttonsPanel.add(esta_abierta);
 		
+		anadirButton = new JButton("Añadir producto a factura");
+		anadirButton.addActionListener((e) -> {
+			Controlador.getInstance().accion(Evento.ANADIR_PRODUCTO_VISTA, null);
+		});
+		buttonsPanel.add(anadirButton);
+		
 		
 		altaButton = new JButton("Cerrar factura");
 		altaButton.addActionListener((e)->{
@@ -80,7 +86,7 @@ private static final long serialVersionUID = 1L;
 		
 		modificarButton = new JButton("Modificar factura");
 		modificarButton.addActionListener((e)->{
-			Controlador.getInstance().accion(Evento.MODIFICAR_FACTURA, null);
+			Controlador.getInstance().accion(Evento.MODIFICAR_FACTURA_VISTA, null);
 		});
 		buttonsPanel.add(modificarButton);
 		

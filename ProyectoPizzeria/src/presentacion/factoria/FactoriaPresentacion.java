@@ -20,6 +20,7 @@ import presentacion.facturas.BuscarFactura;
 import presentacion.facturas.CerrarVenta;
 import presentacion.facturas.ListarFacturas;
 import presentacion.facturas.ModificarFactura;
+import presentacion.facturas.VistaPrincipalFacturas;
 import presentacion.ingredientes.VistaAnadirIngrediente;
 import presentacion.ingredientes.VistaEliminar;
 import presentacion.ingredientes.VistaModificarIngrediente;
@@ -38,6 +39,7 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 	private IGUI vistaClienteLogueado = null;
 	private IGUI vistaClienteNoRegistrado = null;
 	private IGUI vistaPrincipalClientes = null;
+	private IGUI vistaPrincipalFactura = null;
 	private IGUI vistaAltaFactura = null;
 	private IGUI vistaModificarFactura = null;
 	private IGUI vistaBuscarFactura = null;
@@ -94,29 +96,32 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 				vistaPrincipalClientes= new VistaPrincipalCliente();
 			}
 			return vistaPrincipalClientes;
+		case VISTA_PRINCIPAL_FACTURA:
+			this.vistaPrincipalFactura = new VistaPrincipalFacturas();
+			return vistaPrincipalFactura;
 		case ALTA_FACTURA_VISTA:
 			if (vistaAltaFactura == null) {
-				vistaAltaFactura = new CerrarVenta(null);
+				vistaAltaFactura = new CerrarVenta((Frame) vistaPrincipalFactura);
 			}
 			return vistaAltaFactura;
 		case BUSCAR_FACTURA_VISTA:
 			if (vistaBuscarFactura == null) {
-				vistaBuscarFactura = new BuscarFactura(null);
+				vistaBuscarFactura = new BuscarFactura((Frame) vistaPrincipalFactura);
 			}
 			return vistaBuscarFactura;
 		case MODIFICAR_FACTURA_VISTA:
 			if (vistaModificarFactura == null) {
-				vistaModificarFactura = new ModificarFactura(null);
+				vistaModificarFactura = new ModificarFactura((Frame) vistaPrincipalFactura);
 			}
 			return vistaModificarFactura;
 		case LISTAR_FACTURAS_VISTA:
 			if (vistaListarFacturas == null) {
-				vistaListarFacturas = new ListarFacturas(null);
+				vistaListarFacturas = new ListarFacturas((Frame) vistaPrincipalFactura);
 			}
 			return vistaListarFacturas;
 		case ANADIR_PRODUCTO_VISTA:
 			if (vistaAnadirProducto == null) {
-				vistaAnadirProducto = new AnadirProducto(null);
+				vistaAnadirProducto = new AnadirProducto((Frame) vistaPrincipalFactura);
 			}
 			return vistaAnadirProducto;
 		case BAJA_INGREDIENTE_VISTA:

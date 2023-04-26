@@ -2,8 +2,11 @@ package presentacion.facturas;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -27,7 +30,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 	JTextField text3;
 	JTextField text4;
 	
-	public CerrarVenta(JFrame parent) {
+	public CerrarVenta(Frame parent) {
 		super(parent, true);
 		initGUI();
 
@@ -38,42 +41,44 @@ public class CerrarVenta extends JDialog implements IGUI{
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		setContentPane(mainPanel);
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		Box contenedor = Box.createVerticalBox();
 		
 		JPanel panel1 = new JPanel(new FlowLayout());
 		JLabel ID_factura = new JLabel("ID_factura: ");
-		text1 = new JTextField();
+		text1 = new JTextField(10);
 		
 		panel1.add(ID_factura);
 		panel1.add(text1);
 		
-		mainPanel.add(panel1, BorderLayout.CENTER);
+		contenedor.add(panel1);
 		
 		JPanel panel2 = new JPanel(new FlowLayout());
 		JLabel ID_cliente = new JLabel("ID_cliente: ");
-		text2 = new JTextField();
+		text2 = new JTextField(10);
 		
 		panel2.add(ID_cliente);
 		panel2.add(text2);
 		
-		mainPanel.add(panel2, BorderLayout.CENTER);
+		contenedor.add(panel2);
 		
 		JPanel panel3 = new JPanel(new FlowLayout());
 		JLabel ID_vendedor = new JLabel("ID_vendedor: ");
-		text3 = new JTextField();
+		text3 = new JTextField(10);
 		
 		panel3.add(ID_vendedor);
 		panel3.add(text3);
 		
-		mainPanel.add(panel3, BorderLayout.CENTER);
+		contenedor.add(panel3);
 		
 		JPanel panel4 = new JPanel(new FlowLayout());
 		JLabel fecha = new JLabel("Fecha: ");
-		text4 = new JTextField();
+		text4 = new JTextField(10);
 		
 		panel4.add(fecha);
 		panel4.add(text4);
 		
-		mainPanel.add(panel4, BorderLayout.CENTER);
+		contenedor.add(panel4);
 		
 		JPanel panel5 = new JPanel(new FlowLayout());
 		
@@ -85,7 +90,13 @@ public class CerrarVenta extends JDialog implements IGUI{
 	    panel5.add(cerrar);
 	    panel5.add(cancelar);
 		
-		mainPanel.add(panel5, BorderLayout.CENTER);
+		contenedor.add(panel5);
+		mainPanel.add(contenedor, BorderLayout.CENTER);
+		
+		pack();
+		setLocationRelativeTo(null);
+		
+		setResizable(false);
 	}
 	
 	private void cerrar() {
