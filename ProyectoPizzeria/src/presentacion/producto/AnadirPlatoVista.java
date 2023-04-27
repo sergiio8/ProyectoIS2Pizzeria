@@ -17,16 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import negocio.ingredientes.SAIngrediente;
 import negocio.ingredientes.TIngrediente;
-import negocio.mesas.TMesas;
-import negocio.producto.TEntrante;
-import negocio.producto.TPizza;
-import negocio.producto.TPostre;
+import negocio.producto.TPlato;
 import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
-import presentacion.mesas.VistaAnadirMesa;
 
 public class AnadirPlatoVista extends JDialog implements IGUI{
 	
@@ -141,13 +136,13 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 					throw new NumberFormatException();
 				}
 				if(entranteButton.isSelected()) {
-					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TEntrante(id, nombre,precio,ingredientes,descripcion));
+					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPlato(id,"Entrante", nombre,precio,ingredientes,descripcion));
 				}
 				else if(pizzaButton.isSelected()) {
-					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPizza(id, nombre,precio,ingredientes,descripcion));
+					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPlato(id,"Pizza", nombre,precio,ingredientes,descripcion));
 				}
 				else if(postreButton.isSelected()) {
-					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPostre(id, nombre,precio,ingredientes,descripcion));
+					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPlato(id,"Postre", nombre,precio,ingredientes,descripcion));
 				}
 				else {
 					throw new IllegalArgumentException();

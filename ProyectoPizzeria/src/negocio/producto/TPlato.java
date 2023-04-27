@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import negocio.ingredientes.TIngrediente;
 
-public abstract class TPlato {
+public class TPlato {
 	private String id;
 	private String tipo;
 	private String nombre;
