@@ -43,28 +43,32 @@ public class VistaMainIngredientes extends JDialog implements IGUI{
 		panel.add(botonCrear);
 		mainPanel.add(panel, BorderLayout.CENTER);
 		
-		JButton botonCancelar = new JButton("CANCELAR");
-		botonCancelar.addActionListener((e) -> { setVisible(false); });
+		JButton botonCancelar = new JButton("Volver");
+		botonCancelar.addActionListener((e) -> volver());
 		mainPanel.add(botonCancelar, BorderLayout.SOUTH);
 		
 		pack();
 		setResizable(false);
 		setVisible(true);
 	}
-	
+	void volver() {
+		Controlador.getInstance().accion(Evento.MAIN_WINDOW, null);
+		this.setVisible(false);
+	}
 	void listar() {
+		Controlador.getInstance().accion(Evento.LISTAR_INGREDIENTE_VISTA, null);
 	}
 	void eliminar() {
 		Controlador.getInstance().accion(Evento.BAJA_INGREDIENTE_VISTA, null);
-		setVisible(false);
+		
 	}
 	void modificar() {
 		Controlador.getInstance().accion(Evento.MODIFICAR_INGREDIENTE_VISTA, null);
-		setVisible(false);
+		
 	}
 	void crear() {
 		Controlador.getInstance().accion(Evento.ALTA_INGREDIENTE_VISTA, null);
-		setVisible(false);
+		
 	}
 	@Override
 	public void actualizar(Evento e, Object datos) {

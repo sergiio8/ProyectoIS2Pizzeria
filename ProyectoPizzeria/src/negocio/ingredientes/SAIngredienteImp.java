@@ -32,6 +32,7 @@ public class SAIngredienteImp implements SAIngrediente{
 		}catch(Exception e) {
 			
 		}
+		
 		return nombre;
 	}
 

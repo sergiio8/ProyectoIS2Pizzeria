@@ -1,6 +1,7 @@
 package presentacion.ingredientes;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
@@ -36,10 +37,13 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 		setContentPane(mainPanel);
 		JLabel l1= new JLabel("Nombre del ingrediente:");
 		JLabel l2= new JLabel("Cantidad:");
-		JLabel l3= new JLabel("Platos:");
-		t1= new JTextField();//Ns si ajustar el tamano o no
+		JLabel l3= new JLabel("Platos: eg:{pizza,pasta}");
+		t1= new JTextField();
+		t1.setPreferredSize(new Dimension(200,50));
 		t2= new JTextField();
+		t2.setPreferredSize(new Dimension(200,50));
 		t3= new JTextField();
+		t3.setPreferredSize(new Dimension(200,50));
 		JButton ok= new JButton("Ok");
 		ok.addActionListener((e)-> ok());
 		JButton cancel= new JButton("Cancel");
@@ -63,6 +67,10 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 		JPanel paux= new JPanel(new FlowLayout());
 		paux.add(p1,BorderLayout.NORTH);
 		paux.add(p2,BorderLayout.SOUTH);
+		mainPanel.add(paux,BorderLayout.NORTH);
+		mainPanel.add(p3,BorderLayout.CENTER);
+		mainPanel.add(p4,BorderLayout.SOUTH);
+		this.setPreferredSize(new Dimension(700,300));
 		//Falta anadirlos todo a un panel q sea scrollbar y este al main
 		
 		
@@ -78,18 +86,22 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 		try {
 			nombre=t1.getText();
 			if(nombre.equals("")||nombre.equals(null)) {
-				throw new IllegalArgumentException("La Vicky es una zorra");
+				throw new IllegalArgumentException("Alejandro matricula YA");
 			}
 			cantidad= Integer.parseInt(t2.getText());
 			if(cantidad<0) {
 				throw new NumberFormatException();
 			}
 			String aux="";
+			
 	        for (int j=1; j<t3.getText().length()-1;j++) {
 	            aux+=t3.getText().charAt(j);
 	        }
+	        
 	        platos= aux.split(",");
+	        
 			Controlador.getInstance().accion(Evento.ALTA_INGREDIENTE, new TIngrediente(nombre,cantidad,platos));
+			
 		}
 		catch (NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(VistaAnadirIngrediente.this, "ERROR: Error en la cantidad introducida","INTRODUZCA UNA NUEVA", JOptionPane.ERROR_MESSAGE);
@@ -113,10 +125,12 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 			setVisible(true);
 			break;
 		case ALTA_INGREDIENTE_OK:
+			
 			JOptionPane.showMessageDialog(this, "Ingrediente añadido correctamente", "Ingrediente añadido correctamente", JOptionPane.INFORMATION_MESSAGE);
 			setVisible(false);
 			break;
 		case ALTA_INGREDIENTE_KO:
+			
 			JOptionPane.showMessageDialog(this, "ERROR: NO SE HA PODIDO AÑADIR EL INGREDIENTE", "ERROR: NO SE HA PODIDO AÑADIR EL INGREDIENTE", JOptionPane.ERROR_MESSAGE);
 			setVisible(false);
 			break;

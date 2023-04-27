@@ -167,6 +167,7 @@ public class ControladorImp extends Controlador { //implementacion
             FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_VISTA, null);
             break;
         case ALTA_INGREDIENTE:
+        	
             altaIngrediente(datos);
             break;
         case BAJA_INGREDIENTE_VISTA:
@@ -191,10 +192,13 @@ public class ControladorImp extends Controlador { //implementacion
 		TIngrediente ingrediente= (TIngrediente) datos;
 		SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
 		String nombre= saIngrediente.crear(ingrediente);
-		if(nombre.equals(null)) {
+		
+		if(nombre==null) {
+		
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_MESA_KO, nombre);
 		}
 		else {
+
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_MESA_OK, nombre);
 		}
 	}
