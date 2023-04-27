@@ -111,7 +111,7 @@ public class DAOFacturaImp implements DAOFactura {
 						lineas.remove(j);
 					}
 				}
-				TDatosVenta dt = new TDatosVenta(lineas, obj.getString("id"), obj.getString("id_vendedor"), obj.getString("id_cliente"), obj.getString("fecha"));
+				TDatosVenta dt = new TDatosVenta(lineas, obj.getString("id_vendedor"), obj.getString("id_cliente"), obj.getString("fecha"));
 				return new TFactura(obj.getString("id"), obj.getDouble("precio"), dt, obj.getBoolean("activa"));
 			}
 			catch(Exception e) {
@@ -183,7 +183,7 @@ public class DAOFacturaImp implements DAOFactura {
 				}
 			}
 			
-			TDatosVenta dt = new TDatosVenta(lineas, ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getString("id_vendedor"), ja.getJSONObject(i).getString("id_cliente"), ja.getJSONObject(i).getString("fecha"));
+			TDatosVenta dt = new TDatosVenta(lineas, ja.getJSONObject(i).getString("id_vendedor"), ja.getJSONObject(i).getString("id_cliente"), ja.getJSONObject(i).getString("fecha"));
 			resultado.add( new TFactura(ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getDouble("precio"), dt,ja.getJSONObject(i).getBoolean("activa")));
 			i++;
 		}
