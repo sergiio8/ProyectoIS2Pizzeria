@@ -32,6 +32,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 	JTextField text2;
 	JTextField text3;
 	JSpinner cant;
+	JLabel titulo;
 	Box productos_panel;
 	
 
@@ -47,17 +48,22 @@ public class AnadirProducto extends JDialog implements IGUI{
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		setContentPane(mainPanel);
+		setPreferredSize(new Dimension(450,450));
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		Box contenedor = Box.createVerticalBox();
 		
+		
+		JPanel panel0 = new JPanel();
 		productos_panel = Box.createVerticalBox();
-		JLabel titulo = new JLabel("Productos añadidos hasta el momento:");
+		
+		titulo = new JLabel("Productos añadidos hasta el momento:", FlowLayout.LEFT);
 		productos_panel.add(titulo);
-		contenedor.add(productos_panel);
+		panel0.add(productos_panel);
+		contenedor.add(panel0);
 		
 		
 		
-		JPanel panel1 = new JPanel(new FlowLayout());
+		JPanel panel1 = new JPanel();
 		JLabel ID_factura = new JLabel("ID_factura: ");
 		text1 = new JTextField(10);
 		
@@ -68,7 +74,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 		
 		
 		
-		JPanel panel5 = new JPanel(new FlowLayout());
+		JPanel panel5 = new JPanel();
 		JLabel ID_linea = new JLabel("ID_linea_factura: ");
 		text3 = new JTextField(10);
 		
@@ -79,7 +85,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 		
 		
 		
-		JPanel panel2 = new JPanel(new FlowLayout());
+		JPanel panel2 = new JPanel();
 		JLabel ID = new JLabel("ID_producto: ");
 		text2 = new JTextField(10);
 		
@@ -89,7 +95,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 		contenedor.add(panel2);
 		
 		
-		JPanel panel3 = new JPanel(new FlowLayout());
+		JPanel panel3 = new JPanel();
 		JLabel cantidad = new JLabel("Cantidad: ");
 		cant = new JSpinner();
 		cant.setPreferredSize(new Dimension(100, 25));
@@ -101,7 +107,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 		
 		contenedor.add(panel3);
 		
-		JPanel panel4 = new JPanel(new FlowLayout());
+		JPanel panel4 = new JPanel();
 		
 		JButton anadir = new JButton("Añadir");
 		anadir.addActionListener((e) -> anadir());
@@ -128,6 +134,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 		int cantidad;
 		try {
 			ID_factura = text1.getText();
+			titulo.setText("Productos añadidos hasta el momento en la factura con ID: " + ID_factura);
 			ID_producto = text2.getText();
 			ID_linea = text3.getText();
 			cantidad = Integer.parseInt(cant.getValue().toString());
@@ -143,7 +150,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 			JOptionPane.showMessageDialog(AnadirProducto.this, "ERROR: la cantidad debe ser un entero positivo", "ERROR: la cantidad debe ser un entero positivo", JOptionPane.ERROR_MESSAGE);
 		}
 		catch(IllegalArgumentException iae) {
-			JOptionPane.showMessageDialog(AnadirProducto.this, "ERROR: relllene todos los campos relativos a los IDs", "ERROR: relllene todos los campos relativos a los IDs", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(AnadirProducto.this, "ERROR: relllene todos los campos relativos a los IDs", "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -160,16 +167,27 @@ public class AnadirProducto extends JDialog implements IGUI{
 			break;
 		case ANADIR_PRODUCTO_VISTA_OK:
 			JOptionPane.showMessageDialog(this,"Producto anadido correctamente con ID: " + datos.toString() ,"Producto anadido correctamente con ID: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
-			productos_panel.add(new JLabel("ID: " + datos.toString() + ", cantidad: " + Integer.parseInt(cant.getValue().toString())));
 			text2.setText(null);
 			text3.setText(null);
+			cant.setValue(0);
 			setVisible(false);
+			productos_panel.add(new JLabel("ID: " + datos.toString() + ", cantidad: " + Integer.parseInt(cant.getValue().toString())));
 			break;
 		case ANADIR_PRODUCTO_VISTA_WR:
 			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
 			setVisible(false);
 			break;
+		case RESETEAR_VISTA_ANADIR:
+			text1.setText(null);
+			text2.setText(null);
+			text3.setText(null);
+			productos_panel.removeAll();
+			productos_panel.add(new JLabel("Productos añadidos hasta el momento en la factura con ID: "));
+			setVisible(false);
+			
 		}
+		
+			
 		
 	}
 

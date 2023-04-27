@@ -1,1 +1,1 @@
-{"ListaFacturas":[]}
+{"ListaFacturas":[{"id":"1", "fecha":"11/02/03", "precio": "25", "id_cliente": "345", "id_vendedor": "32", "activa": "false"}]}

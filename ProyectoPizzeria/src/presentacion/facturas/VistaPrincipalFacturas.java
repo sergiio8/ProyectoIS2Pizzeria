@@ -61,9 +61,9 @@ public class VistaPrincipalFacturas extends JFrame implements IGUI {
 		
 		anadirButton = new JButton("Añadir producto a factura");
 		anadirButton.addActionListener((e) -> {
-			if (esta_abierta.getText().equals("Factura sin iniciar") || esta_abierta.getText().equals("Factura en proceso"))
+			if (esta_abierta.getText().equals("Factura en proceso"))
 			Controlador.getInstance().accion(Evento.ANADIR_PRODUCTO_VISTA, null);
-			else JOptionPane.showMessageDialog(this,"ERROR","ERROR: Debe abrir una venta antes de añadir productos:" , JOptionPane.INFORMATION_MESSAGE);
+			else JOptionPane.showMessageDialog(this,"ERROR: Debe abrir una venta antes de añadir productos","ERROR" , JOptionPane.INFORMATION_MESSAGE);
 		});
 		buttonsPanel.add(anadirButton);
 		
