@@ -14,6 +14,11 @@ import presentacion.mesas.VistaBuscarMesa;
 import presentacion.mesas.VistaListarMesas;
 import presentacion.mesas.VistaModificarMesa;
 import presentacion.mesas.VistaPrincipalMesas;
+import presentacion.producto.AnadirPlatoVista;
+import presentacion.producto.BuscarPlatoVista;
+import presentacion.producto.EliminarPlatoVista;
+import presentacion.producto.ModificarPlatoVista;
+import presentacion.producto.VistaListarPlatos;
 import presentacion.producto.VistaPrincipalPlatos;
 import presentacion.clientes.*;
 import presentacion.facturas.AnadirProducto;
@@ -50,6 +55,10 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 	private IGUI vistaModificarIngrediente = null;
 	private IGUI vistaPrincipalIngrediente = null;
 	private IGUI vistaPrincipalPlato = null;
+	private IGUI vistaAnadirPlato = null;
+	private IGUI vistaBorrarPlato = null;
+	private IGUI vistaModificarPlato = null;
+	private IGUI vistaBuscarPlato = null;
 
 	@Override
 	public IGUI createVista(Evento e) {
@@ -134,9 +143,27 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 				vistaPrincipalIngrediente = new VistaMainIngredientes();
 			}
 		case VISTA_PRINCIPAL_PLATO:
-			this.vistaPrincipalPlato = new VistaPrincipalPlatos();
+			vistaPrincipalPlato = new VistaPrincipalPlatos();
 			return vistaPrincipalPlato;
 			
+		case ALTA_PLATO_VISTA:
+			if(vistaAnadirPlato == null)
+				vistaAnadirPlato = new AnadirPlatoVista((Frame) vistaPrincipalPlato);
+			return vistaAnadirPlato;
+		case BAJA_PLATO_VISTA:
+			if(vistaBorrarPlato == null)
+				vistaBorrarPlato = new EliminarPlatoVista((Frame) vistaPrincipalPlato);
+			return vistaBorrarPlato;
+		case MODIFICAR_PLATO_VISTA:
+			if(vistaModificarPlato == null)
+				vistaModificarPlato = new ModificarPlatoVista((Frame) vistaPrincipalPlato);
+			return vistaModificarPlato;
+		case BUSCAR_PLATO_VISTA:
+			if(vistaBuscarPlato == null)
+				vistaBuscarPlato = new BuscarPlatoVista((Frame) vistaPrincipalPlato);
+			return vistaBuscarPlato;
+		case LISTAR_PLATOS:
+			return new VistaListarPlatos((Frame) vistaPrincipalPlato);
 		default:
 			return null;
 		}

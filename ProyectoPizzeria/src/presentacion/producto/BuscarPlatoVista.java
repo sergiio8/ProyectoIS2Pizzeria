@@ -83,7 +83,7 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 
 	@Override
 	public void actualizar(Evento e, Object datos) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }
