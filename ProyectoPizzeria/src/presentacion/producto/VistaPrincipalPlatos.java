@@ -55,7 +55,7 @@ public class VistaPrincipalPlatos extends JFrame implements IGUI{
 		
 		JButton listarBoton = new JButton("Listar Platos");
 		listarBoton.addActionListener((e)->{
-			Controlador.getInstance().accion(Evento.LISTAR_PLATOS_VISTA, null);
+			Controlador.getInstance().accion(Evento.LISTAR_PLATOS, null);
 		});
 		botonesPanel.add(listarBoton);
 		

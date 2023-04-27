@@ -31,6 +31,10 @@ public class EliminarPlatoVista extends JDialog implements IGUI{
 	
 	public EliminarPlatoVista(Frame parent) {
 		super(parent,true);
+		initGUI(parent);
+	}
+	
+	private void initGUI(Frame parent) {
 		setTitle("Eliminar Plato");
 
 		JPanel mainPanel = new JPanel();
@@ -69,6 +73,7 @@ public class EliminarPlatoVista extends JDialog implements IGUI{
 		
 		pack();
 		setResizable(false);
+		setLocationRelativeTo(parent);
 	}
 	
 	@Override

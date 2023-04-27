@@ -22,10 +22,10 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 	
 	public BuscarPlatoVista(Frame parent) {
 		super(parent, true);
-		initGUI();
+		initGUI(parent);
 	}
 	
-	private void initGUI() {
+	private void initGUI(Frame parent) {
 		setTitle("Buscar plato");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -37,7 +37,7 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 		//ID
 		JPanel idPanel = new JPanel();
 		JLabel idLabel = new JLabel("ID_plato: ");
-		JTextField idText = new JTextField();
+		JTextField idText = new JTextField(10);
 		
 		idPanel.add(idLabel);
 		idPanel.add(idText);
@@ -78,12 +78,24 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 		
 		pack();
 		setResizable(false);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 
 	@Override
 	public void actualizar(Evento e, Object datos) {
-		
+		switch(e) {
+		case BUSCAR_PLATO_VISTA:
+			setVisible(true);
+			break;
+		case BUSCAR_PLATO_OK:
+			JOptionPane.showMessageDialog(this, "Plato con id: encontrado", "Plato con id: encontrado", JOptionPane.INFORMATION_MESSAGE);
+			setVisible(false);
+			break;
+		case BUSCAR_PLATO_KO:
+			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
+			setVisible(false);
+			break;
+		}
 		
 	}
 }
