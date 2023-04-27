@@ -82,7 +82,7 @@ public class VistaPrincipalFacturas extends JFrame implements IGUI {
 			first = true;
 		});
 		buttonsPanel.add(altaButton);
-		//sgfgegsd
+
 		
 		listarButton = new JButton("Listar facturas");
 		listarButton.addActionListener((e)->{
