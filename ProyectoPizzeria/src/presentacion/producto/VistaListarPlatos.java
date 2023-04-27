@@ -23,6 +23,7 @@ public class VistaListarPlatos extends JDialog implements IGUI{
 	private static final long serialVersionUID = 1L;
 
 	private ModeloTablaPlato tableModel;
+	
 	public VistaListarPlatos(Frame parent) {
 		super(parent,true);
 		initGUI(parent);

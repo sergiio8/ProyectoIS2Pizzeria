@@ -29,10 +29,10 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 
 	public AnadirPlatoVista(Frame parent) {
 		super(parent, true);
-		initGUI();
+		initGUI(parent);
 	}
 	
-	private void initGUI() {
+	private void initGUI(Frame parent) {
 		setTitle("Anadir plato");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -169,7 +169,7 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 		
 		pack();
 		setResizable(false);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 	
 	@Override
@@ -181,7 +181,6 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 		case ALTA_PLATO_OK:
 			JOptionPane.showMessageDialog(this, "Plato anadido con id: " + datos.toString(), "Plato anadido con id: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
 			setVisible(false);
-			initGUI();
 			break;
 		case ALTA_PLATO_KO:
 			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
