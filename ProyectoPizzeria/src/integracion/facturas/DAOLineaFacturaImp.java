@@ -51,16 +51,16 @@ public class DAOLineaFacturaImp implements DAOLineaFactura{
 		
 		JSONObject jo = ja.getJSONObject(i);
 		ja.remove(i);
-		if (linea.getIdProducto() != jo.getString("producto")) {
+		if (linea.getIdProducto() != null) {
 			jo.remove("producto");
 			jo.put("producto", linea.getIdProducto());
 		}
-		if (linea.getCantidad() != jo.getInt("cantidad")){
+		if (linea.getCantidad() != null){
 			jo.remove("cantidad");
 			jo.put("cantidad", linea.getCantidad());
 			
 		}
-		if (linea.getPrecio() != jo.getDouble("precio")) {
+		if (linea.getPrecio() != null) {
 			jo.remove("precio");
 			jo.put("precio", linea.getPrecio());
 		}
