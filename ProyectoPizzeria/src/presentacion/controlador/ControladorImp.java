@@ -153,6 +153,7 @@ public class ControladorImp extends Controlador { //implementacion
 		case BUSCAR_PLATO:
 			buscaPlato(datos);
 			break;
+			
 		case LISTAR_PLATOS:
 			Collection<TPlato> platos = listarPlatos();
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_PLATOS).actualizar(Evento.LISTAR_PLATOS, platos);
