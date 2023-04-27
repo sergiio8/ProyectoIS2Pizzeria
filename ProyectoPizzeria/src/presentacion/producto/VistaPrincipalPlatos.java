@@ -59,7 +59,7 @@ public class VistaPrincipalPlatos extends JFrame implements IGUI{
 		});
 		botonesPanel.add(listarBoton);
 		
-		JButton buscarBoton = new JButton("Buscar Mesa");
+		JButton buscarBoton = new JButton("Buscar Plato");
 		buscarBoton.addActionListener((e)->{
 			Controlador.getInstance().accion(Evento.BUSCAR_PLATO_VISTA, null);
 		});

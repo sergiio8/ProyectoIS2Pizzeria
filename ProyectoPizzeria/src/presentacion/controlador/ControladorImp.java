@@ -150,6 +150,10 @@ public class ControladorImp extends Controlador { //implementacion
 		case BUSCAR_PLATO:
 			buscaPlato(datos);
 			break;
+		case LISTAR_PLATOS:
+			Collection<TPlato> platos = listarPlatos();
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_PLATOS).actualizar(Evento.LISTAR_PLATOS, platos);
+			break;
 			
 		case VISTA_PRINCIPAL_INGREDIENTE:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_INGREDIENTE);
@@ -287,6 +291,12 @@ public class ControladorImp extends Controlador { //implementacion
 		else {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_PLATO_VISTA).actualizar(Evento.BUSCAR_PLATO_OK, buscar);
 		}
+	}
+	
+	private Collection<TPlato> listarPlatos() {
+		SAPlato saPlatos = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
+		Collection<TPlato> platos = saPlatos.consultaTodos();
+		return platos;
 	}
 	
 	private void altaFactura(Object datos) {
