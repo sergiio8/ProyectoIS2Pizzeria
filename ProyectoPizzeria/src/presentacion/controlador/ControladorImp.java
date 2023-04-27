@@ -122,7 +122,8 @@ public class ControladorImp extends Controlador { //implementacion
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_REGISTRO_DE_CLIENTE).actualizar(Evento.VISTA_REGISTRO_DE_CLIENTE, datos);
 			break;
 		case REGISTRO_DE_CLIENTE:
-			registroCliente(datos)
+			registroCliente(datos);
+			break;
 			
 		case ALTA_PLATO_VISTA:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_VISTA, null);
