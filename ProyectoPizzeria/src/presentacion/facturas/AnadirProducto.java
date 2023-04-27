@@ -138,7 +138,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 			ID_producto = text2.getText();
 			ID_linea = text3.getText();
 			cantidad = Integer.parseInt(cant.getValue().toString());
-			if (ID_factura == "" || ID_producto == "" || ID_linea == "") {
+			if (ID_factura == "" || ID_producto == "" || ID_linea == "" || ID_factura == null || ID_producto == null || ID_linea == null) {
 				throw new IllegalArgumentException();
 			}
 			else if (cantidad <= 0) {
