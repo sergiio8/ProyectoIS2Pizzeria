@@ -137,18 +137,22 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 			if(vistaEliminarIngrediente == null) {
 				vistaEliminarIngrediente = new VistaEliminar();
 			}
+			return vistaEliminarIngrediente;
 		case ALTA_INGREDIENTE_VISTA:
 			if(vistaAnadirIngrediente == null) {
 				vistaAnadirIngrediente = new VistaAnadirIngrediente();
 			}
+			return vistaAnadirIngrediente;
 		case MODIFICAR_INGREDIENTE_VISTA:
 			if(vistaModificarIngrediente == null) {
 				vistaModificarIngrediente = new VistaModificarIngrediente();
 			}
+			return vistaModificarIngrediente;
 		case VISTA_PRINCIPAL_INGREDIENTE:
 			if(vistaPrincipalIngrediente == null) {
 				vistaPrincipalIngrediente = new VistaMainIngredientes();
 			}
+			return vistaPrincipalIngrediente;
 		case VISTA_PRINCIPAL_PLATO:
 			vistaPrincipalPlato = new VistaPrincipalPlatos();
 			return vistaPrincipalPlato;
