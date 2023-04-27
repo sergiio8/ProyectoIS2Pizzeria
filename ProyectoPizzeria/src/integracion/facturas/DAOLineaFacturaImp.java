@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,9 +60,13 @@ public class DAOLineaFacturaImp implements DAOLineaFactura{
 			jo.put("cantidad", linea.getCantidad());
 			
 		}
+		if (linea.getPrecio() != jo.getDouble("precio")) {
+			jo.remove("precio");
+			jo.put("precio", linea.getPrecio());
+		}
 		ja.put(jo);
 		
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Facturass.json", false))){
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/LineasFactura.json", false))){
 			JSONObject jo2 = new JSONObject();
 			jo2.put("ListaFacturas", ja);
 			bw.write(jo2.toString());
@@ -96,7 +101,7 @@ public class DAOLineaFacturaImp implements DAOLineaFactura{
 		}
 		else {
 			try {
-				return new TLineaFactura(ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getString("id_factura"), ja.getJSONObject(i).getString("producto"), ja.getJSONObject(i).getInt("cantidad"));
+				return new TLineaFactura(ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getString("id_factura"), ja.getJSONObject(i).getString("producto"), ja.getJSONObject(i).getInt("cantidad"), ja.getJSONObject(i).getDouble("precio"));
 			}
 			catch(Exception e) {
 				return null;
@@ -108,7 +113,7 @@ public class DAOLineaFacturaImp implements DAOLineaFactura{
     @Override
     public void crearLineaFactura(TLineaFactura f) {
         JSONArray ja = null;
-        try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/LineasFacturas.json"))){
+        try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/LineasFactura.json"))){
             JSONObject jsonInput = new JSONObject (new JSONTokener(in));
             ja = jsonInput.getJSONArray("ListaLineasFactura");
             JSONObject jo = new JSONObject();
@@ -116,6 +121,7 @@ public class DAOLineaFacturaImp implements DAOLineaFactura{
             jo.put("id", f.getId());
             jo.put("producto", f.getIdProducto());
             jo.put("cantidad", f.getCantidad());
+            jo.put("precio", f.getPrecio());
             ja.put(jo);
         }
         catch(IOException ie) {
@@ -125,7 +131,7 @@ public class DAOLineaFacturaImp implements DAOLineaFactura{
             
         }
         
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/LineasFacturas.json"))){
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/LineasFactura.json"))){
             JSONObject jo2 = new JSONObject();
             jo2.put("ListaLineasFactura", ja);
             bw.write(jo2.toString());
@@ -133,6 +139,29 @@ public class DAOLineaFacturaImp implements DAOLineaFactura{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+        
+    }
+    
+    public ArrayList<TLineaFactura> mostrarLineasFactura() {
+    	ArrayList<TLineaFactura> resultado = new ArrayList<>();
+		JSONArray ja = null;
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/LineasFactura.json"))){ 
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaLineasFacturas");
+			
+		}
+		catch(Exception e1) {
+			return null;
+		}
+		
+		int i = 0;
+
+		while(i < ja.length()) {
+			
+			resultado.add( new TLineaFactura(ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getString("id_factura"), ja.getJSONObject(i).getString("producto"), ja.getJSONObject(i).getInt("cantidad"), ja.getJSONObject(i).getDouble("precio")));
+			i++;
+		}
+		return resultado;
         
     }
     

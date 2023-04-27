@@ -16,8 +16,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import integracion.factoria.FactoriaAbstractaIntegracion;
+import integracion.producto.DAOPlato;
 import negocio.facturas.TDatosVenta;
 import negocio.facturas.TLineaFactura;
+import negocio.producto.TPlato;
 
 import javax.swing.JSpinner;
 
@@ -119,7 +122,10 @@ public class ModificarFactura extends JDialog implements IGUI{
 				throw new NumberFormatException();
 			}
 			
-			Controlador.getInstance().accion(Evento.MODIFICAR_FACTURA, new TLineaFactura(ID_Linea, ID_Factura, ID_Producto, Cantidad));
+			DAOPlato daop = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
+			TPlato plato = daop.obtenPlato(ID_Producto);
+			
+			Controlador.getInstance().accion(Evento.MODIFICAR_FACTURA, new TLineaFactura(ID_Linea, ID_Factura, ID_Producto, Cantidad, plato.getPrecio()*Cantidad));
 		}
 		catch(NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(ModificarFactura.this, "ERROR: la cantidad debe ser un entero positivo", "ERROR: la cantidad debe ser un entero positivo", JOptionPane.ERROR_MESSAGE);

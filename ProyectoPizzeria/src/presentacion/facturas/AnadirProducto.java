@@ -16,7 +16,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import integracion.factoria.FactoriaAbstractaIntegracion;
+import integracion.producto.DAOPlato;
 import negocio.facturas.TLineaFactura;
+import negocio.producto.TPlato;
 
 import javax.swing.JSpinner;
 
@@ -126,8 +129,10 @@ public class AnadirProducto extends JDialog implements IGUI{
 			else if (cantidad <= 0) {
 				throw new NumberFormatException();
 			}
+			DAOPlato daop = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
+			TPlato plato = daop.obtenPlato(ID_producto);
 			
-			Controlador.getInstance().accion(Evento.ANADIR_PRODUCTO, new TLineaFactura(ID_linea, ID_factura, ID_producto, cantidad));
+			Controlador.getInstance().accion(Evento.ANADIR_PRODUCTO, new TLineaFactura(ID_linea, ID_factura, ID_producto, cantidad, plato.getPrecio()*cantidad));
 		}
 		catch(NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(AnadirProducto.this, "ERROR: la cantidad debe ser un entero positivo", "ERROR: la cantidad debe ser un entero positivo", JOptionPane.ERROR_MESSAGE);

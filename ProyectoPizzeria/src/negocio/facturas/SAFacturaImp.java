@@ -22,7 +22,7 @@ public class SAFacturaImp implements SAFactura{
 
     @Override
     public boolean crearFactura(TDatosVenta datos) {
-        boolean valida = false;
+        boolean valida = true;
         DAOFactura daof = FactoriaAbstractaIntegracion.getInstace().crearDAOFactura();
         DAOClientes daoc = FactoriaAbstractaIntegracion.getInstace().crearDAOCliente();
         DAOPlato daop = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
@@ -40,7 +40,7 @@ public class SAFacturaImp implements SAFactura{
                         valida = true;
                         plato.setStock(plato.getStock() - f.getCantidad());
                         id = f.getIdFactura();
-                        precio_total += plato.getPrecio() * f.getCantidad();
+                        precio_total += f.getPrecio();
                         lineas.add(f);
                         daol.crearLineaFactura(f);
                     }
@@ -48,7 +48,7 @@ public class SAFacturaImp implements SAFactura{
                         f.setCantidad(plato.getStock());
                         plato.setStock(0);
                         id = f.getIdFactura();
-                        precio_total += plato.getPrecio() * f.getCantidad();
+                        precio_total += f.getPrecio();//dejarlo como antes si no hay que modificar
                         lineas.add(f);
                         daol.crearLineaFactura(f);
                     }
@@ -70,7 +70,11 @@ public class SAFacturaImp implements SAFactura{
 
     @Override
     public boolean modificarFactura(TLineaFactura linea) {
+    	
         DAOFactura daof = FactoriaAbstractaIntegracion.getInstace().crearDAOFactura();
+        DAOLineaFactura daol = FactoriaAbstractaIntegracion.getInstace().crearDAOLineaFactura();
+        TFactura tf = daof.buscarFactura(linea.getId());
+       
         return daof.modificarFactura(linea);
         // TODO Auto-generated method stub
         

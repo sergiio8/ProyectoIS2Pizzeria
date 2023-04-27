@@ -54,29 +54,19 @@ public class DAOFacturaImp implements DAOFactura {
 			return false;
 		}
 		
-
-		int j = 0;
-		while (j < ja.getJSONObject(i).getJSONArray("lineas").length() && ja.getJSONObject(i).getJSONArray("lineas").getJSONObject(j).get("id") != l.getId()) {
-			j++;
-		}
+		JSONObject obj = ja.getJSONObject(i);
 		
-		JSONObject jo = ja.getJSONObject(i).getJSONArray("lineas").getJSONObject(j);
-		ja.getJSONObject(i).getJSONArray("lineas").remove(j);
 		
 		DAOLineaFactura daol = FactoriaAbstractaIntegracion.getInstace().crearDAOLineaFactura();
+		TLineaFactura tl = daol.buscarLineaFactura(l.getId());
 		daol.modificarLineaFactura(l);
-		if (l.getIdProducto() != jo.getString("producto")) {
-			jo.remove("producto");
-			jo.put("producto", l.getIdProducto());
-		}
-		if (l.getCantidad() != jo.getDouble("cantidad")) {
-			jo.remove("cantidad");
-			jo.put("cantidad", l.getCantidad());
-		}
-        
-   
-        ja.getJSONObject(i).getJSONArray("lineas").put(ja.getJSONObject(i).getJSONArray("lineas").length(), jo);
+		ja.remove(i);
+		double precio = obj.getDouble("precio") - tl.getPrecio();
+		obj.remove("precio");
+		obj.put("precio", precio + l.getPrecio());
+		ja.put(obj);
 		
+	
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Facturass.json", false))){
 			JSONObject jo2 = new JSONObject();
 			jo2.put("ListaFacturas", ja);
@@ -113,12 +103,16 @@ public class DAOFacturaImp implements DAOFactura {
 		else {
 			try {
 				JSONObject obj =  ja.getJSONObject(i);
-				ArrayList<TLineaFactura> lineas = new ArrayList();
 				DAOLineaFactura daol = FactoriaAbstractaIntegracion.getInstace().crearDAOLineaFactura();
-				for (int j = 0; j < obj.getJSONArray("lineas").length(); ++j) {
-					lineas.add(daol.buscarLineaFactura(obj.getJSONArray("lineas").getJSONObject(j).getString("id")));
+				ArrayList<TLineaFactura> lineas = (ArrayList<TLineaFactura>) daol.mostrarLineasFactura();
+				ArrayList<TLineaFactura> productos = new ArrayList<>();
+				
+				for (int j = 0; j < lineas.size(); ++j) {
+					if (lineas.get(j).getIdFactura().equals(id)) {
+						productos.add(lineas.get(j));
+					}
 				}
-				TDatosVenta dt = new TDatosVenta(lineas, obj.get("id").toString(), obj.get("id_vendedor").toString(), obj.get("id_cliente").toString(), obj.getString("fecha"));
+				TDatosVenta dt = new TDatosVenta(productos, obj.get("id").toString(), obj.get("id_vendedor").toString(), obj.get("id_cliente").toString(), obj.getString("fecha"));
 				return new TFactura(obj.getString("id"), obj.getDouble("precio"), dt, obj.getBoolean("activa"));
 			}
 			catch(Exception e) {
@@ -128,8 +122,8 @@ public class DAOFacturaImp implements DAOFactura {
 		}
     }
     
-    public int crearFactura(TFactura fact) {
-        int id = 0;
+    public boolean crearFactura(TFactura fact) {
+        boolean res = true;
         JSONArray ja = null;
         try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Facturas.json"))){
             JSONObject jsonInput = new JSONObject (new JSONTokener(in));
@@ -143,15 +137,7 @@ public class DAOFacturaImp implements DAOFactura {
             DAOLineaFactura daol = FactoriaAbstractaIntegracion.getInstace().crearDAOLineaFactura();
             for (TLineaFactura t : fact.getProductos()) {
                 daol.crearLineaFactura(t);
-                JSONObject jo3 = new JSONObject();
-                jo3.put("id_factura", t.getIdFactura());
-                jo3.put("id", t.getId());
-                jo3.put("producto", t.getIdProducto());
-                jo3.put("cantidad", t.getCantidad());
-                lines.put(i, jo3);
-                i++;
             }
-            jo.put("lineas", lines);
             jo.put("id_cliente", fact.getIdCliente());
             jo.put("id_vendedor", fact.getIdVendedor());
             if (fact.getActivo()) jo.put("activa", "true");
@@ -160,6 +146,7 @@ public class DAOFacturaImp implements DAOFactura {
             ja.put(jo);
         }
         catch(IOException ie) {
+        	return false;
             
         }
         catch(JSONException je) {
@@ -174,7 +161,7 @@ public class DAOFacturaImp implements DAOFactura {
             e1.printStackTrace();
         }
         
-        return id;
+        return res;
     }
 
 
@@ -194,14 +181,16 @@ public class DAOFacturaImp implements DAOFactura {
 		int i = 0;
 
 		while(i < ja.length()) {
-			ArrayList<TLineaFactura> productos = new ArrayList<>();
 			DAOLineaFactura daol = FactoriaAbstractaIntegracion.getInstace().crearDAOLineaFactura();
-			for (int j = 0; j < ja.getJSONObject(i).getJSONArray("lineas").length(); ++j){
-				TLineaFactura l = daol.buscarLineaFactura(ja.getJSONObject(i).getJSONArray("lineas").getJSONObject(j).getString("id"));
-				productos.add(l);
+			ArrayList<TLineaFactura> lineas = (ArrayList<TLineaFactura>) daol.mostrarLineasFactura();
+			ArrayList<TLineaFactura> productos = new ArrayList<TLineaFactura>();			
+			for (int j = 0; j < lineas.size(); ++j) {
+				if (lineas.get(j).getIdFactura().equals(ja.getJSONObject(i).getString("id"))) {
+					productos.add(lineas.get(j));
+				}
 			}
-			TDatosVenta dt = new TDatosVenta(productos, ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getString("id_vendedor"), ja.getJSONObject(i).getString("id_cliente"), ja.getJSONObject(i).getString("fecha"));
 			
+			TDatosVenta dt = new TDatosVenta(productos, ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getString("id_vendedor"), ja.getJSONObject(i).getString("id_cliente"), ja.getJSONObject(i).getString("fecha"));
 			resultado.add( new TFactura(ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getDouble("precio"), dt,ja.getJSONObject(i).getBoolean("activo")));
 			i++;
 		}
