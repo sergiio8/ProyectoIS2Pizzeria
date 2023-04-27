@@ -2,13 +2,12 @@ package negocio.producto;
 
 import java.util.ArrayList;
 
-import negocio.ingredientes.TIngrediente;
 
 public class TEntrante extends TPlato{
 	
 	//private Salsa salsa;
 	
-	public TEntrante(String id, String nombre, double precio, ArrayList<TIngrediente> ingredientes,
+	public TEntrante(String id, String nombre, double precio, ArrayList<String> ingredientes,
 			String descripcion) {
 		super(id, "Entrante", nombre, precio, ingredientes, descripcion);
 	}

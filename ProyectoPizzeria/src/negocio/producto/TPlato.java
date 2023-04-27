@@ -2,20 +2,19 @@ package negocio.producto;
 
 import java.util.ArrayList;
 
-import negocio.ingredientes.TIngrediente;
 
 public class TPlato {
 	private String id;
 	private String tipo;
 	private String nombre;
 	private double precio;
-	private ArrayList<TIngrediente> ingredientes;
+	private ArrayList<String> ingredientes;
     private String descripcion;
     //private boolean puede_hacerse;
     private int stock;
 
 	
-	public TPlato(String id, String tipo, String nombre, double precio, ArrayList<TIngrediente> ingredientes, String descripcion){
+	public TPlato(String id, String tipo, String nombre, double precio, ArrayList<String> ingredientes, String descripcion){
 		this.id = id;
 		this.tipo = tipo;
 		this.nombre = nombre;
@@ -66,11 +65,11 @@ public class TPlato {
 		this.precio = precio;
 	}
 	
-	public ArrayList<TIngrediente> getIngredientes() {
+	public ArrayList<String> getIngredientes() {
 		return ingredientes;
 	}
 	
-	public void setIngredientes(ArrayList<TIngrediente> ingredientes) {
+	public void setIngredientes(ArrayList<String> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
 	

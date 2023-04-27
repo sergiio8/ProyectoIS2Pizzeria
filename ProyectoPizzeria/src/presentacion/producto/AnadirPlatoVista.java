@@ -18,7 +18,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import negocio.ingredientes.TIngrediente;
+import negocio.producto.TEntrante;
+import negocio.producto.TPizza;
 import negocio.producto.TPlato;
+import negocio.producto.TPostre;
 import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
@@ -101,6 +104,9 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 		JRadioButton pizzaButton = new JRadioButton("Pizza");
 		JRadioButton postreButton = new JRadioButton("Postre");
 		ButtonGroup bGroup = new ButtonGroup();
+		bGroup.add(entranteButton);
+		bGroup.add(pizzaButton);
+		bGroup.add(postreButton);
 		
 		typeButtonPanel.add(entranteButton);
 		typeButtonPanel.add(pizzaButton);
@@ -122,7 +128,7 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 			String id;
 			String nombre;
 			double precio;
-			ArrayList<TIngrediente> ingredientes = new ArrayList<TIngrediente>();
+			ArrayList<String> ingredientes = new ArrayList<String>();
 			String descripcion;
 			try {
 				id = idText.getText();
@@ -130,19 +136,19 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 				precio = Double.parseDouble(priceText.getText());
 				String[] aux = ingredientsText.getText().trim().split(",");
 				for(String s : aux)
-					ingredientes.add(new TIngrediente(s.trim()));
+					ingredientes.add(s.trim());
 				descripcion = descriptionText.getText();
 				if(precio <= 0) {
 					throw new NumberFormatException();
 				}
 				if(entranteButton.isSelected()) {
-					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPlato(id,"Entrante", nombre,precio,ingredientes,descripcion));
+					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TEntrante(id, nombre,precio,ingredientes,descripcion));
 				}
 				else if(pizzaButton.isSelected()) {
-					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPlato(id,"Pizza", nombre,precio,ingredientes,descripcion));
+					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPizza(id, nombre,precio,ingredientes,descripcion));
 				}
 				else if(postreButton.isSelected()) {
-					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPlato(id,"Postre", nombre,precio,ingredientes,descripcion));
+					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPostre(id, nombre,precio,ingredientes,descripcion));
 				}
 				else {
 					throw new IllegalArgumentException();
