@@ -54,7 +54,7 @@ public class VistaListarPlatos extends JDialog implements IGUI{
 		buttonPanel.add(confirmButton);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
-		setPreferredSize(new Dimension(300,300));
+		setPreferredSize(new Dimension(700,300));
 		pack();
 		setLocationRelativeTo(parent);
 	}

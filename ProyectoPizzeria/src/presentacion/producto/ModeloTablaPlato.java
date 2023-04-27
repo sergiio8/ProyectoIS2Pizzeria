@@ -55,9 +55,11 @@ public class ModeloTablaPlato extends AbstractTableModel {
 		}
 		else if (columnIndex == 4) {
 			String ingredientes = "";
-			for(int i = 0; i < platos.get(rowIndex).getIngredientes().size(); ++i) {
-				ingredientes += platos.get(rowIndex).getIngredientes().get(i) + '\n';
-			}
+			ArrayList<String> ing = platos.get(rowIndex).getIngredientes();
+			int i;
+			for(i = 0; i < ing.size()-1; ++i)
+				ingredientes += ing.get(i) + ", ";
+			ingredientes += ing.get(i) + '"';
 			return ingredientes;
 		}
 		else return platos.get(rowIndex).getDescripcion();
