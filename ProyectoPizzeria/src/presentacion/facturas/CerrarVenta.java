@@ -112,7 +112,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 			if(ID_cliente == "" || ID_vendedor == "" || ID_factura == ""|| fecha == "") {
 				throw new IllegalArgumentException();
 			}
-			Controlador.getInstance().accion(Evento.ALTA_FACTURA, new TDatosVenta(new ArrayList<TLineaFactura>(), ID_factura, ID_cliente, ID_vendedor, fecha));
+			Controlador.getInstance().accion(Evento.ALTA_FACTURA, new TDatosVenta(new ArrayList<TLineaFactura>(), ID_cliente, ID_vendedor, fecha));
 			
 		}
 		catch(IllegalArgumentException iae) {
@@ -131,7 +131,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 			setVisible(true);
 			break;
 		case ALTA_FACTURA_VISTA_OK:
-			JOptionPane.showMessageDialog(this,"Factura anadida correctamente con ID: " + datos.toString() ,"Factura anadida correctamente con ID: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this,"Factura anadida correctamente con ID: " + text1.getText() ,"Factura anadida correctamente con ID: " + text1.getText(), JOptionPane.INFORMATION_MESSAGE);
 			setVisible(false);
 			initGUI();
 			break;
