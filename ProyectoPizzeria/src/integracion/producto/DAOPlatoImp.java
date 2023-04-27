@@ -149,22 +149,28 @@ public class DAOPlatoImp implements DAOPlato {
 			return false;
 		}
 		
+		JSONObject jo = ja.getJSONObject(i);
 		ja.remove(i);
-		JSONObject jo = new JSONObject();
-		jo.put("id", id);
-		jo.put("tipo", tp.getTipo());
-		jo.put("nombre", tp.getNombre());
-		jo.put("precio", tp.getPrecio());
-		
-		/*String aux = "";
-		int j;
-		ArrayList<String> lista = tp.getIngredientes();
-		for(j = 0;i<lista.size()-1;++j)
-			aux+=lista.get(j)+", ";
-		aux+=lista.get(j);*/
-		
-		jo.put("ingredientes", tp.getIngredientes());
-		jo.put("descripcion", tp.getDescripcion());
+		if (tp.getTipo() != null){
+			jo.remove("tipo");
+			jo.put("tipo", tp.getTipo());
+		}
+		if (tp.getNombre() != null){
+			jo.remove("nombre");
+			jo.put("nombre", tp.getNombre());
+		}
+		if (tp.getPrecio() != jo.getDouble("precio")) {
+			jo.remove("precio");
+			jo.put("precio", tp.getPrecio());
+		}
+		if (tp.getIngredientes() != null) {
+			jo.remove("ingredientes");
+			jo.put("ingredientes", tp.getIngredientes());
+		}
+		if (tp.getDescripcion() != null) {
+			jo.remove("descripcion");
+			jo.put("descripcion", tp.getDescripcion());
+		}
 		ja.put(jo);
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Platos.json", false))){
