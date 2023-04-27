@@ -9,14 +9,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import presentacion.Evento;
+import presentacion.IGUI;
 import presentacion.controlador.Controlador;
 
-public class VistaMainIngredientes extends JDialog{
+public class VistaMainIngredientes extends JDialog implements IGUI{
 	
-	private Controlador ctrl;
-	
-	public VistaMainIngredientes(Controlador ctrl) {
-		this.ctrl = ctrl;
+	public VistaMainIngredientes() {
 		initGUI();
 	}
 	private void initGUI() {
@@ -56,9 +55,18 @@ public class VistaMainIngredientes extends JDialog{
 	void listar() {
 	}
 	void eliminar() {
+		Controlador.getInstance().accion(Evento.BAJA_INGREDIENTE_VISTA, null);
+		setVisible(false);
 	}
 	void modificar() {
+		Controlador.getInstance().accion(Evento.MODIFICAR_INGREDIENTE_VISTA, null);
+		setVisible(false);
 	}
 	void crear() {
+		Controlador.getInstance().accion(Evento.ALTA_INGREDIENTE_VISTA, null);
+		setVisible(false);
+	}
+	@Override
+	public void actualizar(Evento e, Object datos) {
 	}
 }

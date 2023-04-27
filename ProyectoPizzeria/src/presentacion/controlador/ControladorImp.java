@@ -150,6 +150,11 @@ public class ControladorImp extends Controlador { //implementacion
 		case BUSCAR_PLATO:
 			buscaPlato(datos);
 			break;
+			
+		case VISTA_PRINCIPAL_INGREDIENTE:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_INGREDIENTE);
+			break;
+
 		case ALTA_INGREDIENTE_VISTA:
             FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_VISTA, null);
             break;
