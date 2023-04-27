@@ -76,7 +76,7 @@ private static final long serialVersionUID = 1L;
 	@Override
 	public void actualizar(Evento e, Object datos) {
 		switch(e) {
-		case LISTAR_FACTURAS:
+		case LISTAR_FACTURAS_VISTA:
 			tableModel.update(datos);
 			setVisible(true);
 		}

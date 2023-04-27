@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import presentacion.Evento;
@@ -60,7 +61,9 @@ public class VistaPrincipalFacturas extends JFrame implements IGUI {
 		
 		anadirButton = new JButton("Añadir producto a factura");
 		anadirButton.addActionListener((e) -> {
+			if (esta_abierta.getText().equals("Factura sin iniciar") || esta_abierta.getText().equals("Factura en proceso"))
 			Controlador.getInstance().accion(Evento.ANADIR_PRODUCTO_VISTA, null);
+			else JOptionPane.showMessageDialog(this,"ERROR","ERROR: Debe abrir una venta antes de añadir productos:" , JOptionPane.INFORMATION_MESSAGE);
 		});
 		buttonsPanel.add(anadirButton);
 		

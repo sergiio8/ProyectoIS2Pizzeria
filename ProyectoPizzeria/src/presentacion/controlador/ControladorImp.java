@@ -91,16 +91,14 @@ public class ControladorImp extends Controlador { //implementacion
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA, null);
 			break;
 		case LISTAR_FACTURAS_VISTA:
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_FACTURAS_VISTA).actualizar(Evento.LISTAR_FACTURAS_VISTA, null);
+			Collection<TFactura> facts = listarFacturas();
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_FACTURAS_VISTA).actualizar(Evento.LISTAR_FACTURAS_VISTA, facts);
 			break;
 		case ALTA_FACTURA:
 			altaFactura(datos);
             break;
 		case BUSCAR_FACTURA:
 			buscarFactura(datos);
-			break;
-		case LISTAR_FACTURAS:
-			listarFacturas(datos);
 			break;
 		case ANADIR_PRODUCTO:
 			anadirProducto(datos);
@@ -305,7 +303,7 @@ public class ControladorImp extends Controlador { //implementacion
 		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_FACTURA_VISTA).actualizar(Evento.BUSCAR_FACTURA_VISTA_WR, tf);
 	}
 	
-	private Collection<TFactura> listarFacturas(Object datos) {
+	private Collection<TFactura> listarFacturas() {
 		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
 		Collection<TFactura> facturas = saFact.mostrarFacturas();
 		return facturas;
