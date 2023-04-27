@@ -32,6 +32,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 	JTextField text2;
 	JTextField text3;
 	JSpinner cant;
+	Box productos_panel;
 	
 
 	private static final long serialVersionUID = 1L;
@@ -48,6 +49,13 @@ public class AnadirProducto extends JDialog implements IGUI{
 		setContentPane(mainPanel);
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		Box contenedor = Box.createVerticalBox();
+		
+		productos_panel = Box.createVerticalBox();
+		JLabel titulo = new JLabel("Productos añadidos hasta el momento:");
+		productos_panel.add(titulo);
+		contenedor.add(productos_panel);
+		
+		
 		
 		JPanel panel1 = new JPanel(new FlowLayout());
 		JLabel ID_factura = new JLabel("ID_factura: ");
@@ -129,7 +137,6 @@ public class AnadirProducto extends JDialog implements IGUI{
 			else if (cantidad <= 0) {
 				throw new NumberFormatException();
 			}
-			
 			Controlador.getInstance().accion(Evento.ANADIR_PRODUCTO, new TLineaFactura(ID_linea, ID_factura, ID_producto, cantidad));
 		}
 		catch(NumberFormatException nfe) {
@@ -153,8 +160,10 @@ public class AnadirProducto extends JDialog implements IGUI{
 			break;
 		case ANADIR_PRODUCTO_VISTA_OK:
 			JOptionPane.showMessageDialog(this,"Producto anadido correctamente con ID: " + datos.toString() ,"Producto anadido correctamente con ID: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
+			productos_panel.add(new JLabel("ID: " + datos.toString() + ", cantidad: " + Integer.parseInt(cant.getValue().toString())));
+			text2.setText(null);
+			text3.setText(null);
 			setVisible(false);
-			initGUI();
 			break;
 		case ANADIR_PRODUCTO_VISTA_WR:
 			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
