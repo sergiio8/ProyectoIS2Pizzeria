@@ -109,7 +109,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 			ID_cliente = text2.getText();
 			ID_vendedor = text3.getText();
 			fecha = text4.getText();
-			if(ID_cliente == "" || ID_vendedor == "" || ID_factura == ""|| fecha == "") {
+			if(ID_cliente.equals("") || ID_vendedor.equals("") || ID_factura.equals("")|| fecha.equals("")) {
 				throw new IllegalArgumentException();
 			}
 			Controlador.getInstance().accion(Evento.ALTA_FACTURA, new TDatosVenta(new ArrayList<TLineaFactura>(), ID_cliente, ID_vendedor, fecha));

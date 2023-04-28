@@ -29,9 +29,10 @@ public class BuscarFactura extends JDialog implements IGUI{
 	JButton buscar;
 	JButton cancelar;
 	JPanel panel3;
-	JPanel data;
+	Box data;
 	Box contenedor;
 	JPanel panel1;
+	JPanel panel2;
 	
 	public BuscarFactura(Frame parent) {
 		super(parent, true);
@@ -47,17 +48,19 @@ public class BuscarFactura extends JDialog implements IGUI{
 		contenedor = Box.createVerticalBox();
 		
 		
-		data = new JPanel();
-		data.setLayout(new BorderLayout());
+		data = Box.createVerticalBox();
 		
 		panel1 = new JPanel(new FlowLayout());
 		ID = new JLabel("ID_factura: ");
 		text1 = new JTextField(10);
 		
+		
 		panel1.add(ID);
 		panel1.add(text1);
-		
+		panel2 = new JPanel(new FlowLayout());
+	
 		data.add(panel1);
+		data.add(panel2);
 		
 		contenedor.add(data);
 	
@@ -85,7 +88,7 @@ public class BuscarFactura extends JDialog implements IGUI{
 		String ID_factura = null;
 		try {
 			ID_factura = text1.getText();
-			if (ID_factura == "" || ID_factura == null) {
+			if (ID_factura.equals("") || ID_factura == null) {
 				throw new IllegalArgumentException();
 			}
 			Controlador.getInstance().accion(Evento.BUSCAR_FACTURA, ID_factura);
@@ -109,7 +112,7 @@ public class BuscarFactura extends JDialog implements IGUI{
 			setVisible(true);
 			break;
 		case BUSCAR_FACTURA_VISTA_OK:
-			setPreferredSize(new Dimension(450, 230));
+			setPreferredSize(new Dimension(400, 350));
 			TFactura tf = (TFactura) datos;
 			JOptionPane.showMessageDialog(this,"Factura con ID: " + tf.getId() + " encontrada con exito" ,"Factura con ID: " +tf.getId() + " encontrada con exito" , JOptionPane.INFORMATION_MESSAGE);
 			
@@ -117,12 +120,12 @@ public class BuscarFactura extends JDialog implements IGUI{
 			text1.setEnabled(false);
 			
 			Box data_box = Box.createVerticalBox();
-			JLabel precio = new JLabel("precio: " + tf.getPrecio_total());
-			JLabel id_cliente = new JLabel("id_cliente: " + tf.getIdCliente());
-			JLabel id_vendedor = new JLabel("id_vendedor: " + tf.getIdVendedor());
-			JLabel fecha = new JLabel("fecha: " + tf.getFecha());
+			JLabel precio = new JLabel("Precio: " + tf.getPrecio_total());
+			JLabel id_cliente = new JLabel("ID_cliente: " + tf.getIdCliente());
+			JLabel id_vendedor = new JLabel("ID_vendedor: " + tf.getIdVendedor());
+			JLabel fecha = new JLabel("Fecha: " + tf.getFecha());
 			//String productos = "";
-			JLabel productos_label = new JLabel("productos: ID: " + tf.getProductos().get(0).getIdProducto() + ": " + tf.getProductos().get(0).getCantidad() + " unidades");
+			JLabel productos_label = new JLabel("Productos: ID: " + tf.getProductos().get(0).getIdProducto() + ", " + tf.getProductos().get(0).getCantidad() + " uds");
 			data_box.add(id_cliente);
 			data_box.add(id_vendedor);
 			data_box.add(productos_label);
@@ -133,7 +136,8 @@ public class BuscarFactura extends JDialog implements IGUI{
 			}
 			data_box.add(precio);
 			data_box.add(fecha);
-			panel1.add(data_box);
+			panel2.add(data_box);
+	
 			
 			panel3.removeAll();
 				
