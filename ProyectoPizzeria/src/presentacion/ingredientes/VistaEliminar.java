@@ -1,12 +1,12 @@
 package presentacion.ingredientes;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Frame;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,10 +19,13 @@ import presentacion.controlador.Controlador;
 
 public class VistaEliminar extends JDialog implements IGUI{	
 	private static final long serialVersionUID = 1L;
-	public VistaEliminar(){
-		initGUI();
+	
+	private JTextField nombreIngTextField;
+	
+	public VistaEliminar(Frame parent){
+		initGUI(parent);
 	}
-	private void initGUI() {
+	private void initGUI(Frame parent) {
 		setTitle("Eliminar ingrediente");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -41,9 +44,10 @@ public class VistaEliminar extends JDialog implements IGUI{
 		JPanel panel1 = new JPanel();
 		JLabel ingLabel = new JLabel("Nombre del ingrediente a eliminar: ");
 		panel1.add(ingLabel);
+		panel1.setBorder(BorderFactory.createEmptyBorder(10,40,20,20));
 		
-		JTextField nombreIngTextField = new JTextField();
-		//this.idMesaField.setPreferredSize(new Dimension(130, 30));
+		nombreIngTextField = new JTextField(10);
+		nombreIngTextField.setPreferredSize(new Dimension(150,35));
 		panel1.add(nombreIngTextField);
 		contenedor.add(panel1);
 
@@ -56,11 +60,10 @@ public class VistaEliminar extends JDialog implements IGUI{
 			String nombre;
 			try {
 				nombre = nombreIngTextField.getText();
-				if(nombre == null) {
+				if(nombre.equals("")) {
 					throw new Exception();
 				}
 				Controlador.getInstance().accion(Evento.BAJA_INGREDIENTE, nombre);
-				
 			}
 			catch(Exception ex) {
 				JOptionPane.showMessageDialog(VistaEliminar.this, "ERROR: Debe introducir un nombre de ingrediente", "ERROR: Debe introducir un nombre de ingrediente", JOptionPane.ERROR_MESSAGE);
@@ -79,12 +82,13 @@ public class VistaEliminar extends JDialog implements IGUI{
 		
 		pack();
 		setResizable(false);
-		setVisible(true);
+		setLocationRelativeTo(parent);
 	}
 	@Override
 	public void actualizar(Evento e, Object datos) {
 		switch(e) {
 		case BAJA_INGREDIENTE_VISTA:
+			nombreIngTextField.setText("");
 			setVisible(true);
 			break;
 		case BAJA_INGREDIENTE_OK:

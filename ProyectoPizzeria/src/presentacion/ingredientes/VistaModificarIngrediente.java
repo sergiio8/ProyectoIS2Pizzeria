@@ -1,6 +1,7 @@
 package presentacion.ingredientes;
 
 import java.awt.BorderLayout;
+import java.awt.Frame;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -18,10 +19,10 @@ import presentacion.IGUI;
 
 public class VistaModificarIngrediente extends JDialog implements IGUI{	
 	private static final long serialVersionUID = 1L;
-	public VistaModificarIngrediente(){
-		initGUI();
+	public VistaModificarIngrediente(Frame parent){
+		initGUI(parent);
 	}
-	private void initGUI() {
+	private void initGUI(Frame parent) {
 		setTitle("Modificar ingrediente");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -31,7 +32,7 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 		
 		pack();
 		setResizable(false);
-		setVisible(true);
+		setLocationRelativeTo(parent);
 	}
 	@Override
 	public void actualizar(Evento e, Object datos) {

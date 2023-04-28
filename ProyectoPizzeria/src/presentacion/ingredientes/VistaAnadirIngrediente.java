@@ -3,6 +3,8 @@ package presentacion.ingredientes;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -15,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.JToolBar.Separator;
 
 import negocio.ingredientes.TIngrediente;
 import presentacion.Evento;
@@ -27,57 +30,63 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 	JTextField t1;
 	JTextField t2;
 	JTextField t3;
-	public VistaAnadirIngrediente(){
-		initGUI();
+	public VistaAnadirIngrediente(Frame parent){
+		initGUI(parent);
 	}
-	private void initGUI() {
+	private void initGUI(Frame parent) {
 		setTitle("Crear ingrediente");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(8,15,15,15));
 		setContentPane(mainPanel);
+		
+		JPanel panelCrear = new JPanel(new GridLayout(3,2));
+		panelCrear.setBorder(BorderFactory.createEmptyBorder(10,40,20,20));
+		
 		JLabel l1= new JLabel("Nombre del ingrediente:");
-		JLabel l2= new JLabel("Cantidad:");
-		JLabel l3= new JLabel("Platos: eg:{pizza,pasta}");
+		panelCrear.add(l1);
+		
 		t1= new JTextField();
-		t1.setPreferredSize(new Dimension(200,50));
+		t1.setPreferredSize(new Dimension(150,35));
+		panelCrear.add(t1);
+		
+		
+		JLabel l2= new JLabel("Cantidad:");
+		panelCrear.add(l2);
+		
 		t2= new JTextField();
-		t2.setPreferredSize(new Dimension(200,50));
+		t2.setPreferredSize(new Dimension(150,35));
+		panelCrear.add(t2);
+		
+		
+		JLabel l3= new JLabel("Platos: eg:{pizza,pasta}");
+		panelCrear.add(l3);
+		
 		t3= new JTextField();
-		t3.setPreferredSize(new Dimension(200,50));
+		t3.setPreferredSize(new Dimension(150,35));
+		panelCrear.add(t3);
+		
+		mainPanel.add(panelCrear, BorderLayout.CENTER);
+		
+		JPanel panelOk = new JPanel();
+		panelOk.setAlignmentX(CENTER_ALIGNMENT);
+		
 		JButton ok= new JButton("Ok");
 		ok.addActionListener((e)-> ok());
-		JButton cancel= new JButton("Cancel");
-		cancel.addActionListener((e)->cancel());
-		JPanel p1= new JPanel(new FlowLayout());
-		p1.add(l1);
-		p1.add(new JSeparator(JSeparator.VERTICAL));
-		p1.add(t1);
-		JPanel p2= new JPanel(new FlowLayout());
-		p2.add(l2);
-		p2.add(new JSeparator(JSeparator.VERTICAL));
-		p2.add(t2);
-		JPanel p3= new JPanel(new FlowLayout());
-		p3.add(l3);
-		p3.add(new JSeparator(JSeparator.VERTICAL));
-		p3.add(t3);
-		JPanel p4 = new JPanel(new FlowLayout());
-		p4.add(ok);
-		p4.add(new JSeparator(JSeparator.VERTICAL));
-		p4.add(cancel);
-		JPanel paux= new JPanel(new FlowLayout());
-		paux.add(p1,BorderLayout.NORTH);
-		paux.add(p2,BorderLayout.SOUTH);
-		mainPanel.add(paux,BorderLayout.NORTH);
-		mainPanel.add(p3,BorderLayout.CENTER);
-		mainPanel.add(p4,BorderLayout.SOUTH);
-		this.setPreferredSize(new Dimension(700,300));
+		panelOk.add(ok);
+		
+		JButton volver= new JButton("Volver");
+		volver.addActionListener((e)->volver());
+		panelOk.add(volver);
+		
+		mainPanel.add(panelOk, BorderLayout.SOUTH);
+		
+		
 		//Falta anadirlos todo a un panel q sea scrollbar y este al main
-		
-		
-		
+
 		pack();
 		setResizable(false);
-		setVisible(true);
+		setLocationRelativeTo(parent);
 	}
 	private void ok() {
 		String nombre;
@@ -101,20 +110,19 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 	        platos= aux.split(",");
 	        
 			Controlador.getInstance().accion(Evento.ALTA_INGREDIENTE, new TIngrediente(nombre,cantidad,platos));
-			
+			setVisible(false);
 		}
 		catch (NumberFormatException nfe) {
-			JOptionPane.showMessageDialog(VistaAnadirIngrediente.this, "ERROR: Error en la cantidad introducida","INTRODUZCA UNA NUEVA", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(VistaAnadirIngrediente.this, "ERROR: Error en la cantidad introducida","ERROR: Error en la cantidad introducida", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (IllegalArgumentException a) {
-			JOptionPane.showMessageDialog(VistaAnadirIngrediente.this, "ERROR: Error en el nombre del ingrediente","INTRODUZCA UNO NUEVO", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(VistaAnadirIngrediente.this, "ERROR: Error en el nombre del ingrediente","ERROR: Error en el nombre del ingrediente", JOptionPane.ERROR_MESSAGE);
 		}
 		catch(Exception e) {
 			JOptionPane.showMessageDialog(VistaAnadirIngrediente.this, JOptionPane.ERROR_MESSAGE);
 		}
-		this.setVisible(false);
 	}
-	private void cancel() {
+	private void volver() {
 		this.setVisible(false);
 	}
 
@@ -122,10 +130,12 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 	public void actualizar(Evento e, Object datos) {
 		switch(e) {
 		case ALTA_INGREDIENTE_VISTA:
+			t1.setText("");
+			t2.setText("");
+			t3.setText("");
 			setVisible(true);
 			break;
 		case ALTA_INGREDIENTE_OK:
-			
 			JOptionPane.showMessageDialog(this, "Ingrediente añadido correctamente", "Ingrediente añadido correctamente", JOptionPane.INFORMATION_MESSAGE);
 			setVisible(false);
 			break;

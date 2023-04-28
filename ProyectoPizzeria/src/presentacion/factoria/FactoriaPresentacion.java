@@ -135,23 +135,21 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 			return vistaAnadirProducto;
 		case BAJA_INGREDIENTE_VISTA:
 			if(vistaEliminarIngrediente == null) {
-				vistaEliminarIngrediente = new VistaEliminar();
+				vistaEliminarIngrediente = new VistaEliminar((Frame) vistaPrincipalIngrediente);
 			}
 			return vistaEliminarIngrediente;
 		case ALTA_INGREDIENTE_VISTA:
 			if(vistaAnadirIngrediente == null) {
-				vistaAnadirIngrediente = new VistaAnadirIngrediente();
+				vistaAnadirIngrediente = new VistaAnadirIngrediente((Frame) vistaPrincipalIngrediente);
 			}
 			return vistaAnadirIngrediente;
 		case MODIFICAR_INGREDIENTE_VISTA:
 			if(vistaModificarIngrediente == null) {
-				vistaModificarIngrediente = new VistaModificarIngrediente();
+				vistaModificarIngrediente = new VistaModificarIngrediente((Frame) vistaPrincipalIngrediente);
 			}
 			return vistaModificarIngrediente;
 		case VISTA_PRINCIPAL_INGREDIENTE:
-			if(vistaPrincipalIngrediente == null) {
-				vistaPrincipalIngrediente = new VistaMainIngredientes();
-			}
+			vistaPrincipalIngrediente = new VistaMainIngredientes();
 			return vistaPrincipalIngrediente;
 		case VISTA_PRINCIPAL_PLATO:
 			vistaPrincipalPlato = new VistaPrincipalPlatos();
@@ -176,7 +174,7 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 		case LISTAR_PLATOS:
 			return new VistaListarPlatos((Frame) vistaPrincipalPlato);
 		case LISTAR_INGREDIENTE_VISTA:
-			this.vistaListarIngredientes= new VistaListarIngredientes();
+			this.vistaListarIngredientes= new VistaListarIngredientes((Frame) vistaPrincipalIngrediente);
 			return vistaListarIngredientes;
 		default:
 			return null;
