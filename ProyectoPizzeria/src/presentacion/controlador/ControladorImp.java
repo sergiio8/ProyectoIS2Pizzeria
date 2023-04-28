@@ -231,7 +231,15 @@ public class ControladorImp extends Controlador { //implementacion
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_INGREDIENTE_VISTA).actualizar(Evento.BAJA_INGREDIENTE_OK, (String) datos);
 		}
 	}
-	private void modificarIngrediente(Object datos) {	
+	private void modificarIngrediente(Object datos) {
+		SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
+		boolean modificado= saIngrediente.modificar((TIngrediente) datos);
+		if(!modificado) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_INGREDIENTE_VISTA).actualizar(Evento.MODIFICAR_INGREDIENTE_KO, (String) datos);
+		}
+		else {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_INGREDIENTE_VISTA).actualizar(Evento.MODIFICAR_INGREDIENTE_OK, (String) datos);
+		}
 	}
 	private void altaMesa(Object datos) {
 		TMesas tm = (TMesas) datos;

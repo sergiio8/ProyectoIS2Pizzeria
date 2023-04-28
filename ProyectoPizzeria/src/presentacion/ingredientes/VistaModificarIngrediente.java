@@ -20,8 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import negocio.ingredientes.TIngrediente;
 import presentacion.Evento;
 import presentacion.IGUI;
+import presentacion.controlador.Controlador;
 
 public class VistaModificarIngrediente extends JDialog implements IGUI{	
 	private static final long serialVersionUID = 1L;
@@ -121,7 +123,42 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 		setLocationRelativeTo(parent);
 	}
 	
-	private void ok() {	
+	private void ok() {
+		String nombre;
+		int cantidad = -1;
+		String[]platos = null;
+		try {
+			nombre=nombreText.getText();
+			if(nombre.equals("")) {
+				throw new IllegalArgumentException("Alejandro matricula YA");
+			}
+			if(botonCantidad.isSelected() || botonAmbos.isSelected()) {
+				cantidad= Integer.parseInt(tCantidad.getText());
+				if(cantidad<0) {
+					throw new NumberFormatException();
+				}
+			}
+			if(botonPlatos.isSelected() || botonAmbos.isSelected()) {
+				String aux="";
+				
+		        for (int j=1; j<tPlatos.getText().length()-1;j++) {
+		            aux+=tPlatos.getText().charAt(j);
+		        }
+		        
+		        platos= aux.split(",");
+			}
+			Controlador.getInstance().accion(Evento.MODIFICAR_INGREDIENTE, new TIngrediente(nombre,cantidad,platos));
+			setVisible(false);
+		}
+		catch (NumberFormatException nfe) {
+			JOptionPane.showMessageDialog(VistaModificarIngrediente.this, "ERROR: Error en la cantidad introducida","ERROR: Error en la cantidad introducida", JOptionPane.ERROR_MESSAGE);
+		}
+		catch (IllegalArgumentException a) {
+			JOptionPane.showMessageDialog(VistaModificarIngrediente.this, "ERROR: Error en el nombre del ingrediente","ERROR: Error en el nombre del ingrediente", JOptionPane.ERROR_MESSAGE);
+		}
+		catch(Exception e) {
+			JOptionPane.showMessageDialog(VistaModificarIngrediente.this, JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	private void volver() {
 		setVisible(false);

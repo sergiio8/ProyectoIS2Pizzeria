@@ -18,6 +18,7 @@ public class DAOIngredienteImp implements DAOIngrediente{
 
 	@Override
 	public boolean daDeBajaIngrediente(String nombre) {
+		
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Ingredientes.json"))){ //idea mandar excepciones y tratarlas en controlador
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
@@ -35,10 +36,11 @@ public class DAOIngredienteImp implements DAOIngrediente{
 		}*/
 		
 		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).getString("nombre") != nombre) {
+		while(i < ja.length() && !ja.getJSONObject(i).getString("nombre").equals(nombre)) {
 			i++;
 		}
 		if(i == ja.length()) {
+			System.out.println("a");
 			return false;
 		}
 		else {
@@ -80,21 +82,11 @@ public class DAOIngredienteImp implements DAOIngrediente{
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Ingredientes.json"))){ //idea mandar excepciones y tratarlas en controlador
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
-			ja = jsonInput.getJSONArray("Ingrediente");
+			ja = jsonInput.getJSONArray("ListaIngredientes");
 			JSONObject jo = new JSONObject();
 			jo.put("nombre", ingrediente.getNombre());
 			nombre = ingrediente.getNombre();
 			jo.put("cantidad", ingrediente.getCantidad());
-			String platos="{";
-			for(int i=0; i<platos.length()-1;i++) {
-				platos+=ingrediente.getPlatos()[i];
-				platos+=",";
-			}
-			if(platos.length()>0) {
-				platos+=ingrediente.getPlatos()[platos.length()-1];
-			}
-			
-			platos+="}";
 			jo.put("platos", ingrediente.getPlatos());
 			ja.put(jo);
 		}
@@ -102,7 +94,7 @@ public class DAOIngredienteImp implements DAOIngrediente{
 			nombre="";
 		}
 		
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Mesas.json", false))){
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Ingredientes.json", false))){
 			JSONObject jo2 = new JSONObject();
 			jo2.put("ListaIngredientes", ja);
 			bw.write(jo2.toString());
@@ -141,11 +133,11 @@ public class DAOIngredienteImp implements DAOIngrediente{
 		}*/
 		Collection<TIngrediente> l = new ArrayList<TIngrediente>();
 		for(int k = 0; k<ja.length(); k++) {
-			String aux="";
-		    for (int j=1; j<ja.getJSONObject(k).getString("platos").length()-1;j++) {
-		       aux+=ja.getJSONObject(k).getString("platos").charAt(j);
+			String[] platos = new String[ja.getJSONObject(k).getJSONArray("platos").length()];
+		    for (int j=0; j<ja.getJSONObject(k).getJSONArray("platos").length();j++) {
+		       platos[j] = ja.getJSONObject(k).getJSONArray("platos").getString(j);
+		       //System.out.println(ja.getJSONObject(k).getJSONArray("platos").getString(j));
 		    }
-		    String[] platos= aux.split(",");
 		    TIngrediente ingrediente = new TIngrediente(ja.getJSONObject(k).getString("nombre"), ja.getJSONObject(k).getInt("cantidad"), platos);
 		    l.add(ingrediente);
 		}
@@ -171,7 +163,7 @@ public class DAOIngredienteImp implements DAOIngrediente{
 		}*/
 		
 		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).getString("nombre") != nombre) {
+		while(i < ja.length() && !ja.getJSONObject(i).getString("nombre").equals(nombre)) {
 			i++;
 		}
 		if(i == ja.length()) {

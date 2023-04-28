@@ -22,6 +22,7 @@ public class VistaListarIngredientes extends JDialog implements IGUI{
 	 */
 	private static final long serialVersionUID = 1L;
 	private Controlador ctrl;
+	private ITableModel modelo;
 	
 	
 	private JTable tbl;
@@ -35,7 +36,8 @@ public class VistaListarIngredientes extends JDialog implements IGUI{
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createTitledBorder("Lista ingredientes:"));
 		setContentPane(mainPanel);
-		JTable tbl= new JTable(new ITableModel());
+		modelo = new ITableModel();
+		JTable tbl= new JTable(modelo);
 		JScrollPane scb= new JScrollPane(tbl);
 		mainPanel.add(scb);
 		
@@ -57,7 +59,8 @@ public class VistaListarIngredientes extends JDialog implements IGUI{
 	public void actualizar(Evento e,Object datos) {
 		switch(e) {
 		case LISTAR_INGREDIENTE_VISTA:
-				setVisible(true);
+			modelo.update(datos);
+			setVisible(true);
 		}
 	}
 }

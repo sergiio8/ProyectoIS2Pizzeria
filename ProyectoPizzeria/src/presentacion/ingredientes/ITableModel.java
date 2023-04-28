@@ -34,6 +34,11 @@ public class ITableModel extends AbstractTableModel{
 	}
 
 	@Override
+	public String getColumnName(int index) {
+		return columnNames[index];
+	}
+	
+	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		// TODO Auto-generated method stub
 		switch(columnIndex) {
@@ -42,13 +47,14 @@ public class ITableModel extends AbstractTableModel{
 		case 1:
 			return filas.get(rowIndex).getCantidad();
 		case 2:
-			return filas.get(rowIndex).getPlatos();
+			return filas.get(rowIndex).getPlatosToString();
 			
 		}
 		return null;
 	}
 	
 	public void update(Object datos) {
+		ArrayList<TIngrediente> a = new ArrayList<TIngrediente>((Collection<TIngrediente>) datos);
 		filas= new ArrayList<TIngrediente>((Collection<TIngrediente>) datos);
 		this.fireTableStructureChanged();
 	

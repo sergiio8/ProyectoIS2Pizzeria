@@ -7,8 +7,6 @@ public class TIngrediente {
 	private String[] platos;
 	//boolean activo;
 	
-	
-	//Necesito un constructor solo con el nombre xd
 	public TIngrediente(String nombre) {
 		this.nombre = nombre;
 	}
@@ -18,6 +16,16 @@ public class TIngrediente {
 		this.cantidad = cantidad;
 		this.nombre = nombre;
 		//activo = true;
+	}
+	
+	public String getPlatosToString() {
+		String s = "{ ";
+		for(int i=0; i<platos.length; i++) {
+			s+=platos[i];
+			if(i<platos.length-1) s+=", ";
+		}
+		s+=" }";
+		return s;
 	}
 	
 	public String getNombre() {
