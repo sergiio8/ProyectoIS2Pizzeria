@@ -34,7 +34,8 @@ public class SAClientesImp implements SAClientes{
 	@Override
 	public Collection<TCliente> consultaTodos() {
 		// TODO Auto-generated method stub
-		return null;
+		DAOClientes infoCliente = FactoriaAbstractaIntegracion.getInstace().crearDAOCliente();
+		return infoCliente.consultaTodos();
 	}
 
 	@Override
