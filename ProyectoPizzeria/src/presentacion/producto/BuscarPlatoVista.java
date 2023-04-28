@@ -80,7 +80,7 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 			String id;
 			try {
 				id = idText.getText();
-				if(id == null) {
+				if(id == null || id.equals("")) {
 					throw new IllegalArgumentException();
 				}
 				

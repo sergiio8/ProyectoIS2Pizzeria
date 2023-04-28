@@ -11,7 +11,7 @@ import negocio.mesas.TMesas;
 public class ModeloTablaFacturas extends AbstractTableModel{
 private static final long serialVersionUID = 1L;
 	
-	private String[] header = {"id", "id_cliente", "id_vendedor", "precio_total", "id_productos", "fecha"};
+	private String[] header = {"ID", "ID_cliente", "ID_vendedor", "Precio total", "Fecha"};
 	private ArrayList<TFactura> facturas;
 
 	@Override
@@ -44,14 +44,7 @@ private static final long serialVersionUID = 1L;
 		else if (columnIndex == 3) {
 			return facturas.get(rowIndex).getPrecio_total();
 		}
-		else if (columnIndex == 4) {
-			String productos = "";
-			for (int i = 0; i < facturas.get(rowIndex).getProductos().size(); ++i) {
-				productos += "ID: " + facturas.get(rowIndex).getProductos().get(i).getIdProducto() + ", " + facturas.get(rowIndex).getProductos().get(i).getCantidad() + "unidades|n";
-			}
-			return productos;
-		}
-		else {
+		else{
 			return facturas.get(rowIndex).getFecha();
 		}
 	}

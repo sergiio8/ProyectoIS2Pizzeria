@@ -61,6 +61,7 @@ public class MainWindow extends JFrame implements IGUI{
 		platosButton = new JButton("Subsistema Platos");
 		platosButton.addActionListener((e) -> {
 			Controlador.getInstance().accion(Evento.VISTA_PRINCIPAL_PLATO, null);
+			this.dispose();
 		});
 		buttonsPanel.add(platosButton);
 		
