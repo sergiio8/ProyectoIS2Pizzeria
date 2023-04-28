@@ -9,6 +9,7 @@ import presentacion.Evento;
 
 import presentacion.IGUI;
 import presentacion.mesas.VistaAnadirMesa;
+import presentacion.mesas.VistaAnadirReserva;
 import presentacion.mesas.VistaBorrarMesa;
 import presentacion.mesas.VistaBuscarMesa;
 import presentacion.mesas.VistaListarMesas;
@@ -40,6 +41,8 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 	}
 	
 	private IGUI vistaPrincipalMesa = null;
+	private IGUI vistaAnadirReserva = null;
+	private IGUI vistaPrincipalReserva = null;
 	private IGUI vistaAnadirMesa = null;
 	private IGUI vistaBorrarMesa = null;
 	private IGUI vistaModificarMesa = null;
@@ -70,6 +73,11 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 		switch(e) {
 		case MAIN_WINDOW:
 			return new presentacion.MainWindow();
+		case ALTA_RESERVA_VISTA:
+			if(this.vistaAnadirReserva == null) {
+				vistaAnadirReserva =new VistaAnadirReserva((Frame) vistaPrincipalReserva);
+			}
+			return vistaAnadirReserva;
 		case VISTA_PRINCIPAL_MESA:
 			this.vistaPrincipalMesa = new VistaPrincipalMesas();
 			return vistaPrincipalMesa;
