@@ -113,6 +113,7 @@ public class VistaClienteLogueado extends JDialog implements IGUI{
 		
 		pack();
 		setResizable(false);
+		setLocationRelativeTo(parent);
 	}
 	
 	

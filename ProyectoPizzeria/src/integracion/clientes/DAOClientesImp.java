@@ -7,6 +7,7 @@ public class DAOClientesImp implements DAOClientes{
 	@Override
 	public String insertarCliente(TCliente cliente) {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

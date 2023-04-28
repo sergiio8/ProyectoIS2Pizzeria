@@ -44,7 +44,7 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 		lNombre.setText("Nombre: ");
 		p1.add(lNombre);
 		
-		tNombre = new JTextField();
+		tNombre = new JTextField(15);
 		p1.add(tNombre);
 		mainPanel.add(p1);
 		
@@ -55,7 +55,7 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 		lAp.setText("Apellidos: ");
 		p2.add(lAp);
 		
-		tAp = new JTextField();
+		tAp = new JTextField(15);
 		p2.add(tAp);
 		mainPanel.add(p2);
 		
@@ -67,7 +67,7 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 		lId.setText("Id (NIF): ");
 		p3.add(lId);
 		
-		tId = new JTextField();
+		tId = new JTextField(15);
 		p3.add(tId);
 		mainPanel.add(p3);
 		
@@ -112,7 +112,7 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 		add(mainPanel);
 		pack();
 		setResizable(false);
-		//setVisible(true);
+		setLocationRelativeTo(parent);
 	}
 	
 	

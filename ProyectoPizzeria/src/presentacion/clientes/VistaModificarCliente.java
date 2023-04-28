@@ -100,6 +100,7 @@ public class VistaModificarCliente extends JDialog implements IGUI{
 		
 		pack();
 		setResizable(false);
+		setLocationRelativeTo(parent);
 	}
 	
 	
