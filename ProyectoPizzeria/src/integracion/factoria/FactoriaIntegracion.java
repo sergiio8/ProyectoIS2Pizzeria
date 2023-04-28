@@ -8,6 +8,8 @@ import integracion.facturas.DAOLineaFactura;
 import integracion.facturas.DAOLineaFacturaImp;
 import integracion.ingredientes.DAOIngrediente;
 import integracion.ingredientes.DAOIngredienteImp;
+import integracion.ingredientes.DAOPlatoIngrediente;
+import integracion.ingredientes.DAOPlatoIngredienteImp;
 import integracion.mesas.DAOMesas;
 import integracion.mesas.DAOMesasImp;
 import integracion.producto.DAOPlato;
@@ -42,6 +44,12 @@ public class FactoriaIntegracion extends FactoriaAbstractaIntegracion {
 	
 	public DAOLineaFactura crearDAOLineaFactura() {
 		return new DAOLineaFacturaImp();
+	}
+
+	@Override
+	public DAOPlatoIngrediente crearDAOPlatoIngrediente() {
+		// TODO Auto-generated method stub
+		return new DAOPlatoIngredienteImp();
 	}
 
 }
