@@ -146,7 +146,7 @@ public class DAOLineaFacturaImp implements DAOLineaFactura{
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/LineasFactura.json"))){ 
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
-			ja = jsonInput.getJSONArray("ListaLineasFacturas");
+			ja = jsonInput.getJSONArray("ListaLineasFactura");
 			
 		}
 		catch(Exception e1) {

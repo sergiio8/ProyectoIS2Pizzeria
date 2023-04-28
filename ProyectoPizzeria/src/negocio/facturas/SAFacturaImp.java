@@ -32,24 +32,16 @@ public class SAFacturaImp implements SAFactura{
         int precio_total = 0;
         String id = null;
         
-        if (daoc.obtenCliente(datos.getid_cliente()) != null||true) {
+        if (daoc.obtenCliente(datos.getid_cliente()) != null || true) {
             for (TLineaFactura f : datos.getProductos()) {
                 TPlato plato = daop.obtenPlato(f.getIdProducto());
-                if (plato != null) {
-                    if (plato.getStock() > f.getCantidad()) {
-                        valida = true;
-                        plato.setStock(plato.getStock() - f.getCantidad());
-                        id = f.getIdFactura();
-                        precio_total += plato.getPrecio()*f.getCantidad();
-                        lineas.add(f);
-                        daol.crearLineaFactura(f);
-                    }
-                    else if (plato.getStock() > 0){
-                        f.setCantidad(plato.getStock());
-                        plato.setStock(0);
-                        id = f.getIdFactura();
-                        precio_total += plato.getPrecio()*f.getCantidad();//dejarlo como antes si no hay que modificar
-                        lineas.add(f);
+                if (plato != null) {//mirar lo del stock
+                	valida = true;
+                    id = f.getIdFactura();
+                    precio_total += plato.getPrecio()*f.getCantidad();
+                    TLineaFactura l = daol.buscarLineaFactura(f.getId());
+                    if (l == null) {
+                    	lineas.add(f);
                         daol.crearLineaFactura(f);
                     }
                 }
@@ -85,7 +77,6 @@ public class SAFacturaImp implements SAFactura{
     @Override
     public void anadirProducto(TLineaFactura linea, Carrito c) {
         c.anadirProducto(linea);
-       
         // TODO Auto-generated method stub
     }
     

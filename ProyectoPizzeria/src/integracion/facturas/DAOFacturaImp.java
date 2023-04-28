@@ -94,10 +94,10 @@ public class DAOFacturaImp implements DAOFactura {
 		}
 		
 		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).get("id") != id) {
+		while(i < ja.length() && !ja.getJSONObject(i).getString("id").equals(id)) {
 			i++;
 		}
-		if(i == ja.length()) {
+		if (i == ja.length()) {
 			return null;
 		}
 		else {
@@ -111,7 +111,7 @@ public class DAOFacturaImp implements DAOFactura {
 						lineas.remove(j);
 					}
 				}
-				TDatosVenta dt = new TDatosVenta(lineas, obj.getString("id"), obj.getString("id_vendedor"), obj.getString("id_cliente"), obj.getString("fecha"));
+				TDatosVenta dt = new TDatosVenta(lineas, obj.getString("id_vendedor"), obj.getString("id_cliente"), obj.getString("fecha"));
 				return new TFactura(obj.getString("id"), obj.getDouble("precio"), dt, obj.getBoolean("activa"));
 			}
 			catch(Exception e) {
@@ -119,6 +119,7 @@ public class DAOFacturaImp implements DAOFactura {
 			}
 			
 		}
+		
     }
     
     public boolean crearFactura(TFactura fact) {
@@ -131,12 +132,6 @@ public class DAOFacturaImp implements DAOFactura {
             jo.put("fecha", fact.getFecha());
             jo.put("id", fact.getId());
             jo.put("precio", fact.getPrecio_total());
-            JSONArray lines = new JSONArray();
-            int i = 0;
-            DAOLineaFactura daol = FactoriaAbstractaIntegracion.getInstace().crearDAOLineaFactura();
-            for (TLineaFactura t : fact.getProductos()) {
-                daol.crearLineaFactura(t);
-            }
             jo.put("id_cliente", fact.getIdCliente());
             jo.put("id_vendedor", fact.getIdVendedor());
             if (fact.getActivo()) jo.put("activa", "true");
@@ -188,8 +183,8 @@ public class DAOFacturaImp implements DAOFactura {
 				}
 			}
 			
-			TDatosVenta dt = new TDatosVenta(lineas, ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getString("id_vendedor"), ja.getJSONObject(i).getString("id_cliente"), ja.getJSONObject(i).getString("fecha"));
-			resultado.add( new TFactura(ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getDouble("precio"), dt,ja.getJSONObject(i).getBoolean("activo")));
+			TDatosVenta dt = new TDatosVenta(lineas, ja.getJSONObject(i).getString("id_vendedor"), ja.getJSONObject(i).getString("id_cliente"), ja.getJSONObject(i).getString("fecha"));
+			resultado.add( new TFactura(ja.getJSONObject(i).getString("id"), ja.getJSONObject(i).getDouble("precio"), dt,ja.getJSONObject(i).getBoolean("activa")));
 			i++;
 		}
 		return resultado;

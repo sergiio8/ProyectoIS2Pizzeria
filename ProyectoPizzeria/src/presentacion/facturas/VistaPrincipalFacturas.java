@@ -59,6 +59,8 @@ public class VistaPrincipalFacturas extends JFrame implements IGUI {
 		buttonsPanel.add(abrirButton);
 		
 		esta_abierta = new JLabel("Factura sin iniciar");
+		Font font = null;
+		esta_abierta.setFont(new Font("TimesRoman", Font.ITALIC + Font.BOLD, 20));
 		buttonsPanel.add(esta_abierta);
 		
 		anadirButton = new JButton("Añadir producto a factura");

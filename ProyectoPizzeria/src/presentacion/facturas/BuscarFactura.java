@@ -1,6 +1,7 @@
 package presentacion.facturas;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class BuscarFactura extends JDialog implements IGUI{
 	JButton cancelar;
 	JPanel panel3;
 	JPanel data;
+	Box contenedor;
+	JPanel panel1;
 	
 	public BuscarFactura(Frame parent) {
 		super(parent, true);
@@ -41,13 +44,13 @@ public class BuscarFactura extends JDialog implements IGUI{
 		mainPanel.setLayout(new BorderLayout());
 		setContentPane(mainPanel);
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		Box contenedor = Box.createVerticalBox();
+		contenedor = Box.createVerticalBox();
 		
 		
 		data = new JPanel();
 		data.setLayout(new BorderLayout());
 		
-		JPanel panel1 = new JPanel(new FlowLayout());
+		panel1 = new JPanel(new FlowLayout());
 		ID = new JLabel("ID_factura: ");
 		text1 = new JTextField(10);
 		
@@ -82,7 +85,7 @@ public class BuscarFactura extends JDialog implements IGUI{
 		String ID_factura = null;
 		try {
 			ID_factura = text1.getText();
-			if (ID_factura == "") {
+			if (ID_factura == "" || ID_factura == null) {
 				throw new IllegalArgumentException();
 			}
 			Controlador.getInstance().accion(Evento.BUSCAR_FACTURA, ID_factura);
@@ -106,26 +109,33 @@ public class BuscarFactura extends JDialog implements IGUI{
 			setVisible(true);
 			break;
 		case BUSCAR_FACTURA_VISTA_OK:
-			JOptionPane.showMessageDialog(this,"Factura con ID: " + datos.toString() + " encontrada con exito" ,"Factura con ID: " + datos.toString() + " encontrada con exito" , JOptionPane.INFORMATION_MESSAGE);
+			setPreferredSize(new Dimension(450, 230));
 			TFactura tf = (TFactura) datos;
+			JOptionPane.showMessageDialog(this,"Factura con ID: " + tf.getId() + " encontrada con exito" ,"Factura con ID: " +tf.getId() + " encontrada con exito" , JOptionPane.INFORMATION_MESSAGE);
+			
 			this.ID = new JLabel("ID: " + tf.getId());
 			text1.setEnabled(false);
-			panel3.removeAll();
-			JLabel precio = new JLabel("precio:" + tf.getPrecio_total());
-			JLabel id_cliente = new JLabel("id_cliente" + tf.getIdCliente());
-			JLabel id_vendedor = new JLabel("id_vendedor" + tf.getIdVendedor());
-			String productos = "";
-			for (int i = 0; i < tf.getProductos().size(); ++i) {
-				productos += tf.getProductos().get(i).getIdProducto() + ": " + tf.getProductos().get(i).getCantidad() + " unidades" + '\n';
-			}
-			JLabel productos_label = new JLabel("productos:" + productos);
-			JLabel fecha = new JLabel("fecha: " + tf.getFecha());
 			
-			data.add(precio);
-			data.add(id_cliente);
-			data.add(id_vendedor);
-			data.add(productos_label);
-			data.add(fecha);
+			Box data_box = Box.createVerticalBox();
+			JLabel precio = new JLabel("precio: " + tf.getPrecio_total());
+			JLabel id_cliente = new JLabel("id_cliente: " + tf.getIdCliente());
+			JLabel id_vendedor = new JLabel("id_vendedor: " + tf.getIdVendedor());
+			JLabel fecha = new JLabel("fecha: " + tf.getFecha());
+			//String productos = "";
+			JLabel productos_label = new JLabel("productos: ID: " + tf.getProductos().get(0).getIdProducto() + ": " + tf.getProductos().get(0).getCantidad() + " unidades");
+			data_box.add(id_cliente);
+			data_box.add(id_vendedor);
+			data_box.add(productos_label);
+			for (int i = 1; i < tf.getProductos().size(); ++i) {
+				String productos = "ID: " + tf.getProductos().get(i).getIdProducto() + ", " + tf.getProductos().get(i).getCantidad() + " uds";
+				JLabel productos_label_2 = new JLabel("                  " + productos);
+				data_box.add(productos_label_2);
+			}
+			data_box.add(precio);
+			data_box.add(fecha);
+			panel1.add(data_box);
+			
+			panel3.removeAll();
 				
 		
 			JButton confirmButton = new JButton("Confirmar");
@@ -136,11 +146,11 @@ public class BuscarFactura extends JDialog implements IGUI{
 			revalidate();
 			repaint();
 			pack();
-			setVisible(false);
+			
 			
 			break;
 		case BUSCAR_FACTURA_VISTA_WR:
-			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "ERROR: factura no encontrada ", "ERROR: factura no encontrada", JOptionPane.ERROR_MESSAGE);
 			setVisible(false);
 			break;
 		}

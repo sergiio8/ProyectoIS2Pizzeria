@@ -167,6 +167,7 @@ public class ControladorImp extends Controlador { //implementacion
             FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_VISTA, null);
             break;
         case ALTA_INGREDIENTE:
+        	
             altaIngrediente(datos);
             break;
         case BAJA_INGREDIENTE_VISTA:
@@ -191,11 +192,12 @@ public class ControladorImp extends Controlador { //implementacion
 		TIngrediente ingrediente= (TIngrediente) datos;
 		SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
 		String nombre= saIngrediente.crear(ingrediente);
-		if(nombre.equals(null)) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_MESA_KO, nombre);
+		
+		if(nombre==null) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_KO, nombre);
 		}
 		else {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_MESA_OK, nombre);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_OK, nombre);
 		}
 	}
 	private void bajaIngrediente(Object datos) {	
@@ -313,15 +315,15 @@ public class ControladorImp extends Controlador { //implementacion
 		carrito.cerrarVenta(dt);
         boolean sol = saFact.crearFactura(dt);
         if (sol) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, dt.getid_factura());
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, dt);
 	    }
         else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, dt.getProductos().size());
 	}
 	
 	private void buscarFactura(Object datos) {
 		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
-		TFactura tf = saFact.buscarFactura((String) datos);
-		if (tf != null) FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_FACTURA_VISTA).actualizar(Evento.BUSCAR_FACTURA_VISTA_OK, (String) datos);
+		TFactura tf = saFact.buscarFactura(datos.toString());
+		if (tf != null) FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_FACTURA_VISTA).actualizar(Evento.BUSCAR_FACTURA_VISTA_OK, tf);
 		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_FACTURA_VISTA).actualizar(Evento.BUSCAR_FACTURA_VISTA_WR, tf);
 	}
 	

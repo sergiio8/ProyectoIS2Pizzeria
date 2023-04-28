@@ -26,11 +26,6 @@ private static final long serialVersionUID = 1L;
 	}
 	
 	@Override
-	public boolean isCellEditable(int col, int row) {
-		return false;
-	}
-	
-	@Override
 	public String getColumnName(int col) {
 		return header[col];
 	}
@@ -52,7 +47,7 @@ private static final long serialVersionUID = 1L;
 		else if (columnIndex == 4) {
 			String productos = "";
 			for (int i = 0; i < facturas.get(rowIndex).getProductos().size(); ++i) {
-				productos += facturas.get(rowIndex).getProductos().get(i).getIdProducto() + ": " + facturas.get(rowIndex).getProductos().get(i).getCantidad() + "unidades" + '\n';
+				productos += "ID: " + facturas.get(rowIndex).getProductos().get(i).getIdProducto() + ", " + facturas.get(rowIndex).getProductos().get(i).getCantidad() + "unidades|n";
 			}
 			return productos;
 		}

@@ -8,6 +8,10 @@ public class TFactura {
 	private double precio_total;
 	private boolean activo;
 	
+	public TFactura() {
+		
+	}
+	
 	public TFactura(String Id, double total, TDatosVenta datos, boolean Activo) {
 		id = Id;
 		precio_total = total;

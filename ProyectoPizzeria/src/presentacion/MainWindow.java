@@ -67,6 +67,7 @@ public class MainWindow extends JFrame implements IGUI{
 		ingredientesButton = new JButton("Subsistema Ingredientes");
 		ingredientesButton.addActionListener((e) -> {
 			Controlador.getInstance().accion(Evento.VISTA_PRINCIPAL_INGREDIENTE, null);
+			this.dispose();
 		});
 		buttonsPanel.add(ingredientesButton);
 		
