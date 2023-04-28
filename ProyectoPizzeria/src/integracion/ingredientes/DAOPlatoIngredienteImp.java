@@ -161,7 +161,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 
 	@Override//Lo tiene que hacer el subsistema producto
 	public boolean daDeBajaPlato(String name) {
-		// TODO Auto-generated method stub
+		//esta jodido eh?? copiando y pegando cualquiera...
 		return false;
 	}
 

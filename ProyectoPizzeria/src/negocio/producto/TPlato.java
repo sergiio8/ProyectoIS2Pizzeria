@@ -9,6 +9,7 @@ public class TPlato {
 	private String nombre;
 	private double precio;
 	private ArrayList<String> ingredientes;
+	//os vais a cagar en TODO cuando borreis esto BAAAAA, no sabeis la q se os viene
     private String descripcion;
     //private boolean puede_hacerse;
     private int stock;

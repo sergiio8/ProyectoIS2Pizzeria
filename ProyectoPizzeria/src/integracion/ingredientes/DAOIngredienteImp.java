@@ -92,7 +92,6 @@ public class DAOIngredienteImp implements DAOIngrediente{
 			jo.put("nombre", ingrediente.getNombre());
 			nombre = ingrediente.getNombre();
 			jo.put("cantidad", ingrediente.getCantidad());
-			//jo.put("platos", ingrediente.getPlatos());
 			ja.put(jo);
 		}
 		catch(Exception e1) {
