@@ -16,15 +16,13 @@ public class ITableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 1L;
 
 	private String[] columnNames= {"Nombre","Cantidad","Platos"};
-	List<TIngrediente> filas;
-	ITableModel(){
-		filas=new ArrayList<>();
-	}
+	String[] filas;
+	
 	
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return filas.size();
+		return filas.length;
 	}
 
 	@Override
@@ -43,17 +41,18 @@ public class ITableModel extends AbstractTableModel{
 		// TODO Auto-generated method stub
 		switch(columnIndex) {
 		case 0:
-			return filas.get(rowIndex).getNombre();
+			return filas[0];
 		case 1:
-			return filas.get(rowIndex).getCantidad();
+			return filas[1];
 		case 2:
+			return filas[2];
 			//return filas.get(rowIndex).getPlatosToString();
 			
 		}
 		return null;
 	}
 	
-	public void update(Object datos) {
+	public void update(Object datos) {//las filas tendran que ser un array de strings mejor
 		ArrayList<TIngrediente> a = new ArrayList<TIngrediente>((Collection<TIngrediente>) datos);
 		filas= new ArrayList<TIngrediente>((Collection<TIngrediente>) datos);
 		this.fireTableStructureChanged();

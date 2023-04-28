@@ -211,7 +211,10 @@ public class ControladorImp extends Controlador { //implementacion
             modificarIngrediente(datos);
             break;
         case LISTAR_INGREDIENTE_VISTA:
+        	String[] s;
         	Collection<TIngrediente> c= listarIngredientes();
+        	Collection<TPlatoIngrediente> p= listarPlatoIngrediente();
+        	//Falta crear el string s
         	FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_INGREDIENTE_VISTA).actualizar(Evento.LISTAR_INGREDIENTE_VISTA,c);
         	break;
 	}
@@ -442,6 +445,12 @@ public class ControladorImp extends Controlador { //implementacion
 		return c;
 		
 	}
+	private Collection<TPlatoIngrediente> listarPlatoIngrediente(){
+		SAIngrediente ingrediente=FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
+		Collection<TPlatoIngrediente> p=ingrediente.consultaTodito();
+		return p;
+	}
+	
 	
 		
 }

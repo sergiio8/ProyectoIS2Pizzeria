@@ -68,4 +68,11 @@ public class SAIngredienteImp implements SAIngrediente{
 		return a.insertarPlatoIngrediente(platoIngrediente);
 	}
 
+	@Override
+	public Collection<TPlatoIngrediente> consultaTodito() {
+		DAOPlatoIngrediente i=FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
+		
+		return i.cogerTodosIngredientes();
+	}
+
 }
