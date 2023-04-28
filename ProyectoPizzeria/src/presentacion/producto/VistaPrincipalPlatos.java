@@ -78,7 +78,7 @@ public class VistaPrincipalPlatos extends JFrame implements IGUI{
 		JButton volverBoton = new JButton("Volver");
 		volverBoton.addActionListener((e)->{
 			Controlador.getInstance().accion(Evento.MAIN_WINDOW, null);
-			this.dispose();
+			dispose();
 		});
 		volverBoton.setPreferredSize(new Dimension(100, 45));
 		

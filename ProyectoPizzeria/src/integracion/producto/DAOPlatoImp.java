@@ -152,23 +152,19 @@ public class DAOPlatoImp implements DAOPlato {
 		
 		JSONObject jo = ja.getJSONObject(i);
 		ja.remove(i);
-		if (tp.getTipo() != null){
-			jo.remove("tipo");
-			jo.put("tipo", tp.getTipo());
-		}
-		if (tp.getNombre() != null){
+		if (!tp.getNombre().equals("")){
 			jo.remove("nombre");
 			jo.put("nombre", tp.getNombre());
 		}
-		if (tp.getPrecio() != jo.getDouble("precio")) {
+		if (tp.getPrecio() != 0) {
 			jo.remove("precio");
 			jo.put("precio", tp.getPrecio());
 		}
-		if (tp.getIngredientes() != null) {
+		if (!tp.getIngredientes().get(0).equals("")) {
 			jo.remove("ingredientes");
 			jo.put("ingredientes", tp.getIngredientes());
 		}
-		if (tp.getDescripcion() != null) {
+		if (!tp.getDescripcion().equals("")) {
 			jo.remove("descripcion");
 			jo.put("descripcion", tp.getDescripcion());
 		}

@@ -29,10 +29,10 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 
 	public ModificarPlatoVista(Frame parent) {
 		super(parent, true);
-		initGUI();
+		initGUI(parent);
 	}
 	
-	private void initGUI() {
+	private void initGUI(Frame parent) {
 		setTitle("Modificar plato");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -90,7 +90,7 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 		descriptionPanel.add(descriptionText);
 		
 		contenedor.add(descriptionPanel);
-		
+		/*
 		//Tipo
 		JPanel typePanel = new JPanel();
 		JLabel typeLabel = new JLabel("Tipo: ");
@@ -113,7 +113,7 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 		typePanel.add(typeLabel);
 		typePanel.add(typeButtonPanel);
 		
-		contenedor.add(typePanel);
+		contenedor.add(typePanel);*/
 		
 		
 		//Botones
@@ -131,26 +131,15 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 			try {
 				id = idText.getText();
 				nombre = nameText.getText();
-				precio = Double.parseDouble(priceText.getText());
+				if(!priceText.getText().equals(""))
+					precio = Double.parseDouble(priceText.getText());
+				else precio = 0;
 				String[] aux = ingredientsText.getText().trim().split(",");
 				for(String s : aux)
 					ingredientes.add(s.trim());
 				descripcion = descriptionText.getText();
-				if(precio <= 0) {
-					throw new NumberFormatException();
-				}
-				if(entranteButton.isSelected()) {
-					Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, new TEntrante(id, nombre,precio,ingredientes,descripcion));
-				}
-				else if(pizzaButton.isSelected()) {
-					Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, new TPizza(id, nombre,precio,ingredientes,descripcion));
-				}
-				else if(postreButton.isSelected()) {
-					Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, new TPostre(id, nombre,precio,ingredientes,descripcion));
-				}
-				else {
-					throw new IllegalArgumentException();
-				}				
+				
+				Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, new TEntrante(id, nombre,precio,ingredientes,descripcion));			
 			}
 			catch(NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(ModificarPlatoVista.this, "ERROR: El precio del plato debe ser un numero positivo", "ERROR: El precio del plato debe ser un numero positivo", JOptionPane.ERROR_MESSAGE);
@@ -173,7 +162,7 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 		
 		pack();
 		setResizable(false);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(parent);
 	}
 	
 	@Override
@@ -183,7 +172,7 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 			setVisible(true);
 			break;
 		case MODIFICAR_PLATO_OK:
-			JOptionPane.showMessageDialog(this, "Plato con id: " + datos.toString() + " modificado", "Plato con id: " + datos.toString() + " modificado", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Plato modificado", "Plato con id: modificado", JOptionPane.INFORMATION_MESSAGE);
 			setVisible(false);
 			break;
 		case MODIFICAR_PLATO_KO:
