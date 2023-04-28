@@ -56,28 +56,6 @@ public class VistaPrincipalFacturas extends JFrame implements IGUI {
 			Controlador.getInstance().accion(Evento.VISTA_FACTURA_EN_PROCESO, null);
 		});
 		buttonsPanel.add(abrirButton);
-		
-		/*anadirButton = new JButton("Añadir producto a factura");
-		anadirButton.addActionListener((e) -> {
-			if (esta_abierta.getText().equals("Factura en proceso")) {
-				if (first) {
-					first = false;
-					Controlador.getInstance().accion(Evento.ANADIR_PRODUCTO_VISTA_BIS, null);
-				}
-				else Controlador.getInstance().accion(Evento.ANADIR_PRODUCTO_VISTA, null);
-			}
-			else JOptionPane.showMessageDialog(this,"ERROR: Debe abrir una venta antes de añadir productos","ERROR" , JOptionPane.INFORMATION_MESSAGE);
-		});
-		buttonsPanel.add(anadirButton);*/
-		
-		
-		/*altaButton = new JButton("Cerrar factura");
-		altaButton.addActionListener((e)->{
-			Controlador.getInstance().accion(Evento.ALTA_FACTURA_VISTA, null);
-			esta_abierta.setText("Factura cerrada");
-			first = true;
-		});
-		buttonsPanel.add(altaButton);*/
 
 		
 		listarButton = new JButton("Listar facturas");
