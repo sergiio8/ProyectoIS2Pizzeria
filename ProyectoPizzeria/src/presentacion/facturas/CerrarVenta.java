@@ -29,7 +29,6 @@ public class CerrarVenta extends JDialog implements IGUI{
 	JTextField text2;
 	JTextField text3;
 	JTextField text4;
-	String ID;
 	
 	public CerrarVenta(Frame parent) {
 		super(parent, true);
@@ -48,8 +47,6 @@ public class CerrarVenta extends JDialog implements IGUI{
 		JPanel panel1 = new JPanel(new FlowLayout());
 		JLabel ID_factura = new JLabel("ID_factura: ");
 		text1 = new JTextField(10);
-		text1.setText(ID);
-		text1.setEnabled(false);
 		
 		panel1.add(ID_factura);
 		panel1.add(text1);
@@ -139,7 +136,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 			initGUI();
 			break;
 		case ALTA_FACTURA_VISTA_WR:
-			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "ERROR: La factura con ID " + text1.getText() + "es vacía o ya está creada", "ERROR:", JOptionPane.ERROR_MESSAGE);
 			setVisible(false);
 			break;
 		}

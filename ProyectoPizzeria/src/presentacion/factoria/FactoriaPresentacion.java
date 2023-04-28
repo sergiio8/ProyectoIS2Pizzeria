@@ -25,6 +25,7 @@ import presentacion.facturas.AnadirProducto;
 import presentacion.facturas.BuscarFactura;
 import presentacion.facturas.CerrarVenta;
 import presentacion.facturas.ListarFacturas;
+import presentacion.facturas.VistaFacturaEnProceso;
 import presentacion.facturas.VistaPrincipalFacturas;
 import presentacion.ingredientes.VistaAnadirIngrediente;
 import presentacion.ingredientes.VistaEliminar;
@@ -52,6 +53,7 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 	private IGUI vistaBuscarFactura = null;
 	private IGUI vistaAnadirProducto = null;
 	private IGUI vistaListarFacturas = null;
+	private IGUI vistaFacturaEnProceso = null;
 	private IGUI vistaEliminarIngrediente = null;
 	private IGUI vistaAnadirIngrediente = null;
 	private IGUI vistaModificarIngrediente = null;
@@ -116,6 +118,9 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 		case VISTA_PRINCIPAL_FACTURA:
 			this.vistaPrincipalFactura = new VistaPrincipalFacturas();
 			return vistaPrincipalFactura;
+		case VISTA_FACTURA_EN_PROCESO:
+			this.vistaFacturaEnProceso = new VistaFacturaEnProceso((Frame) vistaPrincipalFactura);
+			return vistaFacturaEnProceso;
 		case ALTA_FACTURA_VISTA:
 			if (vistaAltaFactura == null) {
 				vistaAltaFactura = new CerrarVenta((Frame) vistaPrincipalFactura);

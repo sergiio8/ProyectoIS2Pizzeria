@@ -82,6 +82,9 @@ public class ControladorImp extends Controlador { //implementacion
 		case VISTA_PRINCIPAL_FACTURA:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_FACTURA);
 			break;
+		case VISTA_FACTURA_EN_PROCESO:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_FACTURA_EN_PROCESO);
+			break;
         case ALTA_FACTURA_VISTA:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA, null);
 			break;
@@ -363,7 +366,7 @@ public class ControladorImp extends Controlador { //implementacion
         if (sol) {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, dt);
 	    }
-        else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, dt.getProductos().size());
+        else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, dt);
 	}
 	
 	private void buscarFactura(Object datos) {
