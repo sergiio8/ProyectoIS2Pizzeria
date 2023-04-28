@@ -9,6 +9,7 @@ public interface SAIngrediente {
 	//public void anyadirPlato(String plato,String nombre);
 	boolean modificar (TIngrediente ingrediente);
 	String crear(TIngrediente ingrediente);
+	boolean crear(TPlatoIngrediente platoIngrediente);
 	//void comprar();
 	//String[] mostrar(); Esto en vd a partir del consulta todos ya lo tienes
 	//boolean usar(int cantidad,String nombre);

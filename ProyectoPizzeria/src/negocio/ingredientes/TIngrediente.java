@@ -11,14 +11,14 @@ public class TIngrediente {
 		this.nombre = nombre;
 	}
 	
-	public TIngrediente(String nombre, int cantidad, String[] platos) {
-		this.platos = platos;
+	public TIngrediente(String nombre, int cantidad) {
+		//this.platos = platos;
 		this.cantidad = cantidad;
 		this.nombre = nombre;
 		//activo = true;
 	}
 	
-	public String getPlatosToString() {
+	/*public String getPlatosToString() {
 		String s = "{ ";
 		for(int i=0; i<platos.length; i++) {
 			s+=platos[i];
@@ -26,7 +26,7 @@ public class TIngrediente {
 		}
 		s+=" }";
 		return s;
-	}
+	}*/
 	
 	public String getNombre() {
 		return nombre;
@@ -34,9 +34,9 @@ public class TIngrediente {
 	public int getCantidad() {
 		return cantidad;
 	}
-	public String[] getPlatos() {
+	/*public String[] getPlatos() {
 		return platos;
-	}
+	}*/
 	/*public boolean getActivo() {
 		return activo;
 	}*/
@@ -46,9 +46,9 @@ public class TIngrediente {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	public void setPlatos(String[] platos) {
+	/*public void setPlatos(String[] platos) {
 		this.platos = platos;
-	}
+	}*/
 	/*public void setActivo(boolean activo) {
 		this.activo = activo;
 	}*/

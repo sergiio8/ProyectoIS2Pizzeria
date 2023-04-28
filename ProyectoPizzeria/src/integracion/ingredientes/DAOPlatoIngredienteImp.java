@@ -74,6 +74,8 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
 			JSONObject jo = new JSONObject();
+			
+			//NO SE COMO BUSCAR SI ESTABA YA PREVIAMENTE O NO
 			jo.put("idPlato", platoIngrediente.getidPlato());
 			jo.put("nombreIngrediente", platoIngrediente.getnombreIngrediente());
 			ja.put(jo);

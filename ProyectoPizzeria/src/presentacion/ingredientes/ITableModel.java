@@ -47,7 +47,7 @@ public class ITableModel extends AbstractTableModel{
 		case 1:
 			return filas.get(rowIndex).getCantidad();
 		case 2:
-			return filas.get(rowIndex).getPlatosToString();
+			//return filas.get(rowIndex).getPlatosToString();
 			
 		}
 		return null;

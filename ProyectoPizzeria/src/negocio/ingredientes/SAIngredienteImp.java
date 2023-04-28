@@ -31,11 +31,12 @@ public class SAIngredienteImp implements SAIngrediente{
 		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
 		return ingrediente.modificaIngrediente(ing);
 	}
-
+	
 	@Override
-	public String crear(TIngrediente nuevoIngrediente) {
+	public String crear(TIngrediente nuevoIngrediente) {//Falta usar la clase ingrediente plato para cuando creas un ingrediente
 		String nombre =null;
 		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
+		
 		try {
 			TIngrediente ing= ingrediente.cogerIngrediente(nuevoIngrediente.getNombre());
 			if(ing==null) {
@@ -58,6 +59,13 @@ public class SAIngredienteImp implements SAIngrediente{
 	public TIngrediente consulta(String nombre) {
 		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
 		return ingrediente.cogerIngrediente(nombre);
+	}
+
+	@Override
+	public boolean crear(TPlatoIngrediente platoIngrediente) {
+		DAOPlatoIngrediente a= FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
+		
+		return a.insertarPlatoIngrediente(platoIngrediente);
 	}
 
 }

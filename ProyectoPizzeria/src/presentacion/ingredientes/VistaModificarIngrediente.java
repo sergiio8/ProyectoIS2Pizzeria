@@ -147,7 +147,7 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 		        
 		        platos= aux.split(",");
 			}
-			Controlador.getInstance().accion(Evento.MODIFICAR_INGREDIENTE, new TIngrediente(nombre,cantidad,platos));
+			Controlador.getInstance().accion(Evento.MODIFICAR_INGREDIENTE, new TIngrediente(nombre,cantidad));
 			setVisible(false);
 		}
 		catch (NumberFormatException nfe) {

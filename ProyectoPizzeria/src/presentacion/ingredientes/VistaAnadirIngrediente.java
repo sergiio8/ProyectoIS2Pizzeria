@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar.Separator;
 
 import negocio.ingredientes.TIngrediente;
+import negocio.ingredientes.TPlatoIngrediente;
 import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
@@ -109,7 +110,11 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 	        
 	        platos= aux.split(",");
 	        
-			Controlador.getInstance().accion(Evento.ALTA_INGREDIENTE, new TIngrediente(nombre,cantidad,platos));
+			Controlador.getInstance().accion(Evento.ALTA_INGREDIENTE, new TIngrediente(nombre,cantidad));
+			for(String s: platos) {
+				Controlador.getInstance().accion(Evento.ALTA_PLATOINGREDIENTE, new TPlatoIngrediente(s,nombre));
+			}
+			
 			setVisible(false);
 		}
 		catch (NumberFormatException nfe) {

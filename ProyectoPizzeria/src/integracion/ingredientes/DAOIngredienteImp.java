@@ -87,7 +87,7 @@ public class DAOIngredienteImp implements DAOIngrediente{
 			jo.put("nombre", ingrediente.getNombre());
 			nombre = ingrediente.getNombre();
 			jo.put("cantidad", ingrediente.getCantidad());
-			jo.put("platos", ingrediente.getPlatos());
+			//jo.put("platos", ingrediente.getPlatos());
 			ja.put(jo);
 		}
 		catch(Exception e1) {
@@ -138,7 +138,7 @@ public class DAOIngredienteImp implements DAOIngrediente{
 		       platos[j] = ja.getJSONObject(k).getJSONArray("platos").getString(j);
 		       //System.out.println(ja.getJSONObject(k).getJSONArray("platos").getString(j));
 		    }
-		    TIngrediente ingrediente = new TIngrediente(ja.getJSONObject(k).getString("nombre"), ja.getJSONObject(k).getInt("cantidad"), platos);
+		    TIngrediente ingrediente = new TIngrediente(ja.getJSONObject(k).getString("nombre"), ja.getJSONObject(k).getInt("cantidad"));
 		    l.add(ingrediente);
 		}
 		return l;
@@ -175,7 +175,7 @@ public class DAOIngredienteImp implements DAOIngrediente{
 	            aux+=ja.getJSONObject(i).getString("platos").charAt(j);
 	        }
 	        String[] platos= aux.split(",");
-			TIngrediente ingrediente = new TIngrediente(nombre, ja.getJSONObject(i).getInt("cantidad"), platos);
+			TIngrediente ingrediente = new TIngrediente(nombre, ja.getJSONObject(i).getInt("cantidad"));
 			return ingrediente;
 		}
 	}
