@@ -109,6 +109,9 @@ public class ControladorImp extends Controlador { //implementacion
 		case ABRIR_VENTA:
 			abrirVenta(datos);
 			break;
+		case VISTA_PRINCIPAL_CLIENTES:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_CLIENTES);
+			break;
 		case BUSCA_CLIENTE:
 			buscarCliente(datos);
 			break;
@@ -118,6 +121,24 @@ public class ControladorImp extends Controlador { //implementacion
 			break;
 		case REGISTRO_DE_CLIENTE:
 			registroCliente(datos);
+			break;
+		case VISTA_MODIFICAR_CLIENTE:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_CLIENTE_LOGUEADO).actualizar(Evento.VISTA_MODIFICAR_CLIENTE, null);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_MODIFICAR_CLIENTE).actualizar(Evento.VISTA_MODIFICAR_CLIENTE, datos);
+			break;
+		case MODIFICAR_CLIENTE:
+			modificarCliente(datos);
+			break;
+		case VISTA_CLIENTE_LOGUEADO:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_MODIFICAR_CLIENTE).actualizar(Evento.VISTA_CLIENTE_LOGUEADO, null);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_CLIENTE_LOGUEADO).actualizar(Evento.VISTA_CLIENTE_LOGUEADO, datos);
+			break;
+		case BAJA_CLIENTE:
+			bajaCliente(datos);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_CLIENTE_LOGUEADO).actualizar(Evento.BAJA_CLIENTE, null);
+			break;
+		case CONSULTAR_DATOS_CLIENTE:
+			consultarCliente(datos);
 			break;
 		case VISTA_PRINCIPAL_PLATO:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_PLATO);
@@ -362,7 +383,7 @@ public class ControladorImp extends Controlador { //implementacion
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento. VISTA_PRINCIPAL_CLIENTES).actualizar(Evento.CLIENTE_NO_REGISTRADO, datos);
 		}
 		else {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_CLIENTE_REGISTRADO).actualizar(Evento.CLIENTE_LOGUEADO, datos);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_CLIENTE_LOGUEADO).actualizar(Evento.VISTA_CLIENTE_LOGUEADO, datos);
 			
 		}
 	}
@@ -377,6 +398,23 @@ public class ControladorImp extends Controlador { //implementacion
 			infoCliente.alta(cliente);
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_REGISTRO_DE_CLIENTE).actualizar(Evento.CLIENTE_REGISTRADO, cliente.getId());
 		}
+	}
+	
+	private void modificarCliente (Object datos) {
+		TCliente cliente = (TCliente)datos;
+		SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
+		infoCliente.modificar(cliente);
+	}
+	
+	private void bajaCliente(Object datos) {
+		SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
+		infoCliente.borrar((String)datos);
+	}
+	
+	private void consultarCliente(Object datos) {
+		SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
+		TCliente cliente = infoCliente.consulta((String)datos); 
+		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_CLIENTE_LOGUEADO).actualizar(Evento.CONSULTAR_DATOS_CLIENTE, cliente);
 	}
 	private Collection<TIngrediente> listarIngredientes(){
 		SAIngrediente ingrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();

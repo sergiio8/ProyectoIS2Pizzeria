@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,21 +16,20 @@ import negocio.clientes.TCliente;
 import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
+import presentacion.factoria.FactoriaAbstractaPresentacion;
 
-public class VistaRegistrarCliente extends JDialog implements IGUI{
+public class VistaModificarCliente extends JDialog implements IGUI{
+
 	private JLabel lNombre;
 	private JTextField tNombre;
 	private JLabel lAp;
 	private JTextField tAp;
-	private JLabel lId;
-	private JTextField tId;
 	private JButton ok;
 	private JButton cancel;
+	private String id;
 	
-	
-	public VistaRegistrarCliente(Frame parent) {
+	public VistaModificarCliente(Frame parent){
 		super(parent, true);
-		this.setTitle("REGISTRO");
 		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -44,7 +42,7 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 		lNombre.setText("Nombre: ");
 		p1.add(lNombre);
 		
-		tNombre = new JTextField(15);
+		tNombre = new JTextField();
 		p1.add(tNombre);
 		mainPanel.add(p1);
 		
@@ -55,21 +53,10 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 		lAp.setText("Apellidos: ");
 		p2.add(lAp);
 		
-		tAp = new JTextField(15);
+		tAp = new JTextField();
 		p2.add(tAp);
 		mainPanel.add(p2);
 		
-		
-		JPanel p3 = new JPanel();
-		p3.setAlignmentX(CENTER_ALIGNMENT);
-		
-		lId = new JLabel();
-		lId.setText("Id (NIF): ");
-		p3.add(lId);
-		
-		tId = new JTextField(15);
-		p3.add(tId);
-		mainPanel.add(p3);
 		
 		JPanel buttonp1 = new JPanel();
 		buttonp1.setAlignmentX(CENTER_ALIGNMENT);
@@ -82,11 +69,11 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(tId.getText().isEmpty() || tNombre.getText().isEmpty() || tAp.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(VistaRegistrarCliente.this, "Es necesario rellenar todos los datos", "Falta de datos", JOptionPane.ERROR_MESSAGE);
+				if(tNombre.getText().isEmpty() || tAp.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(VistaModificarCliente.this, "Es necesario rellenar todos los datos", "Falta de datos", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					Controlador.getInstance().accion(Evento.REGISTRO_DE_CLIENTE, new TCliente(tId.getText().toString(),tNombre.getText().toString() , tAp.getText().toString() ));
+					Controlador.getInstance().accion(Evento.MODIFICAR_CLIENTE, new TCliente(VistaModificarCliente.this.id,tNombre.getText().toString() , tAp.getText().toString() ));
 				}
 			}
 			
@@ -101,7 +88,7 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-					VistaRegistrarCliente.this.setVisible(false);
+				Controlador.getInstance().accion(Evento.VISTA_CLIENTE_LOGUEADO, VistaModificarCliente.this.id);
 			}
 			
 		});
@@ -110,6 +97,7 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 		mainPanel.add(buttonp1);
 		
 		add(mainPanel);
+		
 		pack();
 		setResizable(false);
 		setLocationRelativeTo(parent);
@@ -119,24 +107,18 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 	
 	
 	
-	
-	
 	@Override
 	public void actualizar(Evento e, Object datos) {
 		// TODO Auto-generated method stub
 		switch(e) {
-		case VISTA_REGISTRO_DE_CLIENTE:
+		case VISTA_MODIFICAR_CLIENTE:
 			this.setVisible(true);
+			this.setTitle("Modificar cliente con id: " + (String)datos);
+			this.id = (String)datos;
 			break;
-		case CLIENTE_YA_REGISTRADO:
-			JOptionPane.showMessageDialog(this, "El cliente con id" + datos.toString() + "ya ha sido registrado", "Cliente ya registrado", JOptionPane.ERROR_MESSAGE);
-			setVisible(false);
-			break;
-		case CLIENTE_REGISTRADO:
-			JOptionPane.showMessageDialog(this, "El cliente con id" + datos.toString() + "ha sido registrado con éxito", "Cliente registrado", JOptionPane.INFORMATION_MESSAGE);
-			setVisible(false);
+		case VISTA_CLIENTE_LOGUEADO:
+			this.setVisible(false);
 		}
-		
 		
 	}
 
