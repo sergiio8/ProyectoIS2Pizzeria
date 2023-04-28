@@ -109,7 +109,7 @@ public class BuscarFactura extends JDialog implements IGUI{
 			setVisible(true);
 			break;
 		case BUSCAR_FACTURA_VISTA_OK:
-			setPreferredSize(new Dimension(450, 220));
+			setPreferredSize(new Dimension(450, 230));
 			TFactura tf = (TFactura) datos;
 			JOptionPane.showMessageDialog(this,"Factura con ID: " + tf.getId() + " encontrada con exito" ,"Factura con ID: " +tf.getId() + " encontrada con exito" , JOptionPane.INFORMATION_MESSAGE);
 			
@@ -120,19 +120,20 @@ public class BuscarFactura extends JDialog implements IGUI{
 			JLabel precio = new JLabel("precio: " + tf.getPrecio_total());
 			JLabel id_cliente = new JLabel("id_cliente: " + tf.getIdCliente());
 			JLabel id_vendedor = new JLabel("id_vendedor: " + tf.getIdVendedor());
-			String productos = "";
-			for (int i = 0; i < tf.getProductos().size(); ++i) {
-				productos += tf.getProductos().get(i).getIdProducto() + ": " + tf.getProductos().get(i).getCantidad() + " unidades" + System.lineSeparator();
-			}
-			JLabel productos_label = new JLabel("productos:" + productos);
 			JLabel fecha = new JLabel("fecha: " + tf.getFecha());
-			
-			
+			//String productos = "";
+			JLabel productos_label = new JLabel("productos: ID: " + tf.getProductos().get(0).getIdProducto() + ": " + tf.getProductos().get(0).getCantidad() + " unidades");
 			data_box.add(id_cliente);
 			data_box.add(id_vendedor);
 			data_box.add(productos_label);
-			data_box.add(fecha);
+			for (int i = 1; i < tf.getProductos().size(); ++i) {
+				String productos = "ID: " + tf.getProductos().get(i).getIdProducto() + ", " + tf.getProductos().get(i).getCantidad() + " uds";
+				JLabel productos_label_2 = new JLabel("                  " + productos);
+				data_box.add(productos_label_2);
+			}
+			//JLabel productos_label = new JLabel("productos:" + productos);
 			data_box.add(precio);
+			data_box.add(fecha);
 			panel1.add(data_box);
 			
 			panel3.removeAll();
