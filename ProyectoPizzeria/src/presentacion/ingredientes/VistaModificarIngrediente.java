@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -20,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import negocio.ingredientes.Pair;
 import negocio.ingredientes.TIngrediente;
 import presentacion.Evento;
 import presentacion.IGUI;
@@ -30,12 +33,12 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 	
 	private JTextField nombreText;
 	private JRadioButton botonCantidad;
-	private JRadioButton botonPlatos;
+	private JRadioButton botonNombre;
 	private JRadioButton botonAmbos;
 	private JLabel lCantidad;
-	private JLabel lPlatos;
+	private JLabel lNombre;
 	private JTextField tCantidad;
-	private JTextField tPlatos;
+	private JTextField tNombre;
 	
 	public VistaModificarIngrediente(Frame parent){
 		initGUI(parent);
@@ -66,29 +69,29 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 		botonCantidad.addActionListener((e) -> {
 			lCantidad.setVisible(true);
 			tCantidad.setVisible(true);
-			lPlatos.setVisible(false);
-			tPlatos.setVisible(false);
+			lNombre.setVisible(false);
+			tNombre.setVisible(false);
 		});
-		botonPlatos = new JRadioButton("Platos");
-		botonPlatos.addActionListener((e) -> {
+		botonNombre = new JRadioButton("Nombre");
+		botonNombre.addActionListener((e) -> {
 			lCantidad.setVisible(false);
 			tCantidad.setVisible(false);
-			lPlatos.setVisible(true);
-			tPlatos.setVisible(true);
+			lNombre.setVisible(true);
+			tNombre.setVisible(true);
 		});
 		botonAmbos = new JRadioButton("Ambos");
 		botonAmbos.addActionListener((e) -> {
 			lCantidad.setVisible(true);
 			tCantidad.setVisible(true);
-			lPlatos.setVisible(true);
-			tPlatos.setVisible(true);
+			lNombre.setVisible(true);
+			tNombre.setVisible(true);
 		});
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(botonCantidad);
-		bg.add(botonPlatos);
+		bg.add(botonNombre);
 		bg.add(botonAmbos);
 		panelBotones.add(botonCantidad);
-		panelBotones.add(botonPlatos);
+		panelBotones.add(botonNombre);
 		panelBotones.add(botonAmbos);
 		primerPanel.add(panelBotones);
 		
@@ -100,11 +103,11 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 		tCantidad.setPreferredSize(new Dimension(80,20));
 		segundoPanel.add(tCantidad);
 		
-		lPlatos = new JLabel("Nuevos platos (formato {pizza, pasta}):");
-		segundoPanel.add(lPlatos);
-		tPlatos = new JTextField();
-		tPlatos.setPreferredSize(new Dimension(80,20));
-		segundoPanel.add(tPlatos);
+		lNombre = new JLabel("Nuevo nombre:");
+		segundoPanel.add(lNombre);
+		tNombre = new JTextField();
+		tNombre.setPreferredSize(new Dimension(80,20));
+		segundoPanel.add(tNombre);
 		
 		JPanel tercerPanel = new JPanel(new FlowLayout());
 		JButton ok = new JButton("Ok");
@@ -126,11 +129,11 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 	private void ok() {
 		String nombre;
 		int cantidad = -1;
-		String[]platos = null;
+		String nuevoNombre;
 		try {
 			nombre=nombreText.getText();
 			if(nombre.equals("")) {
-				throw new IllegalArgumentException("Alejandro matricula YA");
+				throw new IllegalArgumentException("Error en el nombre del ingrediente");
 			}
 			if(botonCantidad.isSelected() || botonAmbos.isSelected()) {
 				cantidad= Integer.parseInt(tCantidad.getText());
@@ -138,26 +141,26 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 					throw new NumberFormatException();
 				}
 			}
-			if(botonPlatos.isSelected() || botonAmbos.isSelected()) {
-				String aux="";
-				
-		        for (int j=1; j<tPlatos.getText().length()-1;j++) {
-		            aux+=tPlatos.getText().charAt(j);
-		        }
-		        
-		        platos= aux.split(",");
+			if(botonNombre.isSelected() || botonAmbos.isSelected()) {
+		        nuevoNombre = tNombre.getText();
+		        if(nuevoNombre.equals("")) {
+					throw new IllegalArgumentException("Error en el nuevo nombre del ingrediente");
+				}
 			}
-			Controlador.getInstance().accion(Evento.MODIFICAR_INGREDIENTE, new TIngrediente(nombre,cantidad));
+			else nuevoNombre = nombre;
+			tNombre.setText("");
+			tCantidad.setText("");
+			Controlador.getInstance().accion(Evento.MODIFICAR_INGREDIENTE, new Pair<String,TIngrediente>(nombre, new TIngrediente(nuevoNombre,cantidad)));
 			setVisible(false);
 		}
 		catch (NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(VistaModificarIngrediente.this, "ERROR: Error en la cantidad introducida","ERROR: Error en la cantidad introducida", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (IllegalArgumentException a) {
-			JOptionPane.showMessageDialog(VistaModificarIngrediente.this, "ERROR: Error en el nombre del ingrediente","ERROR: Error en el nombre del ingrediente", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(VistaModificarIngrediente.this, "ERROR: "+a.getMessage(),"ERROR: "+a.getMessage(), JOptionPane.ERROR_MESSAGE);
 		}
 		catch(Exception e) {
-			JOptionPane.showMessageDialog(VistaModificarIngrediente.this, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(VistaModificarIngrediente.this, e.getMessage(), e.getMessage(),JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	private void volver() {
@@ -170,8 +173,8 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 		case MODIFICAR_INGREDIENTE_VISTA:
 			lCantidad.setVisible(false);
 			tCantidad.setVisible(false);
-			lPlatos.setVisible(false);
-			tPlatos.setVisible(false);
+			lNombre.setVisible(false);
+			tNombre.setVisible(false);
 			setVisible(true);
 			break;
 		case MODIFICAR_INGREDIENTE_OK:

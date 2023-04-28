@@ -6,7 +6,7 @@ public interface SAIngrediente {
 	public boolean borrar(String name);
 	//public void tirar(int cantidad);
 	//public void anyadirPlato(String plato,String nombre);
-	boolean modificar (TIngrediente ingrediente);
+	boolean modificar (Pair<String,TIngrediente> p);
 	String crear(TIngrediente ingrediente);
 	boolean crear(TPlatoIngrediente platoIngrediente);
 	Collection<TPlatoIngrediente> consultaTodito();

@@ -48,8 +48,6 @@ public class VistaListarIngredientes extends JDialog implements IGUI{
 		//String[][] data = new String[arraydeingrediestes.size()][3]
 		//for de i(recorrer la lista de ingredientes) j(las tres columnas) para rellenar el data
 		
-		//tabla para listar
-		
 		pack();
 		setResizable(false);
 		setLocationRelativeTo(parent);

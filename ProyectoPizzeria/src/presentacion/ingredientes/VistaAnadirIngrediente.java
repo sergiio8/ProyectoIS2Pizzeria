@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -102,16 +104,25 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 			if(cantidad<0) {
 				throw new NumberFormatException();
 			}
-			String aux="";
+			/*String aux="";
 			
 	        for (int j=1; j<t3.getText().length()-1;j++) {
 	            aux+=t3.getText().charAt(j);
 	        }
 	        
-	        platos= aux.split(",");
+	        platos= aux.split(",");*/
+			List<String> l = new ArrayList<String>();
+			for (int j=1; j<t3.getText().length()-1;j++) {
+				String aux="";
+				while(j<t3.getText().length()-1 && t3.getText().charAt(j) != ',') {
+					aux+=t3.getText().charAt(j);
+					j++;
+				}
+				l.add(aux);
+	        }
 	        
 			Controlador.getInstance().accion(Evento.ALTA_INGREDIENTE, new TIngrediente(nombre,cantidad));
-			for(String s: platos) {
+			for(String s: l) {
 				Controlador.getInstance().accion(Evento.ALTA_PLATOINGREDIENTE, new TPlatoIngrediente(s,nombre));
 			}
 			

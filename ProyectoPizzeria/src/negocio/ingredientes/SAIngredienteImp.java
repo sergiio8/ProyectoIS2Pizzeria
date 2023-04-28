@@ -15,8 +15,8 @@ public class SAIngredienteImp implements SAIngrediente{
 		DAOIngrediente ingrediente=FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
 		DAOPlatoIngrediente platoIngrediente=FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
 		DAOPlato plato= FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
-		if(ingrediente.daDeBajaIngrediente(name)) {
-			ArrayList<TPlatoIngrediente> lista= new ArrayList(platoIngrediente.cogerTodosIngredientes());
+		if(ingrediente.daDeBajaIngrediente(name).getFirst()) {
+			ArrayList<TPlatoIngrediente> lista= new ArrayList<TPlatoIngrediente>(platoIngrediente.cogerTodosIngredientes());
 			for(TPlatoIngrediente p:lista) {
 				plato.daDeBajaPlato(p.getidPlato());
 			}
@@ -27,9 +27,16 @@ public class SAIngredienteImp implements SAIngrediente{
 	}
 
 	@Override
-	public boolean modificar(TIngrediente ing) {
+	public boolean modificar(Pair<String,TIngrediente> p) {
 		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
-		return ingrediente.modificaIngrediente(ing);
+		if(ingrediente.modificaIngrediente(p)) {
+			if(!p.getFirst().equals(p.getSecond().getNombre())) {
+				DAOPlatoIngrediente platoIngrediente = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
+				platoIngrediente.modificaIngrediente(p.getFirst(), p.getSecond().getNombre());
+			}
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
@@ -64,14 +71,12 @@ public class SAIngredienteImp implements SAIngrediente{
 	@Override
 	public boolean crear(TPlatoIngrediente platoIngrediente) {
 		DAOPlatoIngrediente a= FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
-		
 		return a.insertarPlatoIngrediente(platoIngrediente);
 	}
 
 	@Override
 	public Collection<TPlatoIngrediente> consultaTodito() {
 		DAOPlatoIngrediente i=FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
-		
 		return i.cogerTodosIngredientes();
 	}
 

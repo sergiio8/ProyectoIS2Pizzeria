@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,7 +20,8 @@ import negocio.producto.TPlato;
 public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 
 	@Override
-	public void daDeBajaIngrediente(String name) {
+	public List<String> daDeBajaIngrediente(String name) {
+		List<String> s = new ArrayList<String>();
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){ //idea mandar excepciones y tratarlas en controlador
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
@@ -39,7 +41,9 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 
 		for(int i=0; i<ja.length();i++) {
 			if(ja.getJSONObject(i).getString("nombreIngrediente").equals(name)) {
+				s.add(ja.getJSONObject(i).getString("idPlato"));
 				ja.remove(i);
+				i--;
 			}
 		}
 		
@@ -57,15 +61,18 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 		
 		
 		
-		
+		return s;
 
 	}
 
-	/*@Override//NO se si sera necesario
-	public boolean modificaIngrediente(TIngrediente ingrediente) {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
+	@Override
+	public void modificaIngrediente(String nombreAntiguo, String nombreNuevo) {
+		List<String> ids = daDeBajaIngrediente(nombreAntiguo);
+		if(ids.size()!=0) {
+			for(String id: ids)
+				insertarPlatoIngrediente(new TPlatoIngrediente(id, nombreNuevo));
+		}
+	}
 
 	@Override
 	public boolean insertarPlatoIngrediente(TPlatoIngrediente platoIngrediente) {
@@ -86,7 +93,6 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 			JSONObject jo2 = new JSONObject();
 			jo2.put("ListaPlatoIngrediente", ja);
 			bw.write(jo2.toString());
-			System.out.println("a");
 		} 
 		catch(Exception e2) {
 			return false;
@@ -115,7 +121,6 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 		
 		Collection<TPlatoIngrediente> l = new ArrayList<TPlatoIngrediente>();
 		for(int k = 0; k<ja.length(); k++) {
-			
 		    TPlatoIngrediente ingrediente = new TPlatoIngrediente(ja.getJSONObject(k).getString("idPlato"), ja.getJSONObject(k).getString("nombreIngrediente"));
 		    l.add(ingrediente);
 		}

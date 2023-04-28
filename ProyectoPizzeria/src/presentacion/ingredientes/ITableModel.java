@@ -6,7 +6,11 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.json.JSONObject;
+
+import negocio.ingredientes.Pair;
 import negocio.ingredientes.TIngrediente;
+import negocio.ingredientes.TPlatoIngrediente;
 
 public class ITableModel extends AbstractTableModel{
 
@@ -16,13 +20,16 @@ public class ITableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 1L;
 
 	private String[] columnNames= {"Nombre","Cantidad","Platos"};
-	String[] filas;
+	List<List<String>> datos;
 	
+	public ITableModel() {
+		datos = new ArrayList<>();
+	}
 	
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return filas.length;
+		return datos.size();
 	}
 
 	@Override
@@ -38,25 +45,32 @@ public class ITableModel extends AbstractTableModel{
 	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		switch(columnIndex) {
-		case 0:
-			return filas[0];
-		case 1:
-			return filas[1];
-		case 2:
-			return filas[2];
-			//return filas.get(rowIndex).getPlatosToString();
-			
-		}
-		return null;
+		return datos.get(rowIndex).get(columnIndex);
 	}
 	
-	public void update(Object datos) {//las filas tendran que ser un array de strings mejor
-		ArrayList<TIngrediente> a = new ArrayList<TIngrediente>((Collection<TIngrediente>) datos);
-		filas= new ArrayList<TIngrediente>((Collection<TIngrediente>) datos);
+	public void update(Object datos) {
+		Pair pair = (Pair)datos;
+		List<TIngrediente> ingredientes = (List<TIngrediente>) pair.getFirst();
+		List<TPlatoIngrediente> platoIngredientes = (List<TPlatoIngrediente>) pair.getSecond();
+		for(TIngrediente ing : ingredientes) {
+			List<String> aux = new ArrayList<String>();
+			aux.add(ing.getNombre());
+			aux.add(String.valueOf(ing.getCantidad()));
+			aux.add(idsPlatos(platoIngredientes, ing.getNombre()));
+			this.datos.add(aux);
+		}
 		this.fireTableStructureChanged();
+	}
 	
-}
+	private String idsPlatos(List<TPlatoIngrediente> platoIngredientes, String nombre) {
+		String s = "{ ";
+		for(TPlatoIngrediente pi : platoIngredientes) {
+			if(pi.getnombreIngrediente().equals(nombre)) s+=pi.getidPlato()+", ";
+		}
+		if(s.length() > 2)
+			s = s.substring(0, s.length()-2);
+		s+=" }";
+		return s;
+	}
 	
 }

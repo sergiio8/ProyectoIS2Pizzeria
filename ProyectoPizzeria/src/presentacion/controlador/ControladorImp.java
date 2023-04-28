@@ -12,6 +12,7 @@ import negocio.facturas.SAFactura;
 import negocio.facturas.TDatosVenta;
 import negocio.facturas.TFactura;
 import negocio.facturas.TLineaFactura;
+import negocio.ingredientes.Pair;
 import negocio.ingredientes.SAIngrediente;
 import negocio.ingredientes.TIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
@@ -20,8 +21,10 @@ import presentacion.factoria.FactoriaAbstractaPresentacion;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class ControladorImp extends Controlador { //implementacion
 	private Carrito carrito;
@@ -211,11 +214,10 @@ public class ControladorImp extends Controlador { //implementacion
             modificarIngrediente(datos);
             break;
         case LISTAR_INGREDIENTE_VISTA:
-        	String[] s;
-        	Collection<TIngrediente> c= listarIngredientes();
-        	Collection<TPlatoIngrediente> p= listarPlatoIngrediente();
-        	//Falta crear el string s
-        	FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_INGREDIENTE_VISTA).actualizar(Evento.LISTAR_INGREDIENTE_VISTA,c);
+        	List<TIngrediente> c= (List<TIngrediente>) listarIngredientes();
+        	List<TPlatoIngrediente> p= (List<TPlatoIngrediente>)listarPlatoIngrediente();
+        	Pair<List<TIngrediente>, List<TPlatoIngrediente>> pair = new Pair<List<TIngrediente>, List<TPlatoIngrediente>>(c,p);
+        	FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_INGREDIENTE_VISTA).actualizar(Evento.LISTAR_INGREDIENTE_VISTA,pair);
         	break;
 	}
 }
@@ -228,7 +230,6 @@ public class ControladorImp extends Controlador { //implementacion
 		TIngrediente ingrediente= (TIngrediente) datos;
 		SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
 		String nombre= saIngrediente.crear(ingrediente);
-		
 		if(nombre==null) {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_KO, nombre);
 		}
@@ -248,12 +249,12 @@ public class ControladorImp extends Controlador { //implementacion
 	}
 	private void modificarIngrediente(Object datos) {
 		SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
-		boolean modificado= saIngrediente.modificar((TIngrediente) datos);
+		boolean modificado= saIngrediente.modificar((Pair<String,TIngrediente>) datos);
 		if(!modificado) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_INGREDIENTE_VISTA).actualizar(Evento.MODIFICAR_INGREDIENTE_KO, (String) datos);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_INGREDIENTE_VISTA).actualizar(Evento.MODIFICAR_INGREDIENTE_KO, datos);
 		}
 		else {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_INGREDIENTE_VISTA).actualizar(Evento.MODIFICAR_INGREDIENTE_OK, (String) datos);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_INGREDIENTE_VISTA).actualizar(Evento.MODIFICAR_INGREDIENTE_OK, datos);
 		}
 	}
 	private void altaMesa(Object datos) {
@@ -443,7 +444,6 @@ public class ControladorImp extends Controlador { //implementacion
 		SAIngrediente ingrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
 		Collection<TIngrediente> c= ingrediente.consultaTodos();
 		return c;
-		
 	}
 	private Collection<TPlatoIngrediente> listarPlatoIngrediente(){
 		SAIngrediente ingrediente=FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();

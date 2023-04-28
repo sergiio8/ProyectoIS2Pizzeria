@@ -1,14 +1,14 @@
 package integracion.ingredientes;
 
 import java.util.Collection;
+import java.util.List;
 
-import negocio.ingredientes.TIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
 import negocio.producto.TPlato;
 
 public interface DAOPlatoIngrediente {
-	void daDeBajaIngrediente(String name);
-	//boolean modificaIngrediente(TIngrediente ingrediente);//No se si sera necesario
+	List<String> daDeBajaIngrediente(String name);
+	void modificaIngrediente(String nombreAntiguo, String nombreNuevo);//No se si sera necesario
 	boolean insertarPlatoIngrediente(TPlatoIngrediente platoIngrediente);
 	Collection<TPlatoIngrediente> cogerTodosIngredientes();
 	TPlatoIngrediente cogerIngrediente(String nombre);
