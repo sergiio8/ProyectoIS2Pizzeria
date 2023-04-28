@@ -39,9 +39,11 @@ public class SAFacturaImp implements SAFactura{
                 	valida = true;
                     id = f.getIdFactura();
                     precio_total += plato.getPrecio()*f.getCantidad();
-                    lineas.add(f);
-                    daol.crearLineaFactura(f);
-                    
+                    TLineaFactura l = daol.buscarLineaFactura(f.getId());
+                    if (l == null) {
+                    	lineas.add(f);
+                        daol.crearLineaFactura(f);
+                    }
                 }
             }
             fact = daof.buscarFactura(id);

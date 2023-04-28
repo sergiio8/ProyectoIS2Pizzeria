@@ -166,12 +166,11 @@ public class AnadirProducto extends JDialog implements IGUI{
 			setVisible(true);
 			break;
 		case ANADIR_PRODUCTO_VISTA_OK:
-			JOptionPane.showMessageDialog(this,"Producto anadido correctamente con ID: " + datos.toString() ,"Producto anadido correctamente con ID: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this,"Producto con ID: " + datos.toString() + " añadido correctamente", "Producto anadido correctamente con ID: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
 			text2.setText(null);
 			text3.setText(null);
 			setVisible(false);
-			productos_panel.add(new JLabel("ID: " + datos.toString() + ", cantidad: " + Integer.parseInt(cant.getValue().toString())));
-			cant.setValue(0);
+			productos_panel.add(new JLabel("ID: " + datos.toString() + ", " + Integer.parseInt(cant.getValue().toString())  + " uds"));
 			break;
 		case ANADIR_PRODUCTO_VISTA_WR:
 			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
