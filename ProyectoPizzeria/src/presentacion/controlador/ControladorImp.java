@@ -265,7 +265,7 @@ public class ControladorImp extends Controlador { //implementacion
 		String id = datos.toString();
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
 		boolean resultado = saPlato.borrar(id);
-		if (resultado == true) {
+		if (resultado) {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_PLATO_VISTA).actualizar(Evento.BAJA_PLATO_OK, resultado);
 		}
 		else {
