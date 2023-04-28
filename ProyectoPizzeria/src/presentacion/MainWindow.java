@@ -24,7 +24,7 @@ public class MainWindow extends JFrame implements IGUI{
 	private JButton platosButton;
 	private JButton ingredientesButton;
 	private JButton facturasButton;
-	private JButton proveedorButton;
+	private JButton reservasButton;
 
 	public MainWindow() {
 		super("Pizzeria Pai-Pai");
@@ -45,41 +45,41 @@ public class MainWindow extends JFrame implements IGUI{
 		buttonsPanel.setLayout(new GridLayout(3, 2, 20 ,20));
 		buttonsPanel.setPreferredSize(new Dimension(110, 300));
 		
-		mesasButton = new JButton("Subsistema Mesas");
+		mesasButton = new JButton("Mesas");
 		mesasButton.addActionListener((e)->{
 			Controlador.getInstance().accion(Evento.VISTA_PRINCIPAL_MESA, null);
 			this.dispose();
 		});
 		buttonsPanel.add(mesasButton);
 		
-		clientesButton = new JButton("Subsistema Clientes");
+		clientesButton = new JButton("Clientes");
 		clientesButton.addActionListener((e) -> {
 			Controlador.getInstance().accion(Evento.VISTA_PRINCIPAL_CLIENTES, null);
 		});
 		buttonsPanel.add(clientesButton);
 		
-		platosButton = new JButton("Subsistema Platos");
+		platosButton = new JButton("Platos");
 		platosButton.addActionListener((e) -> {
 			Controlador.getInstance().accion(Evento.VISTA_PRINCIPAL_PLATO, null);
 		});
 		buttonsPanel.add(platosButton);
 		
-		ingredientesButton = new JButton("Subsistema Ingredientes");
+		ingredientesButton = new JButton("Ingredientes");
 		ingredientesButton.addActionListener((e) -> {
 			Controlador.getInstance().accion(Evento.VISTA_PRINCIPAL_INGREDIENTE, null);
 			this.dispose();
 		});
 		buttonsPanel.add(ingredientesButton);
 		
-		facturasButton = new JButton("Subsistema Facturas");
+		facturasButton = new JButton("Facturas");
 		facturasButton.addActionListener((e) -> {
 			Controlador.getInstance().accion(Evento.VISTA_PRINCIPAL_FACTURA, null);
 			this.dispose();
 		});
 		buttonsPanel.add(facturasButton);
 		
-		proveedorButton = new JButton("Subsistema Proveedor");
-		buttonsPanel.add(proveedorButton);
+		reservasButton = new JButton("Reservas");
+		buttonsPanel.add(reservasButton);
 		
 		mainPanel.add(buttonsPanel, BorderLayout.CENTER);
 		setContentPane(mainPanel);
