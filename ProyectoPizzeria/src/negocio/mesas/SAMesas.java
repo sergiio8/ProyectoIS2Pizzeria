@@ -9,5 +9,5 @@ public interface SAMesas {
 	Collection<TMesas> consultaTodos();
 	Boolean modificar(TMesas tm);
 	Boolean borrar(Integer id);
-	
+	Integer altaReserva(TReserva tr) throws IllegalArgumentException;
 }

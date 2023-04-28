@@ -5,6 +5,7 @@ import negocio.clientes.TCliente;
 import negocio.factoria.FactoriaAbstractaNegocio;
 import negocio.mesas.SAMesas;
 import negocio.mesas.TMesas;
+import negocio.mesas.TReserva;
 import negocio.producto.SAPlato;
 import negocio.producto.TPlato;
 import negocio.facturas.Carrito;
@@ -34,6 +35,12 @@ public class ControladorImp extends Controlador { //implementacion
 		switch(e) {
 		case MAIN_WINDOW:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MAIN_WINDOW);
+			break;
+		case ALTA_RESERVA_VISTA:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_RESERVA_VISTA).actualizar(Evento.ALTA_RESERVA_VISTA, null);
+			break;
+		case ALTA_RESERVA:
+			altaReserva(datos);
 			break;
 		case VISTA_PRINCIPAL_MESA:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_MESA);
@@ -221,6 +228,26 @@ public class ControladorImp extends Controlador { //implementacion
         	break;
 	}
 }
+	private void altaReserva(Object datos) {
+		TReserva tr = (TReserva) datos;
+		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
+		try {
+			int res = saMesas.altaReserva(tr);
+			if(res == -1) {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_RESERVA_VISTA).actualizar(Evento.ALTA_RESERVA_KO, "No se ha podido registrar la reserva");
+			}
+			else {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_RESERVA_VISTA).actualizar(Evento.ALTA_RESERVA_OK, res);
+			}
+		}
+		catch(IllegalArgumentException iae) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_RESERVA_VISTA).actualizar(Evento.ALTA_RESERVA_KO, iae.getMessage());
+		}
+		
+		
+		
+		
+	}
 	private void altaPlatoIngrediente(Object datos) {
 		TPlatoIngrediente pI= (TPlatoIngrediente) datos;
 		SAIngrediente saIngrediente=FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();

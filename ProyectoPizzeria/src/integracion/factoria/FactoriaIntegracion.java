@@ -12,6 +12,8 @@ import integracion.ingredientes.DAOPlatoIngrediente;
 import integracion.ingredientes.DAOPlatoIngredienteImp;
 import integracion.mesas.DAOMesas;
 import integracion.mesas.DAOMesasImp;
+import integracion.mesas.DAOReserva;
+import integracion.mesas.DAOReservaImp;
 import integracion.producto.DAOPlato;
 import integracion.producto.DAOPlatoImp;
 
@@ -50,6 +52,11 @@ public class FactoriaIntegracion extends FactoriaAbstractaIntegracion {
 	public DAOPlatoIngrediente crearDAOPlatoIngrediente() {
 		// TODO Auto-generated method stub
 		return new DAOPlatoIngredienteImp();
+	}
+
+	@Override
+	public DAOReserva crearDAOReserva() {
+		return new DAOReservaImp();
 	}
 
 }

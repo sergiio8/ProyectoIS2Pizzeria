@@ -2,8 +2,11 @@ package negocio.mesas;
 
 import java.util.Collection;
 
+import integracion.clientes.DAOClientes;
 import integracion.factoria.FactoriaAbstractaIntegracion;
 import integracion.mesas.DAOMesas;
+import integracion.mesas.DAOReserva;
+import negocio.clientes.TCliente;
 
 public class SAMesasImp implements SAMesas{
 
@@ -53,6 +56,32 @@ public class SAMesasImp implements SAMesas{
 	public Boolean borrar(Integer id) {
 		DAOMesas daoMesas = FactoriaAbstractaIntegracion.getInstace().crearDAOMesas();
 		return daoMesas.daDeBajaMesa(id);
+	}
+
+	@Override
+	public Integer altaReserva(TReserva tr) throws IllegalArgumentException{
+		Integer id =-1;
+		
+		DAOMesas daoMesas = FactoriaAbstractaIntegracion.getInstace().crearDAOMesas();
+		DAOClientes daoClientes = FactoriaAbstractaIntegracion.getInstace().crearDAOCliente();
+		
+		if(tr != null) {
+			TMesas esta = daoMesas.obtenMesa(tr.getIdMesa());
+			TCliente estaC = daoClientes.obtenCliente(tr.getIdCliente());
+			if(esta == null) {
+				throw new IllegalArgumentException("Mesa no existente");
+			}
+			if(estaC == null) {
+				throw new IllegalArgumentException("Cliente no existente");
+			}
+			DAOReserva daoR = FactoriaAbstractaIntegracion.getInstace().crearDAOReserva();
+			
+			id = daoR.insertaReserva(tr);
+			
+			
+		}
+		
+		return id;
 	}
 
 }
