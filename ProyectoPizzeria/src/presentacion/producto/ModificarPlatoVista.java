@@ -102,6 +102,10 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 		JRadioButton postreButton = new JRadioButton("Postre");
 		ButtonGroup bGroup = new ButtonGroup();
 		
+		bGroup.add(entranteButton);
+		bGroup.add(pizzaButton);
+		bGroup.add(postreButton);
+		
 		typeButtonPanel.add(entranteButton);
 		typeButtonPanel.add(pizzaButton);
 		typeButtonPanel.add(postreButton);
