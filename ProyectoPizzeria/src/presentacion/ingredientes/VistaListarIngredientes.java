@@ -1,6 +1,7 @@
 package presentacion.ingredientes;
 
 import java.awt.BorderLayout;
+import java.awt.Frame;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
@@ -24,11 +25,11 @@ public class VistaListarIngredientes extends JDialog implements IGUI{
 	
 	
 	private JTable tbl;
-	public VistaListarIngredientes(){
+	public VistaListarIngredientes(Frame parent){
 		
-		initGUI();
+		initGUI(parent);
 	}
-	private void initGUI() {
+	private void initGUI(Frame parent) {
 		setTitle("Listar Ingredientes");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -49,7 +50,7 @@ public class VistaListarIngredientes extends JDialog implements IGUI{
 		
 		pack();
 		setResizable(false);
-		setVisible(true);
+		setLocationRelativeTo(parent);
 	}
 	
 	@Override

@@ -11,7 +11,6 @@ public class SAIngredienteImp implements SAIngrediente{
 	public boolean borrar(String name) {
 		DAOIngrediente ingrediente=FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
 		return ingrediente.daDeBajaIngrediente(name);
-		
 	}
 
 	@Override
@@ -26,13 +25,12 @@ public class SAIngredienteImp implements SAIngrediente{
 		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
 		try {
 			TIngrediente ing= ingrediente.cogerIngrediente(nuevoIngrediente.getNombre());
-			if(ing!=null) {
+			if(ing==null) {
 				nombre=ingrediente.insertarIngrediente(nuevoIngrediente);
 			}
 		}catch(Exception e) {
 			
 		}
-		
 		return nombre;
 	}
 
