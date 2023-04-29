@@ -33,6 +33,7 @@ public class BuscarFactura extends JDialog implements IGUI{
 	Box contenedor;
 	JPanel panel1;
 	JPanel panel2;
+	Box data_box;
 	
 	public BuscarFactura(Frame parent) {
 		super(parent, true);
@@ -45,6 +46,7 @@ public class BuscarFactura extends JDialog implements IGUI{
 		mainPanel.setLayout(new BorderLayout());
 		setContentPane(mainPanel);
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		setPreferredSize(new Dimension(170,220));
 		contenedor = Box.createVerticalBox();
 		
 		
@@ -89,12 +91,12 @@ public class BuscarFactura extends JDialog implements IGUI{
 		try {
 			ID_factura = text1.getText();
 			if (ID_factura.equals("") || ID_factura == null) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Introduzca el ID de la factura");
 			}
 			Controlador.getInstance().accion(Evento.BUSCAR_FACTURA, ID_factura);
 		}
 		catch(IllegalArgumentException iae) {
-			JOptionPane.showMessageDialog(BuscarFactura.this, "ERROR: rellene el campo indicando el ID de la factura", "ERROR: rellene el campo indicando el ID de la factura", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(BuscarFactura.this, "ERROR: " + iae.getMessage(), "ERROR: ", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		
@@ -110,6 +112,7 @@ public class BuscarFactura extends JDialog implements IGUI{
 		switch(e) {
 		case BUSCAR_FACTURA_VISTA:
 			setVisible(true);
+			initGUI();
 			break;
 		case BUSCAR_FACTURA_VISTA_OK:
 			setPreferredSize(new Dimension(400, 350));
@@ -119,7 +122,7 @@ public class BuscarFactura extends JDialog implements IGUI{
 			this.ID = new JLabel("ID: " + tf.getId());
 			text1.setEnabled(false);
 			
-			Box data_box = Box.createVerticalBox();
+			data_box = Box.createVerticalBox();
 			JLabel precio = new JLabel("Precio: " + tf.getPrecio_total());
 			JLabel id_cliente = new JLabel("ID_cliente: " + tf.getIdCliente());
 			JLabel id_vendedor = new JLabel("ID_vendedor: " + tf.getIdVendedor());

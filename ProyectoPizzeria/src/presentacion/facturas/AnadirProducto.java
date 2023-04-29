@@ -86,7 +86,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 		
 		
 		JPanel panel2 = new JPanel();
-		JLabel ID = new JLabel("ID_producto: ");
+		JLabel ID = new JLabel("Nombre del producto: ");
 		text2 = new JTextField(10);
 		
 		panel2.add(ID);
@@ -138,8 +138,14 @@ public class AnadirProducto extends JDialog implements IGUI{
 			ID_producto = text2.getText();
 			ID_linea = text3.getText();
 			cantidad = Integer.parseInt(cant.getValue().toString());
-			if (ID_factura.equals("") || ID_producto.equals("") || ID_linea.equals("") || ID_factura == null || ID_producto == null || ID_linea == null) {
-				throw new IllegalArgumentException();
+			if (ID_factura.equals("") || ID_factura == null) {
+				throw new IllegalArgumentException("Introduzca el ID de la factura");
+			}
+			else if (ID_producto.equals("") || ID_producto == null) {
+				throw new IllegalArgumentException("Introduzca el ID del producto");
+			}
+			else if (ID_linea.equals("") || ID_linea == null) {
+				throw new IllegalArgumentException("Introduzca el ID de la linea");
 			}
 			else if (cantidad <= 0) {
 				throw new NumberFormatException();
@@ -150,7 +156,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 			JOptionPane.showMessageDialog(AnadirProducto.this, "ERROR: la cantidad debe ser un entero positivo", "ERROR: la cantidad debe ser un entero positivo", JOptionPane.ERROR_MESSAGE);
 		}
 		catch(IllegalArgumentException iae) {
-			JOptionPane.showMessageDialog(AnadirProducto.this, "ERROR: relllene todos los campos relativos a los IDs", "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(AnadirProducto.this, "ERROR: " + iae.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -166,11 +172,11 @@ public class AnadirProducto extends JDialog implements IGUI{
 			setVisible(true);
 			break;
 		case ANADIR_PRODUCTO_VISTA_OK:
-			JOptionPane.showMessageDialog(this,"Producto con ID: " + datos.toString() + " añadido correctamente", "Producto anadido correctamente con ID: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, datos.toString() + " añadido correctamente", datos.toString() + " añadido correctamente", JOptionPane.INFORMATION_MESSAGE);
 			text2.setText(null);
 			text3.setText(null);
 			setVisible(false);
-			productos_panel.add(new JLabel("ID: " + datos.toString() + ", " + Integer.parseInt(cant.getValue().toString())  + " uds"));
+			productos_panel.add(new JLabel("Nombre: " + datos.toString() + ", " + Integer.parseInt(cant.getValue().toString())  + " uds"));
 			break;
 		case ANADIR_PRODUCTO_VISTA_WR:
 			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);

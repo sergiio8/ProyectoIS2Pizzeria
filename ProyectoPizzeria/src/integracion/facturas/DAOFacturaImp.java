@@ -32,57 +32,6 @@ public class DAOFacturaImp implements DAOFactura {
     }
     
     
-    /*public boolean modificarFactura(TLineaFactura l) {
-    	boolean res = true;
-    	
-		
-		JSONArray ja = null;
-		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Facturas.json"))){ 
-			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
-			ja = jsonInput.getJSONArray("ListaFacturas");
-			
-		}
-		catch(Exception e1) {
-			return false;
-		}
-		
-		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).get("id") != l.getIdFactura()) {
-			i++;
-		}
-		if(i == ja.length()) {
-			return false;
-		}
-		
-		JSONObject obj = ja.getJSONObject(i);
-		
-		
-		DAOLineaFactura daol = FactoriaAbstractaIntegracion.getInstace().crearDAOLineaFactura();
-		TLineaFactura tl = daol.buscarLineaFactura(l.getId());
-		daol.modificarLineaFactura(l);
-		ja.remove(i);
-		double precio = obj.getDouble("precio") - tl.getPrecio();
-		obj.remove("precio");
-		obj.put("precio", precio + l.getPrecio());
-		ja.put(obj);
-		
-	
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Facturass.json", false))){
-			JSONObject jo2 = new JSONObject();
-			jo2.put("ListaFacturas", ja);
-			bw.write(jo2.toString());
-			
-		} 
-		catch(Exception e2) {
-			res = false;
-		}
-		
-		return res;
-        
-        
-        
-    }*/
-    
     public TFactura buscarFactura(String id) {
     	JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Facturas.json"))){ 

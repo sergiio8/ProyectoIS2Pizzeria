@@ -86,7 +86,7 @@ public class VistaAnadirReserva extends JDialog implements IGUI{
 		JPanel fechaPanel = new JPanel();
 		this.fechaLabel = new JLabel("Dia:");
 		fechaPanel.add(fechaLabel);
-		SpinnerDateModel sdm = new SpinnerDateModel(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()), null, Calendar.HOUR);
+		SpinnerDateModel sdm = new SpinnerDateModel(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()), null, Calendar.DATE);
 		this.fechaSpinner = new JSpinner(sdm);
 		this.fechaSpinner.setEditor(new JSpinner.DateEditor(fechaSpinner, "dd.MM.yyyy"));
 		fechaPanel.add(fechaSpinner);

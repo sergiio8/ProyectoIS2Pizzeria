@@ -3,7 +3,15 @@ package presentacion.facturas;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -13,7 +21,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 
 import negocio.facturas.TDatosVenta;
 import negocio.facturas.TLineaFactura;
@@ -29,6 +39,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 	JTextField text2;
 	JTextField text3;
 	JTextField text4;
+	JSpinner fechaSpinner;
 	
 	public CerrarVenta(Frame parent) {
 		super(parent, true);
@@ -71,15 +82,15 @@ public class CerrarVenta extends JDialog implements IGUI{
 		
 		contenedor.add(panel3);
 		
-		JPanel panel4 = new JPanel(new FlowLayout());
+		JPanel panel4 = new JPanel();
 		JLabel fecha = new JLabel("Fecha: ");
-		text4 = new JTextField(10);
-		
 		panel4.add(fecha);
-		panel4.add(text4);
-		
+		Date today = new Date();
+		SpinnerDateModel sdm = new SpinnerDateModel(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()), null, Calendar.DATE);
+		this.fechaSpinner = new JSpinner(sdm);
+		this.fechaSpinner.setEditor(new JSpinner.DateEditor(fechaSpinner, "dd.MM.yyyy"));
+		panel4.add(fechaSpinner);
 		contenedor.add(panel4);
-		
 		JPanel panel5 = new JPanel(new FlowLayout());
 		
 
@@ -108,15 +119,25 @@ public class CerrarVenta extends JDialog implements IGUI{
 			ID_factura = text1.getText();
 			ID_cliente = text2.getText();
 			ID_vendedor = text3.getText();
-			fecha = text4.getText();
-			if(ID_cliente.equals("") || ID_vendedor.equals("") || ID_factura.equals("")|| fecha.equals("")) {
+			Date value = (Date)fechaSpinner.getValue(); 
+			fecha = new SimpleDateFormat("dd/MM/yyyy").format(value);
+			if(ID_cliente.equals("") || ID_cliente == null) {
+				throw new IllegalArgumentException();
+			}
+			if(ID_vendedor.equals("") || ID_vendedor == null) {
+				throw new IllegalArgumentException();
+			}
+			if(ID_factura.equals("") || ID_factura == null) {
+				throw new IllegalArgumentException();
+			}
+			if(fecha.equals("") || fecha == null) {
 				throw new IllegalArgumentException();
 			}
 			Controlador.getInstance().accion(Evento.ALTA_FACTURA, new TDatosVenta(new ArrayList<TLineaFactura>(), ID_cliente, ID_vendedor, fecha));
 			
 		}
 		catch(IllegalArgumentException iae) {
-			JOptionPane.showMessageDialog(CerrarVenta.this, "ERROR: rellene todos los campos relativos a los IDs", "ERROR: rellene todos los campos relativos a los IDs", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(CerrarVenta.this, "ERROR: " + iae.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -136,7 +157,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 			initGUI();
 			break;
 		case ALTA_FACTURA_VISTA_WR:
-			JOptionPane.showMessageDialog(this, "ERROR: La factura con ID " + text1.getText() + "es vacía o ya está creada", "ERROR:", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "ERROR: La factura con ID " + text1.getText() + " no pudo ser validada", "ERROR:", JOptionPane.ERROR_MESSAGE);
 			setVisible(false);
 			break;
 		}

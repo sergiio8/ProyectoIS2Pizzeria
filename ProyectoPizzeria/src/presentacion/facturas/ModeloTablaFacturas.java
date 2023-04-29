@@ -45,7 +45,8 @@ private static final long serialVersionUID = 1L;
 			return facturas.get(rowIndex).getPrecio_total();
 		}
 		else{
-			return facturas.get(rowIndex).getFecha();
+			return  facturas.get(rowIndex).getFecha();
+			
 		}
 	}
 	
