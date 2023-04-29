@@ -560,7 +560,7 @@ public class ControladorImp extends Controlador { //implementacion
 		if(c) {
 			FactoriaPresentacion.getInstace().createVista(Evento.VISTA_BAJA_CLIENTE).actualizar(Evento.BAJA_CLIENTE_OK, datos);
 		}
-		else {
+		else {//cambio
 			FactoriaPresentacion.getInstace().createVista(Evento.VISTA_BAJA_CLIENTE).actualizar(Evento.BAJA_CLIENTE_KO, datos);
 		}
 	}

@@ -50,13 +50,13 @@ public class VistaPrincipalCliente extends JFrame implements IGUI{
 		
 		altaButton = new JButton("Alta Cliente");
 		altaButton.addActionListener((e)->{
-			Controlador.getInstance().accion(Evento.VISTA_ALTA_CLIENTE, null);
+			Controlador.getInstance().accion(Evento.VISTA_ALTA_CLIENTE, null);//hecho
 		});
 		buttonsPanel.add(altaButton);
 		
 		bajaButton = new JButton("Baja Cliente");
 		bajaButton.addActionListener((e)->{
-			Controlador.getInstance().accion(Evento.VISTA_BAJA_CLIENTE, null);
+			Controlador.getInstance().accion(Evento.VISTA_BAJA_CLIENTE, null);//hecho
 		});
 		buttonsPanel.add(bajaButton);
 		
@@ -68,7 +68,7 @@ public class VistaPrincipalCliente extends JFrame implements IGUI{
 		
 		buscarButton = new JButton("Buscar Cliente");
 		buscarButton.addActionListener((e)->{
-			Controlador.getInstance().accion(Evento.BUSCAR_MESA_VISTA, null);
+			Controlador.getInstance().accion(Evento.BUSCA_CLIENTE, null);
 		});
 		buttonsPanel.add(buscarButton);
 		
