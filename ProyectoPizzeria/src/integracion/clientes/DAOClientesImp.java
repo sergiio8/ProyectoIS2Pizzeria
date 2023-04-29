@@ -63,7 +63,7 @@ public class DAOClientesImp implements DAOClientes{
 		}
 		
 		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).getString("id") != id) {
+		while(i < ja.length() && !ja.getJSONObject(i).get("id").equals(id)) {
 			i++;
 		}
 		if(i == ja.length()) {
@@ -98,7 +98,7 @@ public class DAOClientesImp implements DAOClientes{
 		}
 		
 		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).getString("id") != id) {
+		while(i < ja.length() && !ja.getJSONObject(i).getString("id").equals(id)) {
 			i++;
 		}
 		if(i == ja.length()) {
@@ -132,7 +132,7 @@ public class DAOClientesImp implements DAOClientes{
 		}
 		
 		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).getString("id") != id) {
+		while(i < ja.length() && !ja.getJSONObject(i).getString("id").equals(id)) {
 			i++;
 		}
 		if(i == ja.length()) {

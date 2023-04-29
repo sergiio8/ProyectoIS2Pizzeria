@@ -19,6 +19,7 @@ import negocio.ingredientes.TIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
 import presentacion.Evento;
 import presentacion.factoria.FactoriaAbstractaPresentacion;
+import presentacion.factoria.FactoriaPresentacion;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -524,7 +525,14 @@ public class ControladorImp extends Controlador { //implementacion
 	private void modificarCliente (Object datos) {
 		TCliente cliente = (TCliente)datos;
 		SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
-		infoCliente.modificar(cliente);
+		boolean res = infoCliente.modificar(cliente);
+		if(res) {
+			FactoriaPresentacion.getInstace().createVista(Evento.VISTA_MODIFICAR_CLIENTE).actualizar(Evento.VISTA_MODIFICAR_CLIENTE_OK, cliente);
+		}
+		else {
+			FactoriaPresentacion.getInstace().createVista(Evento.VISTA_MODIFICAR_CLIENTE).actualizar(Evento.VISTA_MODIFICAR_CLIENTE_KO, cliente);
+		}
+		
 	}
 	
 	private void bajaCliente(Object datos) {

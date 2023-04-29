@@ -1,9 +1,12 @@
 package presentacion.clientes;
 
+import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -20,42 +23,59 @@ import presentacion.factoria.FactoriaAbstractaPresentacion;
 
 public class VistaModificarCliente extends JDialog implements IGUI{
 
+	private JLabel id;
+	private JTextField tId;
 	private JLabel lNombre;
 	private JTextField tNombre;
 	private JLabel lAp;
 	private JTextField tAp;
 	private JButton ok;
 	private JButton cancel;
-	private String id;
 	
 	public VistaModificarCliente(Frame parent){
 		super(parent, true);
 		
+		setTitle("Modificar Cliente");
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel.setLayout(new BorderLayout());
+		setContentPane(mainPanel);
+		
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		Box contenedor = Box.createVerticalBox();
+		
+		JPanel idPanel = new JPanel();
+		
+		this.id = new JLabel("idMesa: ");
+		idPanel.add(id);
+		
+		this.tId = new JTextField(15);
+		idPanel.add(tId);
+		
+		contenedor.add(idPanel);
 		
 		
-		JPanel p1 = new JPanel();
-		p1.setAlignmentX(CENTER_ALIGNMENT);
 		
-		lNombre = new JLabel();
-		lNombre.setText("Nombre: ");
-		p1.add(lNombre);
+		JPanel nombrePanel = new JPanel();
 		
-		tNombre = new JTextField();
-		p1.add(tNombre);
-		mainPanel.add(p1);
+		lNombre = new JLabel("Nombre: ");
+		nombrePanel.add(lNombre);
 		
-		JPanel p2 = new JPanel();
-		p2.setAlignmentX(CENTER_ALIGNMENT);
+		tNombre = new JTextField(15);
+		nombrePanel.add(tNombre);
 		
-		lAp = new JLabel();
-		lAp.setText("Apellidos: ");
-		p2.add(lAp);
+		contenedor.add(nombrePanel);
 		
-		tAp = new JTextField();
-		p2.add(tAp);
-		mainPanel.add(p2);
+		
+		
+		JPanel apellidoPanel = new JPanel();
+		
+		lAp = new JLabel("Apellidos: ");
+		apellidoPanel.add(lAp);
+		
+		tAp = new JTextField(15);
+		apellidoPanel.add(tAp);
+
+		contenedor.add(apellidoPanel);
 		
 		
 		JPanel buttonp1 = new JPanel();
@@ -69,34 +89,27 @@ public class VistaModificarCliente extends JDialog implements IGUI{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(tNombre.getText().isEmpty() || tAp.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(VistaModificarCliente.this, "Es necesario rellenar todos los datos", "Falta de datos", JOptionPane.ERROR_MESSAGE);
+				if(tId.getText().isEmpty() || tNombre.getText().isEmpty() || tAp.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(VistaModificarCliente.this, "ERROR: Es necesario rellenar todos los datos", "ERROR: Es necesario rellenar todos los datos", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					Controlador.getInstance().accion(Evento.MODIFICAR_CLIENTE, new TCliente(VistaModificarCliente.this.id,tNombre.getText().toString() , tAp.getText().toString() ));
+					Controlador.getInstance().accion(Evento.MODIFICAR_CLIENTE, new TCliente(tId.getText().toString(),tNombre.getText().toString() , tAp.getText().toString() ));
+					
 				}
 			}
 			
 		});
-		buttonp1.add(ok);
 		
-		cancel = new JButton();
-		cancel.setText("Cancelar");
-		
-		cancel.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				Controlador.getInstance().accion(Evento.VISTA_CLIENTE_LOGUEADO, VistaModificarCliente.this.id);
-			}
-			
+		this.cancel = new JButton("Cancelar");
+		this.cancel.addActionListener((e)->{
+			this.setVisible(false);
 		});
-		
+		buttonp1.add(ok);
 		buttonp1.add(cancel);
-		mainPanel.add(buttonp1);
 		
-		add(mainPanel);
+		contenedor.add(buttonp1);
+		
+		mainPanel.add(contenedor, BorderLayout.CENTER);
 		
 		pack();
 		setResizable(false);
@@ -113,11 +126,17 @@ public class VistaModificarCliente extends JDialog implements IGUI{
 		switch(e) {
 		case VISTA_MODIFICAR_CLIENTE:
 			this.setVisible(true);
-			this.setTitle("Modificar cliente con id: " + (String)datos);
-			this.id = (String)datos;
 			break;
-		case VISTA_CLIENTE_LOGUEADO:
+		case VISTA_MODIFICAR_CLIENTE_OK:
+			TCliente cliente = (TCliente)datos;
+			JOptionPane.showMessageDialog(this, "El cliente con id " + cliente.getId() + "ha sido modificado", "Cliente modificado con éxito", JOptionPane.INFORMATION_MESSAGE);
 			this.setVisible(false);
+			break;
+		case VISTA_MODIFICAR_CLIENTE_KO:
+			TCliente cliente2 = (TCliente)datos;
+			JOptionPane.showMessageDialog(this, "ERROR: no se ha podido modificar cliente con id " + cliente2.getId(), "ERROR: Cliente no modificado", JOptionPane.ERROR_MESSAGE);
+			this.setVisible(false);
+			break;
 		}
 		
 	}
