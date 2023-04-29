@@ -140,7 +140,7 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 					throw new IllegalArgumentException("El plato debe tener descripcion");
 				if(entranteButton.isSelected()) {
 					jo.put("plato", new TEntrante(nombre,precio,descripcion));
-					Controlador.getInstance().accion(Evento.ALTA_PLATO,jo );
+					Controlador.getInstance().accion(Evento.ALTA_PLATO,jo);
 				}
 				else if(pizzaButton.isSelected()) {
 					jo.put("plato", new TPizza(nombre,precio,descripcion));

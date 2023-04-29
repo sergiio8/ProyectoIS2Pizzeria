@@ -403,7 +403,6 @@ public class ControladorImp extends Controlador { //implementacion
 			ingredientes.add(s.trim());
 		}
 		
-		TPlato tp = (TPlato) obj.get("plato");
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
 		String nombre = saPlato.alta((JSONObject)datos);
 		if(nombre == "") {

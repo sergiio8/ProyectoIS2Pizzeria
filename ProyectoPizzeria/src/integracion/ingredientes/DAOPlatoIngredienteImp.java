@@ -117,6 +117,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 			JSONObject jo = ja.getJSONObject(i);
 			if(jo.get("nombrePlato").equals(pi.getnombrePlato()) && jo.get("nombreIngrediente").equals(pi.getnombreIngrediente()))
 				return true;
+			i++;
 		}
 		return false;
 	}

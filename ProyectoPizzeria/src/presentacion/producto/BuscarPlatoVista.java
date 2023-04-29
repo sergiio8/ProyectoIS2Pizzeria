@@ -52,9 +52,9 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		Box contenedor = Box.createVerticalBox();
 		
-		//ID
+		//Nombre
 		namePanel = new JPanel();
-		nameLabel = new JLabel("ID_plato: ");
+		nameLabel = new JLabel("Nombre plato: ");
 		nameText = new JTextField(10);
 		
 		namePanel.add(nameLabel);

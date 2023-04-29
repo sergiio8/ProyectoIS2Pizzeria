@@ -25,7 +25,7 @@ public class SAPlatoImp implements SAPlato {
 				DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
 				String[] aux = datos.getString("ingredientes").trim().split(",");
 				for(String s : aux) {
-					daoPIng.insertarPlatoIngrediente(new TPlatoIngrediente(plato.getNombre(), s.trim()));
+					daoPIng.insertarPlatoIngrediente(new TPlatoIngrediente(nombre, s.trim()));
 				}
 			}
 		}
