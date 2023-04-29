@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -22,7 +20,6 @@ import javax.swing.JTextField;
 import negocio.clientes.SAClientes;
 import presentacion.*;
 import presentacion.controlador.Controlador;
-import presentacion.mesas.VistaPrincipalMesas;
 
 public class VistaPrincipalCliente extends JFrame implements IGUI{
 	
@@ -65,7 +62,7 @@ public class VistaPrincipalCliente extends JFrame implements IGUI{
 		
 		listarButton = new JButton("Listar Clientes");
 		listarButton.addActionListener((e)->{
-			Controlador.getInstance().accion(Evento.LISTAR_MESAS, null);
+			Controlador.getInstance().accion(Evento.VISTA_LISTAR_CLIENTES, null);//hecho
 		});
 		buttonsPanel.add(listarButton);
 		
@@ -77,7 +74,7 @@ public class VistaPrincipalCliente extends JFrame implements IGUI{
 		
 		modificarButton = new JButton("Modificar Cliente");
 		modificarButton.addActionListener((e)->{
-			Controlador.getInstance().accion(Evento.VISTA_MODIFICAR_CLIENTE, null);
+			Controlador.getInstance().accion(Evento.VISTA_MODIFICAR_CLIENTE, null);//hecho
 		});
 		buttonsPanel.add(modificarButton);
 		

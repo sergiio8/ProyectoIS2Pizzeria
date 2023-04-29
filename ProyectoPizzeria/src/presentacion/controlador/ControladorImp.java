@@ -150,8 +150,8 @@ public class ControladorImp extends Controlador { //implementacion
 			buscarCliente(datos);
 			break;
 			
-		case VISTA_REGISTRO_DE_CLIENTE:
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_REGISTRO_DE_CLIENTE).actualizar(Evento.VISTA_REGISTRO_DE_CLIENTE, datos);
+		case VISTA_ALTA_CLIENTE:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_ALTA_CLIENTE).actualizar(Evento.VISTA_ALTA_CLIENTE, datos);
 			break;
 		case REGISTRO_DE_CLIENTE:
 			registroCliente(datos);
@@ -174,6 +174,11 @@ public class ControladorImp extends Controlador { //implementacion
 		case CONSULTAR_DATOS_CLIENTE:
 			consultarCliente(datos);
 			break;
+		case VISTA_LISTAR_CLIENTES:
+			Collection<TCliente> lClientes = listarClientes();
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_LISTAR_CLIENTES).actualizar(Evento.VISTA_LISTAR_CLIENTES, lClientes);
+			break;
+			
 		case VISTA_PRINCIPAL_PLATO:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_PLATO);
 			break;
@@ -529,11 +534,11 @@ public class ControladorImp extends Controlador { //implementacion
 		TCliente cliente = (TCliente)datos;
 		SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
 		if(infoCliente.consulta(cliente.getId()) != null) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_REGISTRO_DE_CLIENTE).actualizar(Evento.CLIENTE_YA_REGISTRADO, cliente.getId());
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_ALTA_CLIENTE).actualizar(Evento.CLIENTE_YA_REGISTRADO, cliente.getId());
 		}
 		else {
 			infoCliente.alta(cliente);
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_REGISTRO_DE_CLIENTE).actualizar(Evento.CLIENTE_REGISTRADO, cliente.getId());
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_ALTA_CLIENTE).actualizar(Evento.CLIENTE_REGISTRADO, cliente.getId());
 		}
 	}
 	
@@ -559,6 +564,11 @@ public class ControladorImp extends Controlador { //implementacion
 		SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
 		TCliente cliente = infoCliente.consulta((String)datos); 
 		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_CLIENTE_LOGUEADO).actualizar(Evento.CONSULTAR_DATOS_CLIENTE, cliente);
+	}
+	
+	private Collection<TCliente> listarClientes(){
+		SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
+		return infoCliente.consultaTodos();
 	}
 	private Collection<TIngrediente> listarIngredientes(){
 		SAIngrediente ingrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();

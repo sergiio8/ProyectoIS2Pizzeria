@@ -18,7 +18,7 @@ import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
 
-public class VistaRegistrarCliente extends JDialog implements IGUI{
+public class VistaAltaCliente extends JDialog implements IGUI{
 	private JLabel lNombre;
 	private JTextField tNombre;
 	private JLabel lAp;
@@ -29,7 +29,7 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 	private JButton cancel;
 	
 	
-	public VistaRegistrarCliente(Frame parent) {
+	public VistaAltaCliente(Frame parent) {
 		super(parent, true);
 		this.setTitle("REGISTRO");
 		
@@ -83,7 +83,7 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(tId.getText().isEmpty() || tNombre.getText().isEmpty() || tAp.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(VistaRegistrarCliente.this, "Es necesario rellenar todos los datos", "Falta de datos", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(VistaAltaCliente.this, "Es necesario rellenar todos los datos", "Falta de datos", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					Controlador.getInstance().accion(Evento.REGISTRO_DE_CLIENTE, new TCliente(tId.getText().toString(),tNombre.getText().toString() , tAp.getText().toString() ));
@@ -101,7 +101,7 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-					VistaRegistrarCliente.this.setVisible(false);
+					VistaAltaCliente.this.setVisible(false);
 			}
 			
 		});
@@ -125,7 +125,7 @@ public class VistaRegistrarCliente extends JDialog implements IGUI{
 	public void actualizar(Evento e, Object datos) {
 		// TODO Auto-generated method stub
 		switch(e) {
-		case VISTA_REGISTRO_DE_CLIENTE:
+		case VISTA_ALTA_CLIENTE:
 			this.setVisible(true);
 			break;
 		case CLIENTE_YA_REGISTRADO:
