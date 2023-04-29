@@ -65,7 +65,7 @@ public class ITableModel extends AbstractTableModel{
 	private String idsPlatos(List<TPlatoIngrediente> platoIngredientes, String nombre) {
 		String s = "{ ";
 		for(TPlatoIngrediente pi : platoIngredientes) {
-			if(pi.getnombreIngrediente().equals(nombre)) s+=pi.getidPlato()+", ";
+			if(pi.getnombreIngrediente().equals(nombre)) s+=pi.getnombrePlato()+", ";
 		}
 		if(s.length() > 2)
 			s = s.substring(0, s.length()-2);

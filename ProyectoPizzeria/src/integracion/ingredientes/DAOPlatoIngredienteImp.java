@@ -41,14 +41,16 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 
 		for(int i=0; i<ja.length();i++) {
 			if(ja.getJSONObject(i).getString("nombreIngrediente").equals(name)) {
-				s.add(ja.getJSONObject(i).getString("idPlato"));
-				ja.remove(i);
-				i--;
+				s.add(ja.getJSONObject(i).getString("nombrePlato"));
+				//ja.remove(i);
+				//i--;
 			}
 		}
+		for(String n : s) {
+			daDeBajaPlato(n);
+		}
 		
-	
-			
+		/* Se escribe en daDeBajaPlato()
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/PlatoIngrediente.json", false))){
 			JSONObject jo2 = new JSONObject();
 			jo2.put("ListaPlatoIngrediente", ja);
@@ -59,7 +61,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 				
 		}
 		
-		
+		*/
 		
 		return s;
 
@@ -82,7 +84,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
 			JSONObject jo = new JSONObject();
 			//NO SE COMO BUSCAR SI ESTABA YA PREVIAMENTE O NO
-			jo.put("idPlato", platoIngrediente.getidPlato());
+			jo.put("nombrePlato", platoIngrediente.getnombrePlato());
 			jo.put("nombreIngrediente", platoIngrediente.getnombreIngrediente());
 			ja.put(jo);
 		}
@@ -159,10 +161,33 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 		
 	}
 
-	@Override//Lo tiene que hacer el subsistema producto
-	public boolean daDeBajaPlato(String name) {
-		//esta jodido eh?? copiando y pegando cualquiera...
-		return false;
+	@Override
+	public boolean daDeBajaPlato(String name){
+		JSONArray ja = new JSONArray();
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){ //idea mandar excepciones y tratarlas en controlador
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
+		}
+		catch(Exception e1) {
+		}
+		
+		for(int i = 0; i<ja.length(); i++) {
+			if(ja.getJSONObject(i).getString("nombrePlato").equals(name)) {
+				ja.remove(i);
+				i--;
+			}
+		}
+		
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/PlatoIngrediente.json", false))){
+			JSONObject jo = new JSONObject();
+			jo.put("ListaPlatoIngrediente", ja);
+			bw.write(jo.toString());
+				
+		} 
+		catch(Exception e2) {
+				
+		}
+		return true;
 	}
 
 	@Override//Lo tiene que hacer el subsistema producto

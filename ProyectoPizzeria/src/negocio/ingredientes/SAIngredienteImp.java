@@ -18,7 +18,7 @@ public class SAIngredienteImp implements SAIngrediente{
 		if(ingrediente.daDeBajaIngrediente(name).getFirst()) {
 			ArrayList<TPlatoIngrediente> lista= new ArrayList<TPlatoIngrediente>(platoIngrediente.cogerTodosIngredientes());
 			for(TPlatoIngrediente p:lista) {
-				plato.daDeBajaPlato(p.getidPlato());
+				plato.daDeBajaPlato(p.getnombrePlato());
 			}
 			platoIngrediente.daDeBajaIngrediente(name);
 			return true;
