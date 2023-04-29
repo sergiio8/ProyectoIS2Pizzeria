@@ -67,8 +67,39 @@ public class DAOReservaImp implements DAOReserva{
 
 	@Override
 	public Boolean daDeBajaReserva(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		JSONArray ja = null;
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Reservas.json"))){ //idea mandar excepciones y tratarlas en controlador
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaReservas");
+		}
+		catch(Exception e1) {
+			throw new IllegalArgumentException("No se ha podido acceder al fichero JSON");
+		}
+		
+		int i = 0;
+		while(i < ja.length() && ja.getJSONObject(i).getInt("id") != id) {
+			i++;
+		}
+		if(i == ja.length()) {
+			return false;
+		}
+		
+		else {
+			ja.remove(i);
+			try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Reservas.json", false))){
+				JSONObject jo2 = new JSONObject();
+				jo2.put("ListaReservas", ja);
+				bw.write(jo2.toString());
+				
+			} 
+			catch(Exception e2) {
+				throw new IllegalArgumentException("No se ha podido escribir al fichero JSON");
+			}
+		}
+		
+		
+		
+		return true;
 	}
 
 	@Override

@@ -113,4 +113,21 @@ public class SAMesasImp implements SAMesas{
 		return false;
 	}
 
+	@Override
+	public Boolean borrarR(Integer id) {
+		DAOReserva daoR = FactoriaAbstractaIntegracion.getInstace().crearDAOReserva();
+		
+		TReserva estaR = daoR.obtenReserva(id);
+			
+		if(estaR == null) {
+			throw new IllegalArgumentException("Reserva no existente");
+		}
+			
+			
+		return daoR.daDeBajaReserva(id);
+			
+			
+		
+	}
+
 }

@@ -36,6 +36,12 @@ public class ControladorImp extends Controlador { //implementacion
 		case MAIN_WINDOW:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MAIN_WINDOW);
 			break;
+		case BAJA_RESERVA_VISTA:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_RESERVA_VISTA).actualizar(Evento.BAJA_RESERVA_VISTA, null);
+			break;
+		case BAJA_RESERVA:
+			bajaReserva(datos);
+			break;
 		case ALTA_RESERVA_VISTA:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_RESERVA_VISTA).actualizar(Evento.ALTA_RESERVA_VISTA, null);
 			break;
@@ -234,6 +240,22 @@ public class ControladorImp extends Controlador { //implementacion
         	break;
 	}
 }
+	private void bajaReserva(Object datos) {
+		int id = Integer.parseInt(datos.toString());
+		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
+		try {
+			boolean res = saMesas.borrarR(id);
+			if(res) {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_RESERVA_VISTA).actualizar(Evento.BAJA_RESERVA_OK, null);
+			}
+			else {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_RESERVA_VISTA).actualizar(Evento.BAJA_RESERVA_KO, "No se ha podido modificar la reserva");
+			}
+		}
+		catch(IllegalArgumentException iae) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_RESERVA_VISTA).actualizar(Evento.BAJA_RESERVA_KO, iae.getMessage());
+		}
+	}
 	private void modificarReserva(Object datos) {
 		TReserva tr = (TReserva) datos;
 		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
