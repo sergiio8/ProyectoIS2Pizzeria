@@ -1,9 +1,12 @@
 package presentacion.clientes;
 
+import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,6 +22,7 @@ import presentacion.IGUI;
 import presentacion.controlador.Controlador;
 
 public class VistaAltaCliente extends JDialog implements IGUI{
+	
 	private JLabel lNombre;
 	private JTextField tNombre;
 	private JLabel lAp;
@@ -31,45 +35,49 @@ public class VistaAltaCliente extends JDialog implements IGUI{
 	
 	public VistaAltaCliente(Frame parent) {
 		super(parent, true);
-		this.setTitle("REGISTRO");
 		
+		setTitle("Modificar Cliente");
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel.setLayout(new BorderLayout());
+		setContentPane(mainPanel);
+		
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		Box contenedor = Box.createVerticalBox();
+		
+		JPanel idPanel = new JPanel();
+		
+		this.lId = new JLabel("id: ");
+		idPanel.add(lId);
+		
+		this.tId = new JTextField(15);
+		idPanel.add(tId);
+		
+		contenedor.add(idPanel);
 		
 		
-		JPanel p1 = new JPanel();
-		p1.setAlignmentX(CENTER_ALIGNMENT);
 		
-		lNombre = new JLabel();
-		lNombre.setText("Nombre: ");
-		p1.add(lNombre);
+		JPanel nombrePanel = new JPanel();
+		
+		lNombre = new JLabel("Nombre: ");
+		nombrePanel.add(lNombre);
 		
 		tNombre = new JTextField(15);
-		p1.add(tNombre);
-		mainPanel.add(p1);
+		nombrePanel.add(tNombre);
 		
-		JPanel p2 = new JPanel();
-		p2.setAlignmentX(CENTER_ALIGNMENT);
+		contenedor.add(nombrePanel);
 		
-		lAp = new JLabel();
-		lAp.setText("Apellidos: ");
-		p2.add(lAp);
+		
+		
+		JPanel apellidoPanel = new JPanel();
+		
+		lAp = new JLabel("Apellidos: ");
+		apellidoPanel.add(lAp);
 		
 		tAp = new JTextField(15);
-		p2.add(tAp);
-		mainPanel.add(p2);
+		apellidoPanel.add(tAp);
+
+		contenedor.add(apellidoPanel);
 		
-		
-		JPanel p3 = new JPanel();
-		p3.setAlignmentX(CENTER_ALIGNMENT);
-		
-		lId = new JLabel();
-		lId.setText("Id (NIF): ");
-		p3.add(lId);
-		
-		tId = new JTextField(15);
-		p3.add(tId);
-		mainPanel.add(p3);
 		
 		JPanel buttonp1 = new JPanel();
 		buttonp1.setAlignmentX(CENTER_ALIGNMENT);
@@ -83,39 +91,31 @@ public class VistaAltaCliente extends JDialog implements IGUI{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(tId.getText().isEmpty() || tNombre.getText().isEmpty() || tAp.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(VistaAltaCliente.this, "Es necesario rellenar todos los datos", "Falta de datos", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(VistaAltaCliente.this, "ERROR: Es necesario rellenar todos los datos", "ERROR: Es necesario rellenar todos los datos", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					Controlador.getInstance().accion(Evento.REGISTRO_DE_CLIENTE, new TCliente(tId.getText().toString(),tNombre.getText().toString() , tAp.getText().toString() ));
+					Controlador.getInstance().accion(Evento.ALTA_CLIENTE, new TCliente(tId.getText().toString(),tNombre.getText().toString() , tAp.getText().toString() ));
+					
 				}
 			}
 			
 		});
-		buttonp1.add(ok);
 		
-		cancel = new JButton();
-		cancel.setText("Cancelar");
-		
-		cancel.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-					VistaAltaCliente.this.setVisible(false);
-			}
-			
+		this.cancel = new JButton("Cancelar");
+		this.cancel.addActionListener((e)->{
+			this.setVisible(false);
 		});
-		
+		buttonp1.add(ok);
 		buttonp1.add(cancel);
-		mainPanel.add(buttonp1);
 		
-		add(mainPanel);
+		contenedor.add(buttonp1);
+		
+		mainPanel.add(contenedor, BorderLayout.CENTER);
+		
 		pack();
 		setResizable(false);
 		setLocationRelativeTo(parent);
 	}
-	
-	
 	
 	
 	
@@ -128,16 +128,20 @@ public class VistaAltaCliente extends JDialog implements IGUI{
 		case VISTA_ALTA_CLIENTE:
 			this.setVisible(true);
 			break;
-		case CLIENTE_YA_REGISTRADO:
-			JOptionPane.showMessageDialog(this, "El cliente con id" + datos.toString() + "ya ha sido registrado", "Cliente ya registrado", JOptionPane.ERROR_MESSAGE);
-			setVisible(false);
+		case VISTA_ALTA_CLIENTE_OK:
+			TCliente cliente = (TCliente)datos;
+			JOptionPane.showMessageDialog(this, "El cliente con id " + cliente.getId() + "ha sido modificado", "Cliente modificado con éxito", JOptionPane.INFORMATION_MESSAGE);
+			this.setVisible(false);
 			break;
-		case CLIENTE_REGISTRADO:
-			JOptionPane.showMessageDialog(this, "El cliente con id" + datos.toString() + "ha sido registrado con éxito", "Cliente registrado", JOptionPane.INFORMATION_MESSAGE);
-			setVisible(false);
+		case VISTA_ALTA_CLIENTE_KO:
+			TCliente cliente2 = (TCliente)datos;
+			JOptionPane.showMessageDialog(this, "ERROR: no se ha podido modificar cliente con id " + cliente2.getId(), "ERROR: Cliente no modificado", JOptionPane.ERROR_MESSAGE);
+			this.setVisible(false);
+			break;
 		}
 		
-		
 	}
+		
+		
 
 }

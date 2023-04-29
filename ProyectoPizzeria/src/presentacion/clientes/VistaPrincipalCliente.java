@@ -50,7 +50,7 @@ public class VistaPrincipalCliente extends JFrame implements IGUI{
 		
 		altaButton = new JButton("Alta Cliente");
 		altaButton.addActionListener((e)->{
-			Controlador.getInstance().accion(Evento.ALTA_MESA_VISTA, null);
+			Controlador.getInstance().accion(Evento.VISTA_ALTA_CLIENTE, null);
 		});
 		buttonsPanel.add(altaButton);
 		

@@ -45,7 +45,7 @@ public class VistaModificarCliente extends JDialog implements IGUI{
 		
 		JPanel idPanel = new JPanel();
 		
-		this.id = new JLabel("idMesa: ");
+		this.id = new JLabel("id: ");
 		idPanel.add(id);
 		
 		this.tId = new JTextField(15);
