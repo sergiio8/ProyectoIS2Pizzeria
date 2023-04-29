@@ -57,7 +57,7 @@ public class ModeloTablaPlato extends AbstractTableModel {
 			int i;
 			for(i = 0; i < ing.size()-1; ++i)
 				ingredientes += ing.get(i) + ", ";
-			ingredientes += ing.get(i) + '"';
+			ingredientes += ing.get(i);
 			return ingredientes;
 		}
 		else return datos.get(rowIndex).getFirst().getDescripcion();

@@ -444,7 +444,7 @@ public class ControladorImp extends Controlador { //implementacion
 			ArrayList<String> ingredientes = saPlato.cogerIngredientes(nombre);
 			JSONObject jo = new JSONObject();
 			jo.put("plato", plato);
-			jo.put("ingredientes", ingredientes);
+			//jo.put("ingredientes", ingredientes);
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_PLATO_VISTA).actualizar(Evento.BUSCAR_PLATO_OK, jo);
 		}
 	}
