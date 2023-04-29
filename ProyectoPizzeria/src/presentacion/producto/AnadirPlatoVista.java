@@ -115,7 +115,6 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 		
 		JButton okButton = new JButton("OK");
 		okButton.addActionListener((e) ->{
-			String id;
 			String nombre;
 			double precio;
 			ArrayList<String> ingredientes = new ArrayList<String>();
