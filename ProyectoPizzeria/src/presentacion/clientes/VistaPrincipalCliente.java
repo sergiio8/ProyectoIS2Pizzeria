@@ -68,7 +68,7 @@ public class VistaPrincipalCliente extends JFrame implements IGUI{
 		
 		buscarButton = new JButton("Buscar Cliente");
 		buscarButton.addActionListener((e)->{
-			Controlador.getInstance().accion(Evento.BUSCA_CLIENTE, null);
+			Controlador.getInstance().accion(Evento.VISTA_BUSCAR_CLIENTE, null);
 		});
 		buttonsPanel.add(buscarButton);
 		

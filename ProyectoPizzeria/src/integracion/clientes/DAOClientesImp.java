@@ -26,14 +26,15 @@ public class DAOClientesImp implements DAOClientes{
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaClientes");
 			JSONObject jo = new JSONObject();
-			jo.put("id", cliente.getId());
 			id = cliente.getId();
+			jo.put("id", id);
 			jo.put("nombre", cliente.getNombre());
 			jo.put("apellido", cliente.getApellido());
 			ja.put(jo);
 		}
 		catch(Exception e1) {
 			id = null;
+			System.out.print("error en fileInput de IC");
 		}
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Clientes.json", false))){
@@ -44,6 +45,7 @@ public class DAOClientesImp implements DAOClientes{
 		} 
 		catch(Exception e2) {
 			id = null;
+			System.out.print("error en buffered de IC");
 		}
 		
 		return id;
@@ -94,6 +96,7 @@ public class DAOClientesImp implements DAOClientes{
 			ja = jsonInput.getJSONArray("ListaClientes");
 		}
 		catch(Exception e1) {
+			System.out.print("error en fileInput de OC");
 			return null;
 		}
 		

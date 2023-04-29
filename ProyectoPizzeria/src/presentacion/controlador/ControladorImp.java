@@ -146,9 +146,6 @@ public class ControladorImp extends Controlador { //implementacion
 		case VISTA_PRINCIPAL_CLIENTES:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_CLIENTES);
 			break;
-		case BUSCA_CLIENTE:
-			buscarCliente(datos);
-			break;
 			
 		case VISTA_ALTA_CLIENTE:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_ALTA_CLIENTE).actualizar(Evento.VISTA_ALTA_CLIENTE, datos);
@@ -168,8 +165,11 @@ public class ControladorImp extends Controlador { //implementacion
 		case BAJA_CLIENTE:
 			bajaCliente(datos);
 			break;
-		case CONSULTAR_DATOS_CLIENTE:
-			consultarCliente(datos);
+		case VISTA_BUSCAR_CLIENTE:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_BUSCAR_CLIENTE).actualizar(Evento.VISTA_BUSCAR_CLIENTE, datos);
+			break;
+		case BUSCAR_CLIENTE:
+			buscarCliente(datos);
 			break;
 		case VISTA_LISTAR_CLIENTES:
 			Collection<TCliente> lClientes = listarClientes();
@@ -515,13 +515,7 @@ public class ControladorImp extends Controlador { //implementacion
 	private void buscarCliente(Object datos) {
 		SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
 		TCliente c = infoCliente.consulta((String)datos);
-		if (c == null) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento. VISTA_PRINCIPAL_CLIENTES).actualizar(Evento.ALTA_CLIENTE_KO, datos);
-		}
-		else {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_CLIENTE_LOGUEADO).actualizar(Evento.VISTA_CLIENTE_LOGUEADO, datos);
-			
-		}
+		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_BUSCAR_CLIENTE).actualizar(Evento.BUSCAR_CLIENTE_RES, c);
 	}
 	
 	private void altaCliente(Object datos) {
@@ -555,15 +549,9 @@ public class ControladorImp extends Controlador { //implementacion
 		if(c) {
 			FactoriaPresentacion.getInstace().createVista(Evento.VISTA_BAJA_CLIENTE).actualizar(Evento.BAJA_CLIENTE_OK, datos);
 		}
-		else {//cambio
+		else {
 			FactoriaPresentacion.getInstace().createVista(Evento.VISTA_BAJA_CLIENTE).actualizar(Evento.BAJA_CLIENTE_KO, datos);
 		}
-	}
-	
-	private void consultarCliente(Object datos) {
-		SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
-		TCliente cliente = infoCliente.consulta((String)datos); 
-		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_CLIENTE_LOGUEADO).actualizar(Evento.CONSULTAR_DATOS_CLIENTE, cliente);
 	}
 	
 	private Collection<TCliente> listarClientes(){

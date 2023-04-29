@@ -57,6 +57,7 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 	private IGUI vistaListarClientes = null;
 	private IGUI vistaBajaCliente = null;
 	private IGUI vistaModificarCliente = null;
+	private IGUI vistaBuscarCliente = null;
 	private IGUI vistaPrincipalFactura = null;
 	private IGUI vistaAltaFactura = null;
 	private IGUI vistaBuscarFactura = null;
@@ -126,7 +127,7 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 		case VISTA_PRINCIPAL_CLIENTES:
 			vistaPrincipalClientes = new VistaPrincipalCliente();
 			return vistaPrincipalClientes;
-		case VISTA_ALTA_CLIENTE://cambiar
+		case VISTA_ALTA_CLIENTE:
 			if(vistaAltaCliente == null) {
 				vistaAltaCliente= new VistaAltaCliente((Frame)vistaPrincipalClientes);
 			}
@@ -146,6 +147,11 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 				vistaListarClientes= new VistaListarClientes((Frame)vistaPrincipalClientes);
 			}
 			return vistaListarClientes;
+		case VISTA_BUSCAR_CLIENTE:
+			if(vistaBuscarCliente == null) {
+				vistaBuscarCliente= new VistaBuscarCliente((Frame)vistaPrincipalClientes);
+			}
+			return vistaBuscarCliente;
 			
 		case VISTA_PRINCIPAL_FACTURA:
 			this.vistaPrincipalFactura = new VistaPrincipalFacturas();
