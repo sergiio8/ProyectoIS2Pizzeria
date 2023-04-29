@@ -21,16 +21,15 @@ public class DAOPlatoImp implements DAOPlato {
 
 	@Override
 	public String insertaPlato(TPlato tp) {
-		String id = "";
+		String nombre = "";
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Platos.json"))){ 
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaPlatos");
 			JSONObject jo = new JSONObject();
-			id = tp.getId();
-			jo.put("id", id);
+			nombre = tp.getNombre();
+			jo.put("nombre", nombre);
 			jo.put("tipo", tp.getTipo());
-			jo.put("nombre", tp.getNombre());
 			jo.put("precio", tp.getPrecio());
 			/*String aux = "";
 			int i;
@@ -43,7 +42,7 @@ public class DAOPlatoImp implements DAOPlato {
 			ja.put(jo);
 		}
 		catch(Exception e1) {
-			id = "hola";
+			nombre = "";
 		}
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Platos.json", false))){
 			JSONObject jo2 = new JSONObject();
@@ -52,13 +51,13 @@ public class DAOPlatoImp implements DAOPlato {
 			
 		} 
 		catch(Exception e2) {
-			id = "";
+			nombre = "";
 		}		
-		return id;
+		return nombre;
 	}
 
 	@Override
-	public Boolean daDeBajaPlato(String id) {
+	public Boolean daDeBajaPlato(String nombre) {
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Platos.json"))){ 
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
@@ -68,7 +67,7 @@ public class DAOPlatoImp implements DAOPlato {
 			return false;
 		}
 		int i = 0;
-		while(i < ja.length() && !ja.getJSONObject(i).get("id").equals(id)) {
+		while(i < ja.length() && !ja.getJSONObject(i).get("nombre").equals(nombre)) {
 			i++;
 		}
 		if(i == ja.length()) {
@@ -89,7 +88,7 @@ public class DAOPlatoImp implements DAOPlato {
 	}
 
 	@Override
-	public TPlato obtenPlato(String id) {
+	public TPlato obtenPlato(String nombre) {
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Platos.json"))){ 
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
@@ -99,7 +98,7 @@ public class DAOPlatoImp implements DAOPlato {
 			return null;
 		}
 		int i = 0;
-		while(i < ja.length() && !ja.getJSONObject(i).get("id").equals(id)) {
+		while(i < ja.length() && !ja.getJSONObject(i).get("nombre").equals(nombre)) {
 			i++;
 		}
 		if(i == ja.length()) {
@@ -107,9 +106,7 @@ public class DAOPlatoImp implements DAOPlato {
 		}
 		else {
 			JSONObject obj = ja.getJSONObject(i);
-			
 			String tipo = obj.getString("tipo").toLowerCase();
-			String nombre = obj.getString("nombre");
 			Double precio = obj.getDouble("precio");
 			ArrayList<String> ingredientes =  new ArrayList<String>();
 			Object o = obj.get("ingredientes");
@@ -119,11 +116,11 @@ public class DAOPlatoImp implements DAOPlato {
 			String descripcion = obj.getString("descripcion");
 			
 			if(tipo.equals("entrante"))
-					return new TEntrante(id,nombre,precio,ingredientes,descripcion);
+					return new TEntrante(nombre,precio,ingredientes,descripcion);
 			else if(tipo.equals("pizza"))
-				return new TPizza(id,nombre,precio,ingredientes,descripcion);
+				return new TPizza(nombre,precio,ingredientes,descripcion);
 			else if(tipo.equals("postre"))
-				return new TPostre(id,nombre,precio,ingredientes,descripcion);
+				return new TPostre(nombre,precio,ingredientes,descripcion);
 			else return null;
 		}
 	}
@@ -131,7 +128,7 @@ public class DAOPlatoImp implements DAOPlato {
 	@Override
 	public Boolean modificaPlato(TPlato tp) {
 		
-		String id = tp.getId();
+		String nombre = tp.getNombre();
 		
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Platos.json"))){ //idea mandar excepciones y tratarlas en controlador
@@ -143,7 +140,7 @@ public class DAOPlatoImp implements DAOPlato {
 		}
 		
 		int i = 0;
-		while(i < ja.length() && !ja.getJSONObject(i).getString("id").equals(id)) {
+		while(i < ja.length() && !ja.getJSONObject(i).getString("nombre").equals(nombre)) {
 			i++;
 		}
 		if(i == ja.length()) {
@@ -152,10 +149,6 @@ public class DAOPlatoImp implements DAOPlato {
 		
 		JSONObject jo = ja.getJSONObject(i);
 		ja.remove(i);
-		if (!tp.getNombre().equals("")){
-			jo.remove("nombre");
-			jo.put("nombre", tp.getNombre());
-		}
 		if (tp.getPrecio() != 0) {
 			jo.remove("precio");
 			jo.put("precio", tp.getPrecio());
@@ -199,9 +192,8 @@ public class DAOPlatoImp implements DAOPlato {
 		while(i < ja.length()) {
 			JSONObject obj = ja.getJSONObject(i);
 			
-			String id = obj.getString("id");
-			String tipo = obj.getString("tipo").toLowerCase();
 			String nombre = obj.getString("nombre");
+			String tipo = obj.getString("tipo").toLowerCase();
 			Double precio = obj.getDouble("precio");
 			ArrayList<String> ingredientes =  new ArrayList<String>();
 			Object o = obj.get("ingredientes");
@@ -211,11 +203,11 @@ public class DAOPlatoImp implements DAOPlato {
 			String descripcion = obj.getString("descripcion");
 			
 			if(tipo.equals("entrante"))
-				resultado.add(new TEntrante(id,nombre,precio,ingredientes,descripcion));
+				resultado.add(new TEntrante(nombre,precio,ingredientes,descripcion));
 			else if(tipo.equals("pizza"))
-				resultado.add(new TPizza(id,nombre,precio,ingredientes,descripcion));
+				resultado.add(new TPizza(nombre,precio,ingredientes,descripcion));
 			else if(tipo.equals("postre"))
-				resultado.add(new TPostre(id,nombre,precio,ingredientes,descripcion));
+				resultado.add(new TPostre(nombre,precio,ingredientes,descripcion));
 			i++;
 		}
 		return resultado;

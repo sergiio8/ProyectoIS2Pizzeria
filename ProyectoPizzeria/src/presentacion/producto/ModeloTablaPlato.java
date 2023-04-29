@@ -11,7 +11,7 @@ public class ModeloTablaPlato extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String[] header = {"Id", "Tipo", "Nombre", "Precio", "Ingredientes", "Descripcion"};
+	private String[] header = {"Nombre", "Tipo", "Precio", "Ingredientes", "Descripcion"};
 	private ArrayList<TPlato> platos;
 	
 	@Override
@@ -42,18 +42,15 @@ public class ModeloTablaPlato extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if(columnIndex == 0) {
-			return platos.get(rowIndex).getId();
+			return platos.get(rowIndex).getNombre();
 		}
 		else if (columnIndex == 1) {
 			return platos.get(rowIndex).getTipo();
 		}
 		else if (columnIndex == 2) {
-			return platos.get(rowIndex).getNombre();
-		}
-		else if (columnIndex == 3) {
 			return platos.get(rowIndex).getPrecio();
 		}
-		else if (columnIndex == 4) {
+		else if (columnIndex == 3) {
 			String ingredientes = "";
 			ArrayList<String> ing = platos.get(rowIndex).getIngredientes();
 			int i;

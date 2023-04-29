@@ -7,9 +7,9 @@ public class TEntrante extends TPlato{
 	
 	//private Salsa salsa;
 	
-	public TEntrante(String id, String nombre, double precio, ArrayList<String> ingredientes,
+	public TEntrante(String nombre, double precio, ArrayList<String> ingredientes,
 			String descripcion) {
-		super(id, "Entrante", nombre, precio, ingredientes, descripcion);
+		super("Entrante", nombre, precio, ingredientes, descripcion);
 	}
 	
 	/*public Salsa getSalsa() {

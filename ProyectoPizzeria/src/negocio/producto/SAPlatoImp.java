@@ -3,32 +3,30 @@ package negocio.producto;
 import java.util.Collection;
 
 import integracion.factoria.FactoriaAbstractaIntegracion;
-import integracion.ingredientes.DAOIngrediente;
 import integracion.producto.DAOPlato;
-import negocio.ingredientes.TIngrediente;
 
 public class SAPlatoImp implements SAPlato {
 
 	@Override
 	public String alta(TPlato tp) {
-		String id = "";
+		String nombre = "";
 		
 		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
 		
 		if(tp != null) {
-			TPlato plato = daoPlato.obtenPlato(tp.getId());
+			TPlato plato = daoPlato.obtenPlato(tp.getNombre());
 			if(plato == null) {
-				id = daoPlato.insertaPlato(tp);
+				nombre = daoPlato.insertaPlato(tp);
 			}
 		}
 		
-		return id;
+		return nombre;
 	}
 
 	@Override
-	public TPlato consulta(String id) {
+	public TPlato consulta(String nombre) {
 		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
-		return daoPlato.obtenPlato(id);
+		return daoPlato.obtenPlato(nombre);
 	}
 
 	@Override
@@ -44,9 +42,9 @@ public class SAPlatoImp implements SAPlato {
 	}
 
 	@Override
-	public Boolean borrar(String id) {
+	public Boolean borrar(String nombre) {
 		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
-		return daoPlato.daDeBajaPlato(id);
+		return daoPlato.daDeBajaPlato(nombre);
 	}
 
 	

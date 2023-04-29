@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 
 public class TPlato {
-	private String id;
 	private String tipo;
 	private String nombre;
 	private double precio;
@@ -15,8 +14,7 @@ public class TPlato {
     private int stock;
 
 	
-	public TPlato(String id, String tipo, String nombre, double precio, ArrayList<String> ingredientes, String descripcion){
-		this.id = id;
+	public TPlato(String tipo, String nombre, double precio, ArrayList<String> ingredientes, String descripcion){
 		this.tipo = tipo;
 		this.nombre = nombre;
 		this.precio = precio;
@@ -24,14 +22,6 @@ public class TPlato {
 		this.descripcion = descripcion;
 		stock = 10;
 		//puede_hacerse = true;
-	}
-	
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
 	}
 	
 	public String getTipo() {

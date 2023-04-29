@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import negocio.mesas.TMesas;
 import negocio.producto.TPlato;
 import presentacion.Evento;
 import presentacion.IGUI;
@@ -23,13 +22,11 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 
 	private static final long serialVersionUID = 1L;
 	
-	private JPanel idPanel;
-	private JLabel idLabel;
-	private JTextField idText;
-	private JPanel typePanel;
-	private JLabel typeLabel;
 	private JPanel namePanel;
 	private JLabel nameLabel;
+	private JTextField nameText;
+	private JPanel typePanel;
+	private JLabel typeLabel;
 	private JPanel pricePanel;
 	private JLabel priceLabel;
 	private JPanel ingredientsPanel;
@@ -55,17 +52,16 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 		Box contenedor = Box.createVerticalBox();
 		
 		//ID
-		idPanel = new JPanel();
-		idLabel = new JLabel("ID_plato: ");
-		idText = new JTextField(10);
+		namePanel = new JPanel();
+		nameLabel = new JLabel("ID_plato: ");
+		nameText = new JTextField(10);
 		
-		idPanel.add(idLabel);
-		idPanel.add(idText);
+		namePanel.add(nameLabel);
+		namePanel.add(nameText);
 		
-		contenedor.add(idPanel);
+		contenedor.add(namePanel);
 		
 		contenedor.add(typePanel = new JPanel());
-		contenedor.add(namePanel = new JPanel());
 		contenedor.add(pricePanel = new JPanel());
 		contenedor.add(ingredientsPanel = new JPanel());
 		contenedor.add(descriptionPanel = new JPanel());
@@ -77,18 +73,18 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 				
 		okButton = new JButton("OK");
 		okButton.addActionListener((e) ->{
-			String id;
+			String nombre;
 			try {
-				id = idText.getText();
-				if(id == null || id.equals("")) {
+				nombre = nameText.getText();
+				if(nombre == null || nombre.equals("")) {
 					throw new IllegalArgumentException();
 				}
 				
-				Controlador.getInstance().accion(Evento.BUSCAR_PLATO, id);
+				Controlador.getInstance().accion(Evento.BUSCAR_PLATO, nombre);
 				
 			}
 			catch(IllegalArgumentException iae) {
-				JOptionPane.showMessageDialog(BuscarPlatoVista.this, "ERROR: Rellene el campo relativo al id", "ERROR: Rellene el campo relativo al id", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(BuscarPlatoVista.this, "ERROR: Rellene el campo relativo al nombre", "ERROR: Rellene el campo relativo al nombre", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
@@ -111,10 +107,9 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 	public void actualizar(Evento e, Object datos) {
 		switch(e) {
 		case BUSCAR_PLATO_VISTA:
-			idText.setEnabled(true);
+			nameText.setEnabled(true);
 			if(typeLabel != null) {
 				typePanel.remove(typeLabel);
-				namePanel.remove(nameLabel);
 				pricePanel.remove(priceLabel);
 				ingredientsPanel.remove(ingredientsLabel);
 				descriptionPanel.remove(descriptionLabel);
@@ -130,12 +125,10 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 		case BUSCAR_PLATO_OK:
 			JOptionPane.showMessageDialog(this, "Plato encontrado", "Plato encontrado", JOptionPane.INFORMATION_MESSAGE);
 			TPlato tp = (TPlato) datos;
-			idText.setEnabled(false);
+			nameText.setEnabled(false);
 			
 			typeLabel = new JLabel("Tipo: " + tp.getTipo());
 			typePanel.add(typeLabel);
-			nameLabel = new JLabel("Nombre: " + tp.getNombre());
-			namePanel.add(nameLabel);
 			priceLabel = new JLabel("Precio: " + tp.getPrecio());
 			pricePanel.add(priceLabel);
 			String ingredientes = "";

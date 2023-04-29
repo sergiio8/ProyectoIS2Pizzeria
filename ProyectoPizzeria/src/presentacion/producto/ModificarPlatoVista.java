@@ -41,16 +41,6 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		Box contenedor = Box.createVerticalBox();
 		
-		//ID
-		JPanel idPanel = new JPanel();
-		JLabel idLabel = new JLabel("ID_plato: ");
-		JTextField idText = new JTextField(10);
-		
-		idPanel.add(idLabel);
-		idPanel.add(idText);
-		
-		contenedor.add(idPanel);
-		
 		//Nombre
 		JPanel namePanel = new JPanel(new FlowLayout());
 		JLabel nameLabel = new JLabel("Nombre: ");
@@ -89,32 +79,7 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 		descriptionPanel.add(descriptionLabel);
 		descriptionPanel.add(descriptionText);
 		
-		contenedor.add(descriptionPanel);
-		/*
-		//Tipo
-		JPanel typePanel = new JPanel();
-		JLabel typeLabel = new JLabel("Tipo: ");
-		
-		JPanel typeButtonPanel = new JPanel();
-		typeButtonPanel.setLayout(new BoxLayout(typeButtonPanel, BoxLayout.Y_AXIS));
-		JRadioButton entranteButton = new JRadioButton("Entrante");
-		JRadioButton pizzaButton = new JRadioButton("Pizza");
-		JRadioButton postreButton = new JRadioButton("Postre");
-		ButtonGroup bGroup = new ButtonGroup();
-		
-		bGroup.add(entranteButton);
-		bGroup.add(pizzaButton);
-		bGroup.add(postreButton);
-		
-		typeButtonPanel.add(entranteButton);
-		typeButtonPanel.add(pizzaButton);
-		typeButtonPanel.add(postreButton);
-		
-		typePanel.add(typeLabel);
-		typePanel.add(typeButtonPanel);
-		
-		contenedor.add(typePanel);*/
-		
+		contenedor.add(descriptionPanel);		
 		
 		//Botones
 		JPanel buttonsPanel = new JPanel();
@@ -123,13 +88,11 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 		
 		JButton okButton = new JButton("OK");
 		okButton.addActionListener((e) ->{
-			String id;
 			String nombre;
 			double precio;
 			ArrayList<String> ingredientes = new ArrayList<String>();
 			String descripcion;
 			try {
-				id = idText.getText();
 				nombre = nameText.getText();
 				if(!priceText.getText().equals(""))
 					precio = Double.parseDouble(priceText.getText());
@@ -139,7 +102,7 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 					ingredientes.add(s.trim());
 				descripcion = descriptionText.getText();
 				
-				Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, new TEntrante(id, nombre,precio,ingredientes,descripcion));			
+				Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, new TEntrante(nombre,precio,ingredientes,descripcion));			
 			}
 			catch(NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(ModificarPlatoVista.this, "ERROR: El precio del plato debe ser un numero positivo", "ERROR: El precio del plato debe ser un numero positivo", JOptionPane.ERROR_MESSAGE);

@@ -44,16 +44,6 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		Box contenedor = Box.createVerticalBox();
 		
-		//ID
-		JPanel idPanel = new JPanel();
-		JLabel idLabel = new JLabel("ID_plato: ");
-		JTextField idText = new JTextField(10);
-		
-		idPanel.add(idLabel);
-		idPanel.add(idText);
-		
-		contenedor.add(idPanel);
-		
 		//Nombre
 		JPanel namePanel = new JPanel(new FlowLayout());
 		JLabel nameLabel = new JLabel("Nombre: ");
@@ -131,9 +121,6 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 			ArrayList<String> ingredientes = new ArrayList<String>();
 			String descripcion;
 			try {
-				id = idText.getText();
-				if(id == null || id.equals(""))
-					throw new IllegalArgumentException("El id no puede ser nulo");
 				nombre = nameText.getText();
 				if(nombre == null || nombre.equals(""))
 					throw new IllegalArgumentException("El plato debe tener nombre");
@@ -150,13 +137,13 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 				if(descripcion == null || descripcion.equals(""))
 					throw new IllegalArgumentException("El plato debe tener descripcion");
 				if(entranteButton.isSelected()) {
-					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TEntrante(id, nombre,precio,ingredientes,descripcion));
+					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TEntrante(nombre,precio,ingredientes,descripcion));
 				}
 				else if(pizzaButton.isSelected()) {
-					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPizza(id, nombre,precio,ingredientes,descripcion));
+					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPizza(nombre,precio,ingredientes,descripcion));
 				}
 				else if(postreButton.isSelected()) {
-					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPostre(id, nombre,precio,ingredientes,descripcion));
+					Controlador.getInstance().accion(Evento.ALTA_PLATO, new TPostre(nombre,precio,ingredientes,descripcion));
 				}
 				else {
 					throw new IllegalArgumentException("Indique el tipo del plato");
@@ -193,7 +180,7 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 			setVisible(true);
 			break;
 		case ALTA_PLATO_OK:
-			JOptionPane.showMessageDialog(this, "Plato anadido con id: " + datos.toString(), "Plato anadido con id: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Plato anadido con nombre: " + datos.toString(), "Plato anadido con nombre: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
 			setVisible(false);
 			break;
 		case ALTA_PLATO_KO:
