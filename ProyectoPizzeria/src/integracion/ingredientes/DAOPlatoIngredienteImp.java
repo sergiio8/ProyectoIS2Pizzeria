@@ -135,7 +135,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 		
 		Collection<TPlatoIngrediente> l = new ArrayList<TPlatoIngrediente>();
 		for(int k = 0; k<ja.length(); k++) {
-		    TPlatoIngrediente ingrediente = new TPlatoIngrediente(ja.getJSONObject(k).getString("idPlato"), ja.getJSONObject(k).getString("nombreIngrediente"));
+		    TPlatoIngrediente ingrediente = new TPlatoIngrediente(ja.getJSONObject(k).getString("nombrePlato"), ja.getJSONObject(k).getString("nombreIngrediente"));
 		    l.add(ingrediente);
 		}
 		return l;
@@ -167,7 +167,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 			return null;
 		}
 		else {
-			TPlatoIngrediente platoIngrediente = new TPlatoIngrediente( ja.getJSONObject(i).getString("idPlato"),ja.getJSONObject(i).getString("nombreIngrediente") );
+			TPlatoIngrediente platoIngrediente = new TPlatoIngrediente( ja.getJSONObject(i).getString("nombrePlato"),ja.getJSONObject(i).getString("nombreIngrediente") );
 			return platoIngrediente;
 		}
 		
