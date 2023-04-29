@@ -125,12 +125,12 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 		case VISTA_PRINCIPAL_CLIENTES:
 			vistaPrincipalClientes = new VistaPrincipalCliente();
 			return vistaPrincipalClientes;
-		case VISTA_CLIENTE_LOGUEADO:
+		case VISTA_CLIENTE_LOGUEADO://cambiar
 			if(vistaClienteLogueado == null) {
 				vistaClienteLogueado= new VistaClienteLogueado((Frame)vistaPrincipalClientes);
 			}
 			return vistaClienteLogueado;
-		case VISTA_REGISTRO_DE_CLIENTE:
+		case VISTA_REGISTRO_DE_CLIENTE://cambiar
 			if(vistaRegistrarCliente == null) {
 				vistaRegistrarCliente= new VistaRegistrarCliente((Frame)vistaPrincipalClientes);
 			}

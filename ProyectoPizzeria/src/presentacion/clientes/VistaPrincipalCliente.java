@@ -1,11 +1,16 @@
 package presentacion.clientes;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,101 +25,76 @@ import presentacion.controlador.Controlador;
 import presentacion.mesas.VistaPrincipalMesas;
 
 public class VistaPrincipalCliente extends JFrame implements IGUI{
-
-	private JLabel lid;
-	private JTextField tid;
-	private JButton ok;
-	private JButton cancel;
-	private JLabel lcuenta;
-	private JButton register;
 	
+	private JButton altaButton;
+	private JButton bajaButton;
+	private JButton listarButton;
+	private JButton buscarButton;
+	private JButton modificarButton;
+	private JButton volverButton;
+
 	public VistaPrincipalCliente() {
-		
-		this.setTitle("MENÚ CLIENTES");
-		
+		super("Clientes");
+		initGUI();
+	}
+
+	private void initGUI() {
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(8,15,15,15));
 		
+		JLabel titulo = new JLabel("Subsistema Clientes");
+		titulo.setFont(new Font("Serif", Font.PLAIN, 75));
+		mainPanel.add(titulo, BorderLayout.NORTH);
 		
-		JPanel labelp1 = new JPanel();
-		labelp1.setAlignmentX(CENTER_ALIGNMENT);
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new GridLayout(3, 2, 20 ,20));
+		buttonsPanel.setPreferredSize(new Dimension(110, 300));
 		
-		lid = new JLabel();
-		lid.setText("Introduzca su id de usuario(NIF):");
-		labelp1.add(lid);
-		mainPanel.add(labelp1);
-		
-		
-		JPanel textp1 = new JPanel();
-		textp1.setAlignmentX(CENTER_ALIGNMENT);
-		
-		tid = new JTextField(15);
-		tid.setAlignmentX(CENTER_ALIGNMENT);
-		//tid.setMaximumSize(new Dimension(300, 50));
-		textp1.add(tid);
-		mainPanel.add(textp1);
-		
-		JPanel buttonp1 = new JPanel();
-		buttonp1.setAlignmentX(CENTER_ALIGNMENT);
-		
-		ok = new JButton();
-		ok.setText("OK");
-		
-		ok.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				String id = tid.getText();
-				Controlador.getInstance().accion(Evento.BUSCA_CLIENTE, id);
-			}
-			
+		altaButton = new JButton("Alta Cliente");
+		altaButton.addActionListener((e)->{
+			Controlador.getInstance().accion(Evento.ALTA_MESA_VISTA, null);
 		});
-		buttonp1.add(ok);
+		buttonsPanel.add(altaButton);
 		
-		
-		cancel = new JButton();
-		cancel.setText("Cancelar");
-		
-		cancel.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				VistaPrincipalCliente.this.setVisible(false);
-			}
-			
+		bajaButton = new JButton("Baja Cliente");
+		bajaButton.addActionListener((e)->{
+			Controlador.getInstance().accion(Evento.BAJA_MESA_VISTA, null);
 		});
-		buttonp1.add(cancel);
-		mainPanel.add(buttonp1);
+		buttonsPanel.add(bajaButton);
 		
-		
-		JPanel lp2 = new JPanel();
-		lp2.setAlignmentX(CENTER_ALIGNMENT);
-		
-		lcuenta = new JLabel();
-		lcuenta.setText("¿No está registrado? Regístrese aquí:");
-		lp2.add(lcuenta);
-		mainPanel.add(lp2);
-		
-		JPanel buttonp2 = new JPanel();
-		buttonp2.setAlignmentX(CENTER_ALIGNMENT);
-		
-		register = new JButton();
-		register.setText("Regístrate");
-		register.setSize(new Dimension(300, 50));
-		register.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				Controlador.getInstance().accion(Evento.VISTA_REGISTRO_DE_CLIENTE, null);
-			}
-			
+		listarButton = new JButton("Listar Clientes");
+		listarButton.addActionListener((e)->{
+			Controlador.getInstance().accion(Evento.LISTAR_MESAS, null);
 		});
-		buttonp2.add(register);
-		mainPanel.add(buttonp2);
+		buttonsPanel.add(listarButton);
 		
+		buscarButton = new JButton("Buscar Cliente");
+		buscarButton.addActionListener((e)->{
+			Controlador.getInstance().accion(Evento.BUSCAR_MESA_VISTA, null);
+		});
+		buttonsPanel.add(buscarButton);
+		
+		modificarButton = new JButton("Modificar Cliente");
+		modificarButton.addActionListener((e)->{
+			Controlador.getInstance().accion(Evento.VISTA_MODIFICAR_CLIENTE, null);
+		});
+		buttonsPanel.add(modificarButton);
+		
+		JPanel volverPanel = new JPanel();
+		volverPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		volverPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+		
+		volverButton = new JButton("Volver");
+		volverButton.addActionListener((e)->{
+			Controlador.getInstance().accion(Evento.MAIN_WINDOW, null);
+			this.dispose();
+		});
+		volverButton.setPreferredSize(new Dimension(100, 45));
+		
+		volverPanel.add(volverButton);
+		
+		mainPanel.add(volverPanel, BorderLayout.SOUTH);
 		
 		addWindowListener(new WindowListener() {
 
@@ -163,23 +143,22 @@ public class VistaPrincipalCliente extends JFrame implements IGUI{
 			
 		});
 		
-		add(mainPanel);
+		mainPanel.add(buttonsPanel, BorderLayout.CENTER);
+		setContentPane(mainPanel);
+		
 		pack();
-		//setResizable(false);
+		setResizable(false);
 		setLocationRelativeTo(null);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		
 	}
-	
-	
-	
-	
+
 	@Override
 	public void actualizar(Evento e, Object datos) {
 		// TODO Auto-generated method stub
-		switch(e) {
-		case CLIENTE_NO_REGISTRADO:
-			JOptionPane.showMessageDialog(this, "Ningún cliente registrado con id " + datos.toString(), "Cliente no registrado", JOptionPane.ERROR_MESSAGE);
-			break;
-		}
+		
 	}
+	
+	
 }
