@@ -13,4 +13,5 @@ public interface SAMesas {
 	Boolean modificarR(TReserva tr);
 	Boolean borrarR(Integer id);
 	Collection<TReserva> consultaTodosR();
+	Collection<TReserva> consultaTodosRCliente(String id);
 }

@@ -61,7 +61,21 @@ public class ControladorImp extends Controlador { //implementacion
 			Collection<TReserva> reservas = listarReservas();
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_RESERVAS).actualizar(Evento.LISTAR_RESERVAS, reservas);
 			break;
+		case LISTAR_RESERVAS_CLIENTE_VISTA:
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_RESERVAS_CLIENTE_VISTA).actualizar(Evento.LISTAR_RESERVAS_CLIENTE_VISTA, null);
+			break;
+		case LISTAR_RESERVAS_CLIENTE:
+			try {
+				Collection<TReserva> reservasC = listarReservasCliente(datos);
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_RESERVAS_CLIENTE_VISTA).actualizar(Evento.LISTAR_RESERVAS_CLIENTE_OK, reservasC);
+			}
+			catch(Exception er) {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_RESERVAS_CLIENTE_VISTA).actualizar(Evento.LISTAR_RESERVAS_CLIENTE_KO, er.getMessage());
+			}
 			
+			
+			
+			break;
 		case VISTA_PRINCIPAL_MESA:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_MESA);
 			break;
@@ -249,6 +263,12 @@ public class ControladorImp extends Controlador { //implementacion
         	break;
 	}
 }
+	private Collection<TReserva> listarReservasCliente(Object datos) {
+		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
+		Collection<TReserva> reservas = saMesas.consultaTodosRCliente(datos.toString());
+		return reservas;
+		
+	}
 	private Collection<TReserva> listarReservas() {
 		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
 		Collection<TReserva> reservas = saMesas.consultaTodosR();

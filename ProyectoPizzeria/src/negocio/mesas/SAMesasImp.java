@@ -136,4 +136,15 @@ public class SAMesasImp implements SAMesas{
 		return daoR.consultaTodos();
 	}
 
+	@Override
+	public Collection<TReserva> consultaTodosRCliente(String id) {
+		DAOClientes daoClientes = FactoriaAbstractaIntegracion.getInstace().crearDAOCliente();
+		TCliente estaC = daoClientes.obtenCliente(id);
+		if(estaC == null) {
+			throw new IllegalArgumentException("Cliente no existente");
+		}
+		DAOReserva daoR = FactoriaAbstractaIntegracion.getInstace().crearDAOReserva();
+		return daoR.consultaTodosCliente(id);
+	}
+
 }

@@ -188,4 +188,39 @@ public class DAOReservaImp implements DAOReserva{
 		return resultado;
 	}
 
+	@Override
+	public Collection<TReserva> consultaTodosCliente(String id) {
+		Collection<TReserva> resultado = new ArrayList<TReserva>();
+		JSONArray ja = null;
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Reservas.json"))){ //idea mandar excepciones y tratarlas en controlador
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaReservas");
+			
+		}
+		catch(Exception e1) {
+			
+			return resultado;
+		}
+		
+		int i = 0;
+		Date date;
+		String idCliente;
+
+		while(i < ja.length()) {
+			try {
+				idCliente = ja.getJSONObject(i).getString("idCliente");
+				if(idCliente.equals(id)) {
+					date = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(ja.getJSONObject(i).getString("fecha"));
+					resultado.add( new TReserva(ja.getJSONObject(i).getInt("idMesa"),idCliente  ,date,ja.getJSONObject(i).getInt("id")));
+				}
+				i++;
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				i++;
+			}
+			
+		}
+		return resultado;
+	}
+
 }

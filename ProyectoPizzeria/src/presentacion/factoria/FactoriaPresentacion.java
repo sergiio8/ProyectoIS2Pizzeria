@@ -15,6 +15,7 @@ import presentacion.mesas.VistaBorrarReserva;
 import presentacion.mesas.VistaBuscarMesa;
 import presentacion.mesas.VistaListarMesas;
 import presentacion.mesas.VistaListarReservas;
+import presentacion.mesas.VistaListarReservasPorCliente;
 import presentacion.mesas.VistaModificarMesa;
 import presentacion.mesas.VistaModificarReserva;
 import presentacion.mesas.VistaPrincipalMesas;
@@ -49,6 +50,7 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 	private IGUI vistaModificarReserva = null;
 	private IGUI vistaBorrarReserva = null;
 	private IGUI vistaAnadirMesa = null;
+	private IGUI vistaListarReservasCliente = null;
 	private IGUI vistaBorrarMesa = null;
 	private IGUI vistaModificarMesa = null;
 	private IGUI vistaBuscarMesa = null;
@@ -97,6 +99,12 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 			return vistaAnadirReserva;
 		case LISTAR_RESERVAS:
 			return new VistaListarReservas((Frame) vistaPrincipalReserva);
+		case LISTAR_RESERVAS_CLIENTE_VISTA:
+			if(vistaListarReservasCliente == null) {
+				vistaListarReservasCliente = new VistaListarReservasPorCliente((Frame) vistaPrincipalReserva);
+			}
+			return vistaListarReservasCliente;
+			
 		case VISTA_PRINCIPAL_MESA:
 			this.vistaPrincipalMesa = new VistaPrincipalMesas();
 			return vistaPrincipalMesa;

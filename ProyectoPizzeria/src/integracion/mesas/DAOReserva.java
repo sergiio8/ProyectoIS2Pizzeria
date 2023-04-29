@@ -11,4 +11,5 @@ public interface DAOReserva {
 	public TReserva obtenReserva(Integer id);
 	Boolean modificaReserva(TReserva tr);
 	Collection<TReserva> consultaTodos();
+	public Collection<TReserva> consultaTodosCliente(String id);
 }
