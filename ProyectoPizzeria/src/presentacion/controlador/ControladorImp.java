@@ -54,6 +54,12 @@ public class ControladorImp extends Controlador { //implementacion
 		case MODIFICAR_RESERVA:
 			modificarReserva(datos);
 			break;
+		case LISTAR_RESERVAS:
+			
+			Collection<TReserva> reservas = listarReservas();
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_RESERVAS).actualizar(Evento.LISTAR_RESERVAS, reservas);
+			break;
+			
 		case VISTA_PRINCIPAL_MESA:
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_PRINCIPAL_MESA);
 			break;
@@ -240,6 +246,11 @@ public class ControladorImp extends Controlador { //implementacion
         	break;
 	}
 }
+	private Collection<TReserva> listarReservas() {
+		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
+		Collection<TReserva> reservas = saMesas.consultaTodosR();
+		return reservas;
+	}
 	private void bajaReserva(Object datos) {
 		int id = Integer.parseInt(datos.toString());
 		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();

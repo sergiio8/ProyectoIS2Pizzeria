@@ -14,6 +14,7 @@ import presentacion.mesas.VistaBorrarMesa;
 import presentacion.mesas.VistaBorrarReserva;
 import presentacion.mesas.VistaBuscarMesa;
 import presentacion.mesas.VistaListarMesas;
+import presentacion.mesas.VistaListarReservas;
 import presentacion.mesas.VistaModificarMesa;
 import presentacion.mesas.VistaModificarReserva;
 import presentacion.mesas.VistaPrincipalMesas;
@@ -92,6 +93,8 @@ public class FactoriaPresentacion extends FactoriaAbstractaPresentacion{
 				vistaModificarReserva =new VistaModificarReserva((Frame) vistaPrincipalReserva);
 			}
 			return vistaAnadirReserva;
+		case LISTAR_RESERVAS:
+			return new VistaListarReservas((Frame) vistaPrincipalReserva);
 		case VISTA_PRINCIPAL_MESA:
 			this.vistaPrincipalMesa = new VistaPrincipalMesas();
 			return vistaPrincipalMesa;

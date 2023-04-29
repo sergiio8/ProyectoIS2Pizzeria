@@ -3,6 +3,7 @@ package integracion.mesas;
 import java.util.Collection;
 
 import negocio.mesas.TMesas;
+import negocio.mesas.TReserva;
 
 public interface DAOMesas {
 	

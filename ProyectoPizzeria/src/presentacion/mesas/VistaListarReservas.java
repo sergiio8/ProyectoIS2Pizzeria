@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,36 +12,33 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.AbstractTableModel;
 
-import negocio.mesas.TMesas;
 import presentacion.Evento;
 import presentacion.IGUI;
 
-public class VistaListarMesas extends JDialog implements IGUI{
-	
-	private static final long serialVersionUID = 1L;
+public class VistaListarReservas extends JDialog implements IGUI{
+private static final long serialVersionUID = 1L;
 	
 	private JTable tabla;
 	private JPanel tablaPanel;
 	private JButton confirmButton;
 	private JPanel buttonPanel;
-	private ModeloTablaMesas tableModel;
+	private ModeloTablaReservas tableModel;
 	
-	public VistaListarMesas(Frame parent){
+	public VistaListarReservas(Frame parent){
 		super(parent, true);
-		this.setTitle("Listar Mesas");
+		this.setTitle("Listar Reservas");
 		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		this.setContentPane(mainPanel);
 		
 		tablaPanel = new JPanel();
-		tableModel = new ModeloTablaMesas();
+		tableModel = new ModeloTablaReservas();
 		tabla = new JTable(tableModel);
 		
 		tablaPanel.setLayout(new BorderLayout());
-		tablaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), "Mesas", TitledBorder.LEFT,TitledBorder.TOP));
+		tablaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), "Reservas", TitledBorder.LEFT,TitledBorder.TOP));
 		tablaPanel.add(new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER));
 		
@@ -57,7 +52,7 @@ public class VistaListarMesas extends JDialog implements IGUI{
 		buttonPanel.add(confirmButton);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
-		this.setPreferredSize(new Dimension(300,300));
+		this.setPreferredSize(new Dimension(600,300));
 		pack();
 		setLocationRelativeTo(parent);
 		
@@ -72,7 +67,7 @@ public class VistaListarMesas extends JDialog implements IGUI{
 	@Override
 	public void actualizar(Evento e, Object datos) {
 		switch(e) {
-		case LISTAR_MESAS:
+		case LISTAR_RESERVAS:
 			tableModel.update(datos);
 			setVisible(true);
 		}

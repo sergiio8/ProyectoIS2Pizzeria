@@ -6,8 +6,12 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +39,7 @@ public class DAOReservaImp implements DAOReserva{
 			jo.put("id", id);
 			jo.put("idMesa", tr.getIdMesa());
 			jo.put("idCliente", tr.getIdCliente());
-			jo.put("fecha", tr.getFecha().toString());
+			jo.put("fecha", new SimpleDateFormat("dd/MM/yyyy HH:mm").format(tr.getFecha()).toString());
 			ja.put(jo);
 			
 		}
@@ -136,7 +140,7 @@ public class DAOReservaImp implements DAOReserva{
 		jo.put("id", id);
 		jo.put("idMesa", tr.getIdMesa());
 		jo.put("idCliente", tr.getIdCliente());
-		jo.put("fecha", tr.getFecha().toString());
+		jo.put("fecha", new SimpleDateFormat("dd/MM/yyyy HH:mm").format(tr.getFecha()).toString());
 		ja.put(jo);
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Reservas.json", false))){
@@ -154,8 +158,34 @@ public class DAOReservaImp implements DAOReserva{
 
 	@Override
 	public Collection<TReserva> consultaTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<TReserva> resultado = new ArrayList<TReserva>();
+		JSONArray ja = null;
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Reservas.json"))){ //idea mandar excepciones y tratarlas en controlador
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaReservas");
+			
+		}
+		catch(Exception e1) {
+			
+			return resultado;
+		}
+		
+		int i = 0;
+		Date date;
+		
+
+		while(i < ja.length()) {
+			try {
+				date = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(ja.getJSONObject(i).getString("fecha"));
+				resultado.add( new TReserva(ja.getJSONObject(i).getInt("idMesa"),ja.getJSONObject(i).getString("idCliente")  ,date,ja.getJSONObject(i).getInt("id")));
+				i++;
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				i++;
+			}
+			
+		}
+		return resultado;
 	}
 
 }
