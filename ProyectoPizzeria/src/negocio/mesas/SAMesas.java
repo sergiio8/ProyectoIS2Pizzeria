@@ -10,4 +10,5 @@ public interface SAMesas {
 	Boolean modificar(TMesas tm);
 	Boolean borrar(Integer id);
 	Integer altaReserva(TReserva tr) throws IllegalArgumentException;
+	Boolean modificarR(TReserva tr);
 }

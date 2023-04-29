@@ -84,4 +84,33 @@ public class SAMesasImp implements SAMesas{
 		return id;
 	}
 
+	@Override
+	public Boolean modificarR(TReserva tr) {
+		
+		DAOMesas daoMesas = FactoriaAbstractaIntegracion.getInstace().crearDAOMesas();
+		DAOClientes daoClientes = FactoriaAbstractaIntegracion.getInstace().crearDAOCliente();
+		DAOReserva daoR = FactoriaAbstractaIntegracion.getInstace().crearDAOReserva();
+		if(tr != null) {
+			TMesas esta = daoMesas.obtenMesa(tr.getIdMesa());
+			TCliente estaC = daoClientes.obtenCliente(tr.getIdCliente());
+			TReserva estaR = daoR.obtenReserva(tr.getId());
+			if(esta == null) {
+				throw new IllegalArgumentException("Mesa no existente");
+			}
+			if(estaC == null) {
+				throw new IllegalArgumentException("Cliente no existente");
+			}
+			if(estaR == null) {
+				throw new IllegalArgumentException("Reserva no existente");
+			}
+			
+			
+			return daoR.modificaReserva(tr);
+			
+			
+		}
+		
+		return false;
+	}
+
 }

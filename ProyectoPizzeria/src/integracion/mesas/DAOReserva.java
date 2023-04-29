@@ -9,6 +9,6 @@ public interface DAOReserva {
 	public Integer insertaReserva(TReserva tr) throws IllegalArgumentException;
 	public Boolean daDeBajaReserva(Integer id);
 	public TReserva obtenReserva(Integer id);
-	Boolean modificaReserva(TMesas tr);
+	Boolean modificaReserva(TReserva tr);
 	Collection<TReserva> consultaTodos();
 }

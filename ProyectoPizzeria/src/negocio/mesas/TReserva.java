@@ -8,6 +8,13 @@ public class TReserva {
 	private String idCliente;
 	private Date fecha;
 	
+	public TReserva(int idMesa, String idCliente,Date fecha, int id) {
+		this.idCliente = idCliente;
+		this.idMesa = idMesa;
+		this.fecha = fecha;
+		this.id = id;
+	}
+	
 	public TReserva(int idMesa, String idCliente,Date fecha) {
 		this.idCliente = idCliente;
 		this.idMesa = idMesa;
