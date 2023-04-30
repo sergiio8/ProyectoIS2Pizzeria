@@ -28,13 +28,16 @@ import presentacion.controlador.Controlador;
 
 public class ModificarPlatoVista extends JDialog implements IGUI {
 	private static final long serialVersionUID = 1L;
+	
+	private Frame parent;
 
 	public ModificarPlatoVista(Frame parent) {
 		super(parent, true);
-		initGUI(parent);
+		this.parent = parent;
+		initGUI();
 	}
 	
-	private void initGUI(Frame parent) {
+	private void initGUI() {
 		setTitle("Modificar plato");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -137,10 +140,12 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 			break;
 		case MODIFICAR_PLATO_OK:
 			JOptionPane.showMessageDialog(this, "Plato modificado", "Plato modificado correctamente", JOptionPane.INFORMATION_MESSAGE);
+			initGUI();
 			setVisible(false);
 			break;
 		case MODIFICAR_PLATO_KO:
 			JOptionPane.showMessageDialog(this, "ERROR: MODIFICAR PLATO", "ERROR: Plato " + datos.toString() + "no encontrado", JOptionPane.ERROR_MESSAGE);
+			initGUI();
 			setVisible(false);
 			break;
 		}

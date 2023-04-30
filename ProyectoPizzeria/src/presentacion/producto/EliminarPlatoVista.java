@@ -24,17 +24,19 @@ public class EliminarPlatoVista extends JDialog implements IGUI{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	private Frame parent;
 	private JTextField nameText;
 	private JButton okButton;
 	private JButton cancelButton;
 	
 	public EliminarPlatoVista(Frame parent) {
 		super(parent,true);
-		initGUI(parent);
+		this.parent = parent;
+		initGUI();
 	}
 	
-	private void initGUI(Frame parent) {
+	private void initGUI() {
 		setTitle("Eliminar Plato");
 
 		JPanel mainPanel = new JPanel();
@@ -84,10 +86,12 @@ public class EliminarPlatoVista extends JDialog implements IGUI{
 			break;
 		case BAJA_PLATO_OK:
 			JOptionPane.showMessageDialog(this, "Baja Plato", "Plato borrado correctamente", JOptionPane.INFORMATION_MESSAGE);
+			initGUI();
 			setVisible(false);
 			break;
 		case BAJA_PLATO_KO:
 			JOptionPane.showMessageDialog(this, "ERROR: NO SE HA PODIDO BORRAR EL PLATO", "ERROR: NO SE HA ENCONTRADO EL PLATO", JOptionPane.ERROR_MESSAGE);
+			initGUI();
 			setVisible(false);
 			break;
 		}

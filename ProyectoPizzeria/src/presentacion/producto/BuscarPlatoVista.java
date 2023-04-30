@@ -23,6 +23,7 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 
 	private static final long serialVersionUID = 1L;
 	
+	private Frame parent;
 	private JPanel namePanel;
 	private JLabel nameLabel;
 	private JTextField nameText;
@@ -40,10 +41,11 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 	
 	public BuscarPlatoVista(Frame parent) {
 		super(parent, true);
-		initGUI(parent);
+		this.parent = parent;
+		initGUI();
 	}
 	
-	private void initGUI(Frame parent) {
+	private void initGUI() {
 		setTitle("Buscar plato");
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -109,6 +111,7 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 		switch(e) {
 		case BUSCAR_PLATO_VISTA:
 			nameText.setEnabled(true);
+			nameText.setText("");
 			if(typeLabel != null) {
 				typePanel.remove(typeLabel);
 				pricePanel.remove(priceLabel);
