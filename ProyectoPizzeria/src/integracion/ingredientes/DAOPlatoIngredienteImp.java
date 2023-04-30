@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import integracion.factoria.FactoriaAbstractaIntegracion;
 import negocio.ingredientes.TPlatoIngrediente;
 import negocio.producto.TPlato;
 
@@ -235,6 +236,44 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 	public TPlatoIngrediente cogerPlato(String id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean disponible(String nombre, int cantidad) {
+		JSONArray ja = new JSONArray();
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){ //idea mandar excepciones y tratarlas en controlador
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
+		}
+		catch(Exception e1) {
+		}
+		DAOIngrediente daoIng = FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
+		for(int i=0; i<ja.length();i++) {
+			if(ja.getJSONObject(i).getString("nombrePlato").equals(nombre)) {
+				if(daoIng.cogerIngrediente(ja.getJSONObject(i).getString("nombreIngrediente")).getCantidad()<cantidad)
+					return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public void hacerPlato(String nombre, int cantidad) {
+		JSONArray ja = new JSONArray();
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){ //idea mandar excepciones y tratarlas en controlador
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
+		}
+		catch(Exception e1) {
+		}
+		DAOIngrediente daoIng = FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
+		for(int i=0; i<ja.length();i++) {
+			JSONObject jo = ja.getJSONObject(i);
+			if(jo.getString("nombrePlato").equals(nombre))
+				daoIng.cogerIngrediente(jo.getString("nombreIngrediente")).setCantidad(
+						daoIng.cogerIngrediente(jo.getString("nombreIngrediente")).getCantidad()-cantidad);
+		}
+		
 	}
 
 }

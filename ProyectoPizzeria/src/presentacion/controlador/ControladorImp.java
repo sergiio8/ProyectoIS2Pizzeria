@@ -518,6 +518,8 @@ public class ControladorImp extends Controlador { //implementacion
 			}
 		}
 		if (!stop) {
+			for(TLineaFactura linea : carrito.getProductos())
+				saPlato.hacerPlato(linea.getIdProducto(), linea.getCantidad());
 			dt.setProductos(carrito.getProductos());
 	        boolean sol = saFact.crearFactura(dt);
 	        if (sol) {

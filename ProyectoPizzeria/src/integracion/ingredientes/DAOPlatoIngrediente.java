@@ -18,4 +18,6 @@ public interface DAOPlatoIngrediente {
 	boolean modificaPlato(JSONObject datos);
 	TPlatoIngrediente cogerPlato(String id);
 	ArrayList<String> cogerIngredientes(String plato);
+	boolean disponible(String nombre, int cantidad);
+	void hacerPlato(String nombre, int cantidad);
 }

@@ -14,4 +14,6 @@ public interface SAPlato {
 	Boolean borrar(String id);
 	//boolean puede_hacerse(TPlato plato);
 	ArrayList<String> cogerIngredientes(String plato);
+	boolean disponible(String nombre, int cantidad);
+	void hacerPlato(String nombre, int cantidad);
 }
