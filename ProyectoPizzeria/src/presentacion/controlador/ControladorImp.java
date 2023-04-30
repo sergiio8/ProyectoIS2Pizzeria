@@ -30,7 +30,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ControladorImp extends Controlador { //implementacion
-	private Carrito carrito;
 
 	@Override
 	public void accion(Evento e, Object datos) {
@@ -535,21 +534,26 @@ public class ControladorImp extends Controlador { //implementacion
 			if (!saPlato.disponible(linea.getIdProducto(), linea.getCantidad())) {
 				stop = true;
 				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, "El producto " + linea.getIdProducto() + " no está disponible");
+				carrito = new Carrito();
 			}
 			else if (saPlato.consulta(linea.getIdProducto()) == null) {
 				stop = true;
 				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, "El producto " + linea.getIdProducto() + " no existe");
+				carrito = new Carrito();
 			}
 		}
 		if (!stop) {
-			for(TLineaFactura linea : carrito.getProductos())
-				saPlato.hacerPlato(linea.getIdProducto(), linea.getCantidad());
 			dt.setProductos(carrito.getProductos());
 	        boolean sol = saFact.crearFactura(dt);
 	        if (sol) {
+	        	for(TLineaFactura linea : carrito.getProductos())
+					saPlato.hacerPlato(linea.getIdProducto(), linea.getCantidad());
 				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, dt);
 		    }
-	        else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, "La factura no pudo ser validada");
+	        else {
+	        	FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, "La factura no pudo ser validada");
+	        	carrito = new Carrito();
+	        }
 		}
 	}
 	
@@ -585,6 +589,8 @@ public class ControladorImp extends Controlador { //implementacion
 		TCliente c = infoCliente.consulta((String)datos);
 		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_BUSCAR_CLIENTE).actualizar(Evento.BUSCAR_CLIENTE_RES, c);
 	}
+	
+	private Carrito carrito;
 	
 	private void altaCliente(Object datos) {
 		TCliente cliente = (TCliente)datos;
