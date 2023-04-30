@@ -10,7 +10,7 @@ public interface SAPlato {
 	TPlato consulta(String id);
 	Collection<TPlato> consultaTodos();
 	//boolean hacerPlato(String id);
-	Boolean modificar(TPlato tp);
+	String modificar(JSONObject datos);
 	Boolean borrar(String id);
 	//boolean puede_hacerse(TPlato plato);
 	ArrayList<String> cogerIngredientes(String plato);

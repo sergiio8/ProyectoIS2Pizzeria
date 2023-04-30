@@ -120,7 +120,7 @@ public class DAOPlatoImp implements DAOPlato {
 	}
 
 	@Override
-	public Boolean modificaPlato(TPlato tp) {
+	public String modificaPlato(TPlato tp) {
 		
 		String nombre = tp.getNombre();
 		
@@ -130,7 +130,7 @@ public class DAOPlatoImp implements DAOPlato {
 			ja = jsonInput.getJSONArray("ListaPlatos");
 		}
 		catch(Exception e1) {
-			return false;
+			return "";
 		}
 		
 		int i = 0;
@@ -138,7 +138,7 @@ public class DAOPlatoImp implements DAOPlato {
 			i++;
 		}
 		if(i == ja.length()) {
-			return false;
+			return "";
 		}
 		
 		JSONObject jo = ja.getJSONObject(i);
@@ -159,10 +159,10 @@ public class DAOPlatoImp implements DAOPlato {
 			bw.write(jo2.toString());
 		} 
 		catch(Exception e2) {
-			return false;
+			return "";
 		}
 		
-		return true;
+		return nombre;
 	}
 
 	@Override

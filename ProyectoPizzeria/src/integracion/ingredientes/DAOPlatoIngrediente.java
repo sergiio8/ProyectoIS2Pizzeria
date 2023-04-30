@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import negocio.ingredientes.TPlatoIngrediente;
-import negocio.producto.TPlato;
 
 public interface DAOPlatoIngrediente {
 	List<String> daDeBajaIngrediente(String name);
@@ -14,7 +15,7 @@ public interface DAOPlatoIngrediente {
 	Collection<TPlatoIngrediente> cogerTodosIngredientes();
 	TPlatoIngrediente cogerIngrediente(String nombre);
 	boolean daDeBajaPlato (String id);
-	boolean modificaPlato(TPlato plato);
+	boolean modificaPlato(JSONObject datos);
 	TPlatoIngrediente cogerPlato(String id);
 	ArrayList<String> cogerIngredientes(String plato);
 }

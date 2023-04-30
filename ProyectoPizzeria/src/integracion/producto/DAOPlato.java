@@ -10,5 +10,5 @@ public interface DAOPlato {
 	public Boolean daDeBajaPlato(String id);
 	public TPlato obtenPlato(String id);
 	public Collection<TPlato> obtenTodosPlatos();
-	public Boolean modificaPlato(TPlato tp);
+	public String modificaPlato(TPlato tp);
 }

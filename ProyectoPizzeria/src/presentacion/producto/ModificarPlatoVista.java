@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import org.json.JSONObject;
+
 import negocio.producto.TEntrante;
 import negocio.producto.TPizza;
 import negocio.producto.TPostre;
@@ -61,6 +63,16 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 		
 		contenedor.add(pricePanel);
 		
+		//Ingredientes
+		JPanel ingredientsPanel = new JPanel(new FlowLayout());
+		JLabel ingredientsLabel = new JLabel("Ingredientes (ing1,..., ingN): ");
+		JTextField ingredientsText = new JTextField(25);
+				
+		ingredientsPanel.add(ingredientsLabel);
+		ingredientsPanel.add(ingredientsText);
+				
+		contenedor.add(ingredientsPanel);
+		
 		//Descripcion
 		JPanel descriptionPanel= new JPanel(new FlowLayout());
 		JLabel descriptionLabel = new JLabel("Descripcion: ");
@@ -80,6 +92,7 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 		okButton.addActionListener((e) ->{
 			String nombre;
 			double precio;
+			String ingredientes;
 			String descripcion;
 			try {
 				nombre = nameText.getText();
@@ -88,9 +101,12 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 				else precio = 0;
 				if(precio < 0)
 					throw new NumberFormatException();
-				descripcion = descriptionText.getText();
-				
-				Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, new TEntrante(nombre,precio,descripcion));			
+				ingredientes = ingredientsText.getText().trim();
+				descripcion = descriptionText.getText().trim();
+				JSONObject jo = new JSONObject();
+				jo.put("plato", new TEntrante(nombre,precio,descripcion));
+				jo.put("ingredientes", ingredientes);
+				Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, jo);			
 			}
 			catch(NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(ModificarPlatoVista.this, "ERROR: El precio del plato debe ser un numero positivo", "ERROR: El precio del plato debe ser un numero positivo", JOptionPane.ERROR_MESSAGE);
@@ -120,11 +136,11 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 			setVisible(true);
 			break;
 		case MODIFICAR_PLATO_OK:
-			JOptionPane.showMessageDialog(this, "Plato modificado", "Plato modificado", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Plato modificado", "Plato modificado correctamente", JOptionPane.INFORMATION_MESSAGE);
 			setVisible(false);
 			break;
 		case MODIFICAR_PLATO_KO:
-			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "ERROR: MODIFICAR PLATO", "ERROR: Plato " + datos.toString() + "no encontrado", JOptionPane.ERROR_MESSAGE);
 			setVisible(false);
 			break;
 		}
