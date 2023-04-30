@@ -504,13 +504,27 @@ public class ControladorImp extends Controlador { //implementacion
 	
 	private void altaFactura(Object datos) {
 		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
+		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
 		TDatosVenta dt = (TDatosVenta) datos;
-		carrito.cerrarVenta(dt);
-        boolean sol = saFact.crearFactura(dt);
-        if (sol) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, dt);
-	    }
-        else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, dt);
+		boolean stop = false;
+		for (TLineaFactura linea : carrito.getProductos()) {
+			if (!saPlato.disponible(linea.getIdProducto(), linea.getCantidad())) {
+				stop = true;
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, "El producto " + linea.getIdProducto() + " no está disponible");
+			}
+			else if (saPlato.consulta(linea.getIdProducto()) == null) {
+				stop = true;
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, "El producto " + linea.getIdProducto() + " no existe");
+			}
+		}
+		if (!stop) {
+			dt.setProductos(carrito.getProductos());
+	        boolean sol = saFact.crearFactura(dt);
+	        if (sol) {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, dt);
+		    }
+	        else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, dt);
+		}
 	}
 	
 	private void buscarFactura(Object datos) {

@@ -157,7 +157,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 			initGUI();
 			break;
 		case ALTA_FACTURA_VISTA_WR:
-			JOptionPane.showMessageDialog(this, "ERROR: La factura con ID " + text1.getText() + " no pudo ser validada", "ERROR:", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR:", JOptionPane.ERROR_MESSAGE);
 			setVisible(false);
 			break;
 		}

@@ -42,7 +42,7 @@ private static final long serialVersionUID = 1L;
 		
 		tablaPanel = new JPanel();
 		tableModel = new ModeloTablaFacturas();
-		tabla = new JTable(tableModel);
+		tabla = new JTable(tableModel);		
 		tablaPanel.setLayout(new BorderLayout());
 		tablaPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), "Facturas", TitledBorder.LEFT,TitledBorder.TOP));
 		tablaPanel.add(new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -60,7 +60,7 @@ private static final long serialVersionUID = 1L;
 		
 		
 		
-		this.setPreferredSize(new Dimension(300,300));
+		setPreferredSize(new Dimension(700,300));
 		pack();
 		setLocationRelativeTo(null);
 		

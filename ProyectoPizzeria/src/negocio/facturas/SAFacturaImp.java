@@ -35,16 +35,13 @@ public class SAFacturaImp implements SAFactura{
         if (daoc.obtenCliente(datos.getid_cliente()) != null) {
             for (TLineaFactura f : datos.getProductos()) {
                 TPlato plato = daop.obtenPlato(f.getIdProducto());
-                if (plato != null) {
-                    id = f.getIdFactura();
-                    precio_total += plato.getPrecio()*f.getCantidad();
-                    TLineaFactura l = daol.buscarLineaFactura(f.getId());
-                    if (l == null) {
-                    	lineas.add(f);
-                        daol.crearLineaFactura(f);
-                    }
+                id = f.getIdFactura();
+                precio_total += plato.getPrecio()*f.getCantidad();
+                TLineaFactura l = daol.buscarLineaFactura(f.getId());
+                if (l == null) {
+                	lineas.add(f);
+                    daol.crearLineaFactura(f);
                 }
-                else return false;
             }
             fact = daof.buscarFactura(id);
             if (fact == null) {

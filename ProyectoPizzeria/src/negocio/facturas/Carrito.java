@@ -22,6 +22,10 @@ public class Carrito {
 		last_id--;
 	}
 	
+	public ArrayList<TLineaFactura> getProductos() {
+		return lista_productos;
+	}
+	
 	public void cerrarVenta(TDatosVenta dt) {
 		dt.setProductos(lista_productos);
 	}
