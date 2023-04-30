@@ -75,7 +75,7 @@ public class DAOClientesImp implements DAOClientes{
 			ja.remove(i);
 			try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Clientes.json", false))){
 				JSONObject jo2 = new JSONObject();
-				jo2.put("ListaMesas", ja);
+				jo2.put("ListaClientes", ja);
 				bw.write(jo2.toString());
 				
 			} 
