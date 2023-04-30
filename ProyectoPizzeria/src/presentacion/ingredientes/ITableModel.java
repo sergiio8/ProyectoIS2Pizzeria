@@ -9,6 +9,7 @@ import javax.swing.table.AbstractTableModel;
 import org.json.JSONObject;
 
 import negocio.ingredientes.Pair;
+import negocio.ingredientes.TDatosIngrediente;
 import negocio.ingredientes.TIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
 
@@ -49,9 +50,9 @@ public class ITableModel extends AbstractTableModel{
 	}
 	
 	public void update(Object datos) {
-		Pair pair = (Pair)datos;
-		List<TIngrediente> ingredientes = (List<TIngrediente>) pair.getFirst();
-		List<TPlatoIngrediente> platoIngredientes = (List<TPlatoIngrediente>) pair.getSecond();
+		TDatosIngrediente d = (TDatosIngrediente)datos;
+		List<TIngrediente> ingredientes = d.getIngredientes();
+		List<TPlatoIngrediente> platoIngredientes = d.getPlatoIngredientes();
 		for(TIngrediente ing : ingredientes) {
 			List<String> aux = new ArrayList<String>();
 			aux.add(ing.getNombre());

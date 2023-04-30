@@ -15,6 +15,7 @@ import negocio.facturas.TFactura;
 import negocio.facturas.TLineaFactura;
 import negocio.ingredientes.Pair;
 import negocio.ingredientes.SAIngrediente;
+import negocio.ingredientes.TDatosIngrediente;
 import negocio.ingredientes.TIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
 import presentacion.Evento;
@@ -23,10 +24,8 @@ import presentacion.factoria.FactoriaPresentacion;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ControladorImp extends Controlador { //implementacion
@@ -268,10 +267,8 @@ public class ControladorImp extends Controlador { //implementacion
             modificarIngrediente(datos);
             break;
         case LISTAR_INGREDIENTE_VISTA:
-        	List<TIngrediente> c= (List<TIngrediente>) listarIngredientes();
-        	List<TPlatoIngrediente> p= (List<TPlatoIngrediente>)listarPlatoIngrediente();
-        	Pair<List<TIngrediente>, List<TPlatoIngrediente>> pair = new Pair<List<TIngrediente>, List<TPlatoIngrediente>>(c,p);
-        	FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_INGREDIENTE_VISTA).actualizar(Evento.LISTAR_INGREDIENTE_VISTA,pair);
+        	TDatosIngrediente d = new TDatosIngrediente((List<TIngrediente>) listarIngredientes(), (List<TPlatoIngrediente>) listarPlatoIngrediente());
+        	FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_INGREDIENTE_VISTA).actualizar(Evento.LISTAR_INGREDIENTE_VISTA,d);
         	break;
 	}
 }
