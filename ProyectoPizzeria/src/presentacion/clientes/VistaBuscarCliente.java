@@ -115,6 +115,9 @@ public class VistaBuscarCliente  extends JDialog implements IGUI{
 			buttonsPanel.add(this.okButton);
 			buttonsPanel.add(this.cancelButton);
 			this.tId.setEnabled(true);
+			if(!tId.getText().toString().equals(null)) {
+				tId.setText(null);
+			}
 			if(lNombre != null) {
 				this.nombrePanel.remove(lNombre);
 			}
@@ -136,7 +139,7 @@ public class VistaBuscarCliente  extends JDialog implements IGUI{
 				TCliente c = (TCliente) datos;
 				this.lNombre = new JLabel("Nombre: " + c.getNombre());
 				this.nombrePanel.add(lNombre);
-				this.lApellido = new JLabel("Apellido: " + c.getNombre());
+				this.lApellido = new JLabel("Apellido: " + c.getApellido());
 				this.apellidoPanel.add(lApellido);
 				this.tId.setEnabled(false);
 				this.buttonsPanel.removeAll();
