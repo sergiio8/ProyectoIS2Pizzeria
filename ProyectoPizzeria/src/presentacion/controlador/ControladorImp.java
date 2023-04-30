@@ -426,7 +426,7 @@ public class ControladorImp extends Controlador { //implementacion
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
 		String nombre = saPlato.alta((JSONObject)datos);
 		if(nombre == "") {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_KO, nombre);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_KO, "plato ya existente");
 		}
 		else {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_OK, nombre);
