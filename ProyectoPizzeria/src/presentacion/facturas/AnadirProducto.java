@@ -177,6 +177,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 			text3.setText(null);
 			setVisible(false);
 			productos_panel.add(new JLabel("Nombre: " + datos.toString() + ", " + Integer.parseInt(cant.getValue().toString())  + " uds"));
+			cant.setValue(0);
 			break;
 		case ANADIR_PRODUCTO_VISTA_WR:
 			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
@@ -186,6 +187,7 @@ public class AnadirProducto extends JDialog implements IGUI{
 			text1.setText(null);
 			text2.setText(null);
 			text3.setText(null);
+			cant.setValue(0);
 			productos_panel.removeAll();
 			productos_panel.add(new JLabel("Productos añadidos hasta el momento:", FlowLayout.LEFT));
 			setVisible(true);
