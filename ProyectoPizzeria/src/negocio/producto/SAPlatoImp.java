@@ -8,7 +8,10 @@ import org.json.JSONObject;
 import integracion.factoria.FactoriaAbstractaIntegracion;
 import integracion.ingredientes.DAOPlatoIngrediente;
 import integracion.producto.DAOPlato;
+import negocio.facturas.TLineaFactura;
 import negocio.ingredientes.TPlatoIngrediente;
+import presentacion.Evento;
+import presentacion.factoria.FactoriaAbstractaPresentacion;
 
 public class SAPlatoImp implements SAPlato {
 
@@ -79,10 +82,28 @@ public class SAPlatoImp implements SAPlato {
 	}
 
 	@Override
+	
+	public void hacerPedido(ArrayList<TLineaFactura> lineas) {
+		for (TLineaFactura linea : lineas) {
+			hacerPlato(linea.getIdProducto(), linea.getCantidad());
+		}
+	}
 	public void hacerPlato(String nombre, int cantidad) {
 		DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
 		daoPIng.hacerPlato(nombre,cantidad);
 		
+	}
+	
+	public String comprobarDisponibilidad(ArrayList<TLineaFactura> productos) {
+		for (TLineaFactura linea : productos) {
+			if (!disponible(linea.getIdProducto(), linea.getCantidad())) {
+				return "El producto " + linea.getIdProducto() + " no está disponible";
+			}
+			else if (consulta(linea.getIdProducto()) == null) {
+				return "El producto " + " no existe";
+			}
+		}
+		return null;
 	}
 
 

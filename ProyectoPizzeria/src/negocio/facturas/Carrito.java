@@ -26,7 +26,7 @@ public class Carrito {
 		return lista_productos;
 	}
 	
-	public void cerrarVenta(TDatosVenta dt) {
+	public void cerrarVenta(TDatosVenta dt){
 		dt.setProductos(lista_productos);
 	}
 	

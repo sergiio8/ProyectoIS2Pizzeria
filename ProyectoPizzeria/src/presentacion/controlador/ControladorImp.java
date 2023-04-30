@@ -29,6 +29,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 public class ControladorImp extends Controlador { //implementacion
+	
 
 	@Override
 	public void accion(Evento e, Object datos) {
@@ -394,6 +395,8 @@ public class ControladorImp extends Controlador { //implementacion
 		}
 	}
 	
+	private Carrito carrito;
+	
 	private void bajaMesa(Object datos) {
 		int id = Integer.parseInt(datos.toString());
 		SAMesas saMesas2 = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
@@ -526,25 +529,15 @@ public class ControladorImp extends Controlador { //implementacion
 		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
 		TDatosVenta dt = (TDatosVenta) datos;
-		boolean stop = false;
-		for (TLineaFactura linea : carrito.getProductos()) {
-			if (!saPlato.disponible(linea.getIdProducto(), linea.getCantidad())) {
-				stop = true;
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, "El producto " + linea.getIdProducto() + " no está disponible");
-				carrito = new Carrito();
-			}
-			else if (saPlato.consulta(linea.getIdProducto()) == null) {
-				stop = true;
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, "El producto " + linea.getIdProducto() + " no existe");
-				carrito = new Carrito();
-			}
+		carrito.cerrarVenta(dt);
+		if (saPlato.comprobarDisponibilidad(dt.getProductos()) != null) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, saPlato.comprobarDisponibilidad(dt.getProductos()));
+			carrito = new Carrito();
 		}
-		if (!stop) {
-			dt.setProductos(carrito.getProductos());
+		else {
 	        boolean sol = saFact.crearFactura(dt);
 	        if (sol) {
-	        	for(TLineaFactura linea : carrito.getProductos())
-					saPlato.hacerPlato(linea.getIdProducto(), linea.getCantidad());
+	        	for(TLineaFactura linea : dt.getProductos()) saPlato.hacerPlato(linea.getIdProducto(), linea.getCantidad());
 				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, dt);
 		    }
 	        else {
@@ -587,7 +580,6 @@ public class ControladorImp extends Controlador { //implementacion
 		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_BUSCAR_CLIENTE).actualizar(Evento.BUSCAR_CLIENTE_RES, c);
 	}
 	
-	private Carrito carrito;
 	
 	private void altaCliente(Object datos) {
 		TCliente cliente = (TCliente)datos;

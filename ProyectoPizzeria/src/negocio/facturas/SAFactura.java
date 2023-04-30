@@ -6,9 +6,9 @@ import negocio.clientes.TCliente;
 import negocio.producto.TPlato;
 
 public interface SAFactura {
-	public void anadirProducto(TLineaFactura linea, Carrito c);
 	public TFactura buscarFactura(String id);
 	public Collection<TFactura> mostrarFacturas();
 	public boolean crearFactura(TDatosVenta datos);
+	void anadirProducto(TLineaFactura linea, Carrito c);
 
 }
