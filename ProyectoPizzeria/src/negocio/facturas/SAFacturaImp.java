@@ -8,10 +8,8 @@ import integracion.factoria.FactoriaAbstractaIntegracion;
 import integracion.facturas.DAOFactura;
 import integracion.facturas.DAOFacturaImp;
 import integracion.facturas.DAOLineaFactura;
-import integracion.mesas.DAOMesas;
 import integracion.producto.DAOPlato;
 import negocio.clientes.TCliente;
-import negocio.mesas.TMesas;
 import negocio.producto.TPlato;
 
 public class SAFacturaImp implements SAFactura{
