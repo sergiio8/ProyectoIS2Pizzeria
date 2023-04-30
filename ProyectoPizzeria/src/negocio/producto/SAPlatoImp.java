@@ -15,7 +15,6 @@ public class SAPlatoImp implements SAPlato {
 	@Override
 	public String alta(JSONObject datos) {
 		String nombre = "";
-		
 		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
 		
 		if(datos != null) {
@@ -46,9 +45,16 @@ public class SAPlatoImp implements SAPlato {
 	}
 
 	@Override
-	public Boolean modificar(TPlato tp) {
+	public String modificar(JSONObject datos) {
 		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
-		return daoPlato.modificaPlato(tp);
+		
+		String nombre = daoPlato.modificaPlato((TPlato)datos.get("plato"));
+		if(!datos.getString("ingredientes").trim().equals("")) {
+			DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
+			daoPIng.modificaPlato(datos);
+		}
+		return  nombre;
+		
 	}
 
 	@Override

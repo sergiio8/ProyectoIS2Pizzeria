@@ -446,16 +446,24 @@ public class ControladorImp extends Controlador { //implementacion
 	}
 
 	private void modificaPlato(Object datos) {
-		TPlato tp = (TPlato) datos;
+		JSONObject obj = (JSONObject) datos;
+		if(!obj.getString("ingredientes").equals("")) {
+			String[] aux = obj.getString("ingredientes").split(",");
+			for(String s : aux) {
+				SAIngrediente saIng = FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
+				if(saIng.consulta(s.trim()) == null) {
+					FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_KO, "Ingrediente: "+ s +" no encontrado");
+					return;
+				}
+			}
+		}
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
-		
-		boolean resultado = saPlato.modificar(tp);
-		
-		if(resultado) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_OK, resultado);
+		String nombre = saPlato.modificar(obj);
+		if(nombre == "") {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_KO, nombre);
 		}
 		else {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_KO, resultado);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_OK, nombre);
 		}
 	}
 	

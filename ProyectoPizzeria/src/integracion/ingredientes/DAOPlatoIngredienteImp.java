@@ -13,7 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import negocio.ingredientes.TIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
 import negocio.producto.TPlato;
 
@@ -181,6 +180,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
 		}
 		catch(Exception e1) {
+			return false;
 		}
 		
 		for(int i = 0; i<ja.length(); i++) {
@@ -221,10 +221,14 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 		return ing;
 	}
 
-	@Override//Lo tiene que hacer el subsistema producto
-	public boolean modificaPlato(TPlato plato) {
-		// TODO Auto-generated method stub
-		return false;
+	@Override
+	public boolean modificaPlato(JSONObject datos) {
+		String nombre = ((TPlato)datos.get("plato")).getNombre();
+		daDeBajaPlato(nombre);
+		String[] aux = datos.getString("ingredientes").trim().split(",");
+		for(String ing : aux)
+			insertarPlatoIngrediente(new TPlatoIngrediente(nombre, ing.trim()));
+		return true;
 	}
 
 	@Override//LO teinee que hacer el subsistema producto

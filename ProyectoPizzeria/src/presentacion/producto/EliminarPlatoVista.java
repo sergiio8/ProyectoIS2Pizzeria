@@ -46,7 +46,7 @@ public class EliminarPlatoVista extends JDialog implements IGUI{
 		
 		JPanel namePanel = new JPanel();
 		
-		namePanel.add(new JLabel("ID Plato: "));
+		namePanel.add(new JLabel("Nombre Plato: "));
 		nameText = new JTextField(10);
 		namePanel.add(nameText);
 		
