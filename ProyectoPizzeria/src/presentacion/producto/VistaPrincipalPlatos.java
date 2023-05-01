@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
-import presentacion.mesas.VistaPrincipalMesas;
 
 public class VistaPrincipalPlatos extends JFrame implements IGUI{
 

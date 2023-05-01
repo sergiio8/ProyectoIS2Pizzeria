@@ -3,7 +3,6 @@ package presentacion.producto;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Frame;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -19,10 +18,8 @@ import javax.swing.JTextField;
 
 import org.json.JSONObject;
 
-import negocio.ingredientes.TIngrediente;
 import negocio.producto.TEntrante;
 import negocio.producto.TPizza;
-import negocio.producto.TPlato;
 import negocio.producto.TPostre;
 import presentacion.Evento;
 import presentacion.IGUI;
