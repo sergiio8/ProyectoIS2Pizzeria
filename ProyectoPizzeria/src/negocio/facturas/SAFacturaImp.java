@@ -54,7 +54,7 @@ public class SAFacturaImp implements SAFactura{
         
     }
 
-    @Override
+
     public TFactura buscarFactura(String id) {
         DAOFactura daof = FactoriaAbstractaIntegracion.getInstace().crearDAOFactura();
         return daof.buscarFactura(id);
