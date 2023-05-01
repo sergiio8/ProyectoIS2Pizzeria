@@ -17,6 +17,7 @@ import negocio.ingredientes.Pair;
 import negocio.ingredientes.SAIngrediente;
 import negocio.ingredientes.TDatosIngrediente;
 import negocio.ingredientes.TIngrediente;
+import negocio.ingredientes.TModificacionIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
 import presentacion.Evento;
 import presentacion.factoria.FactoriaAbstractaPresentacion;
@@ -29,8 +30,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 public class ControladorImp extends Controlador { //implementacion
-	
-
+	private Carrito carrito;
 	@Override
 	public void accion(Evento e, Object datos) {
 		switch(e) {
@@ -320,11 +320,8 @@ public class ControladorImp extends Controlador { //implementacion
 		catch(IllegalArgumentException iae) {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_MESA_VISTA).actualizar(Evento.MODIFICAR_RESERVA_KO, iae.getMessage());
 		}
-		
-		
-	
-		
 	}
+	
 	private void altaReserva(Object datos) {
 		TReserva tr = (TReserva) datos;
 		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
@@ -340,16 +337,14 @@ public class ControladorImp extends Controlador { //implementacion
 		catch(IllegalArgumentException iae) {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_RESERVA_VISTA).actualizar(Evento.ALTA_RESERVA_KO, iae.getMessage());
 		}
-		
-		
-		
-		
 	}
+	
 	private void altaPlatoIngrediente(Object datos) {
 		TPlatoIngrediente pI= (TPlatoIngrediente) datos;
 		SAIngrediente saIngrediente=FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
 		saIngrediente.crear(pI);
 	}
+	
 	private void altaIngrediente(Object datos) {
 		TIngrediente ingrediente= (TIngrediente) datos;
 		SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
@@ -361,6 +356,7 @@ public class ControladorImp extends Controlador { //implementacion
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_OK, nombre);
 		}
 	}
+	
 	private void bajaIngrediente(Object datos) {
 		SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
 		boolean borrar= saIngrediente.borrar((String) datos);
@@ -371,9 +367,10 @@ public class ControladorImp extends Controlador { //implementacion
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_INGREDIENTE_VISTA).actualizar(Evento.BAJA_INGREDIENTE_OK, (String) datos);
 		}
 	}
+	
 	private void modificarIngrediente(Object datos) {
 		SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
-		boolean modificado= saIngrediente.modificar((Pair<String,TIngrediente>) datos);
+		boolean modificado= saIngrediente.modificar((TModificacionIngrediente) datos);
 		if(!modificado) {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_INGREDIENTE_VISTA).actualizar(Evento.MODIFICAR_INGREDIENTE_KO, datos);
 		}
@@ -381,6 +378,7 @@ public class ControladorImp extends Controlador { //implementacion
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_INGREDIENTE_VISTA).actualizar(Evento.MODIFICAR_INGREDIENTE_OK, datos);
 		}
 	}
+	
 	private void altaMesa(Object datos) {
 		TMesas tm = (TMesas) datos;
 		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
@@ -395,8 +393,6 @@ public class ControladorImp extends Controlador { //implementacion
 		}
 	}
 	
-	private Carrito carrito;
-	
 	private void bajaMesa(Object datos) {
 		int id = Integer.parseInt(datos.toString());
 		SAMesas saMesas2 = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
@@ -407,8 +403,6 @@ public class ControladorImp extends Controlador { //implementacion
 		catch(Exception e) {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_MESA_VISTA).actualizar(Evento.BAJA_MESA_RES_KO, e.getMessage());
 		}
-		
-		
 	}
 	
 	private void modificaMesa(Object datos) {
@@ -438,14 +432,11 @@ public class ControladorImp extends Controlador { //implementacion
 	private void altaPlato(Object datos) {
 		JSONObject obj = (JSONObject) datos;
 		SAIngrediente saIng = FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
-		String[] aux = obj.getString("ingredientes").trim().split(",");
-		for(String s : aux) {
-			if(saIng.consulta(s.trim()) == null) {
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_KO, "Ingrediente: "+ s +" no encontrado");
-				return;
-			}
+		String aux = saIng.consultaIngredientes(obj.getString("ingredientes"));
+		if(aux != null) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_KO, "Ingrediente: "+ aux +" no encontrado");
+			return;
 		}
-		
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
 		String nombre = saPlato.alta((JSONObject)datos);
 		if(nombre == "") {
@@ -471,13 +462,11 @@ public class ControladorImp extends Controlador { //implementacion
 	private void modificaPlato(Object datos) {
 		JSONObject obj = (JSONObject) datos;
 		if(!obj.getString("ingredientes").equals("")) {
-			String[] aux = obj.getString("ingredientes").split(",");
-			for(String s : aux) {
-				SAIngrediente saIng = FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
-				if(saIng.consulta(s.trim()) == null) {
-					FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_KO, "Ingrediente: "+ s +" no encontrado");
-					return;
-				}
+			SAIngrediente saIng = FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
+			String aux = saIng.consultaIngredientes(obj.getString("ingredientes"));
+			if(aux != null) {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_KO, "Ingrediente: "+ aux +" no encontrado");
+				return;
 			}
 		}
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
@@ -501,15 +490,10 @@ public class ControladorImp extends Controlador { //implementacion
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_PLATO_VISTA).actualizar(Evento.BUSCAR_PLATO_KO, plato);
 		}
 		else {
-			ArrayList<String> ingredientes = saPlato.cogerIngredientes(nombre);
+			String ingredientes = saPlato.cogerIngredientes(nombre);
 			JSONObject jo = new JSONObject();
 			jo.put("plato", plato);
-			String ing = "";
-			int i = 0;
-			while(i<ingredientes.size()-1)
-				ing += ingredientes.get(i++) + ", ";
-			ing += ingredientes.get(i);
-			jo.put("ingredientes", ing);
+			jo.put("ingredientes", ingredientes);
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_PLATO_VISTA).actualizar(Evento.BUSCAR_PLATO_OK, jo);
 		}
 	}
@@ -519,7 +503,7 @@ public class ControladorImp extends Controlador { //implementacion
 		ArrayList<TPlato> platos = new ArrayList<TPlato>(saPlato.consultaTodos());
 		ArrayList<Pair<TPlato,ArrayList<String>>> datos = new ArrayList<Pair<TPlato,ArrayList<String>>>();
 		for(int i=0; i< platos.size();i++) {
-			ArrayList<String> ing = saPlato.cogerIngredientes(platos.get(i).getNombre());
+			ArrayList<String> ing = saPlato.cogerIngredientesLista(platos.get(i).getNombre());
 			datos.add(new Pair<TPlato,ArrayList<String>>(platos.get(i),ing));
 		}
 		return datos;
@@ -529,15 +513,16 @@ public class ControladorImp extends Controlador { //implementacion
 		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
 		TDatosVenta dt = (TDatosVenta) datos;
-		carrito.cerrarVenta(dt);
-		if (saPlato.comprobarDisponibilidad(dt.getProductos()) != null) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, saPlato.comprobarDisponibilidad(dt.getProductos()));
+		dt.setProductos(carrito.getProductos());
+		String solu = saPlato.comprobarDisponibilidad(dt.getProductos());
+		if (solu != null) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, solu);
 			carrito = new Carrito();
 		}
 		else {
 	        boolean sol = saFact.crearFactura(dt);
 	        if (sol) {
-	        	for(TLineaFactura linea : dt.getProductos()) saPlato.hacerPlato(linea.getIdProducto(), linea.getCantidad());
+	        	saPlato.hacerPedido(dt.getProductos());
 				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, dt);
 		    }
 	        else {

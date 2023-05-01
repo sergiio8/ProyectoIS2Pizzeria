@@ -23,13 +23,9 @@ public class VistaPrincipalFacturas extends JFrame implements IGUI {
 
 
 	private JButton abrirButton;
-	private JLabel esta_abierta;
-	private JButton altaButton;
 	private JButton listarButton;
 	private JButton buscarButton;
-	private JButton modificarButton;
 	private JButton volverButton;
-	private JButton anadirButton;
 	private boolean first = true;
 
 	public VistaPrincipalFacturas() {

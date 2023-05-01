@@ -21,7 +21,6 @@ public class SAFacturaImp implements SAFactura{
 
     @Override
     public boolean crearFactura(TDatosVenta datos) {
-        boolean valida = true;
         DAOFactura daof = FactoriaAbstractaIntegracion.getInstace().crearDAOFactura();
         DAOClientes daoc = FactoriaAbstractaIntegracion.getInstace().crearDAOCliente();
         DAOPlato daop = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
@@ -51,11 +50,11 @@ public class SAFacturaImp implements SAFactura{
         }
         else return false;
         
-        return valida;
+        return true;
         
     }
 
-    @Override
+
     public TFactura buscarFactura(String id) {
         DAOFactura daof = FactoriaAbstractaIntegracion.getInstace().crearDAOFactura();
         return daof.buscarFactura(id);
@@ -73,10 +72,5 @@ public class SAFacturaImp implements SAFactura{
 	public void anadirProducto(TLineaFactura linea, Carrito c) {
 		c.anadirProducto(linea);
 	}
-
-
-    
- 
-    
 
 }

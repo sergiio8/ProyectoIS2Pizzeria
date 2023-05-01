@@ -5,14 +5,12 @@ public class TPlato {
 	private String nombre;
 	private double precio;
     private String descripcion;
-    //private boolean puede_hacerse;
 	
 	public TPlato(String tipo, String nombre, double precio, String descripcion){
 		this.tipo = tipo;
 		this.nombre = nombre;
 		this.precio = precio;
 		this.descripcion = descripcion;
-		
 	}
 	
 	public String getTipo() {

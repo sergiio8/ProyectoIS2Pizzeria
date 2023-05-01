@@ -10,8 +10,6 @@ import integracion.ingredientes.DAOPlatoIngrediente;
 import integracion.producto.DAOPlato;
 import negocio.facturas.TLineaFactura;
 import negocio.ingredientes.TPlatoIngrediente;
-import presentacion.Evento;
-import presentacion.factoria.FactoriaAbstractaPresentacion;
 
 public class SAPlatoImp implements SAPlato {
 
@@ -68,9 +66,20 @@ public class SAPlatoImp implements SAPlato {
 		daoPIng.daDeBajaPlato(nombre);
 		return b;
 	}
+	
+	@Override
+	public String cogerIngredientes(String plato) {
+		ArrayList<String> ingredientes = cogerIngredientesLista(plato);
+		String ing = "";
+		int i = 0;
+		while(i<ingredientes.size()-1)
+			ing += ingredientes.get(i++) + ", ";
+		ing += ingredientes.get(i);
+		return ing;
+	}
 
 	@Override
-	public ArrayList<String> cogerIngredientes(String plato) {
+	public ArrayList<String> cogerIngredientesLista(String plato) {
 		DAOPlatoIngrediente daoPlatoIngrediente = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
 		return daoPlatoIngrediente.cogerIngredientes(plato);
 	}
@@ -82,7 +91,6 @@ public class SAPlatoImp implements SAPlato {
 	}
 
 	@Override
-	
 	public void hacerPedido(ArrayList<TLineaFactura> lineas) {
 		for (TLineaFactura linea : lineas) {
 			hacerPlato(linea.getIdProducto(), linea.getCantidad());
@@ -100,39 +108,9 @@ public class SAPlatoImp implements SAPlato {
 				return "El producto " + linea.getIdProducto() + " no está disponible";
 			}
 			else if (consulta(linea.getIdProducto()) == null) {
-				return "El producto " + " no existe";
+				return "El producto " + linea.getIdProducto() + " no existe";
 			}
 		}
 		return null;
 	}
-
-
-
-	
-	/*public boolean puede_hacerse(TPlato plato) {
-		DAOIngrediente daoi = FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
-		boolean se_puede = true;
-		for (int i = 0; i < plato.getIngredientes().size() && se_puede; ++i) {
-			TIngrediente ti = daoi.cogerIngrediente(plato.getIngredientes().get(i).getNombre());
-			if (ti.getCantidad() == 0) se_puede = false;
-		}
-		
-		return se_puede;
-		
-	}
-	public boolean hacerPlato(String id) {
-		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
-		TPlato plato = daoPlato.obtenPlato(id);
-		DAOIngrediente daoi = FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
-		boolean se_puede = puede_hacerse(plato);
-		if (se_puede) {
-			for (int i = 0; i < plato.getIngredientes().size() && se_puede; ++i) {
-				TIngrediente ti = daoi.cogerIngrediente(plato.getIngredientes().get(i).getNombre());
-				ti.setCantidad(ti.getCantidad() - 1);
-			}
-		}
-		
-		return se_puede;
-	}*/
-
 }

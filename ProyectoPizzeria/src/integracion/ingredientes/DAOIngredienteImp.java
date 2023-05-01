@@ -14,6 +14,7 @@ import org.json.JSONTokener;
 
 import negocio.ingredientes.Pair;
 import negocio.ingredientes.TIngrediente;
+import negocio.ingredientes.TModificacionIngrediente;
 
 public class DAOIngredienteImp implements DAOIngrediente{
 
@@ -69,13 +70,13 @@ public class DAOIngredienteImp implements DAOIngrediente{
 	}
 
 	@Override
-	public boolean modificaIngrediente(Pair<String,TIngrediente> p) {
-		Pair<Boolean,Integer> b = daDeBajaIngrediente(p.getFirst());
+	public boolean modificaIngrediente(TModificacionIngrediente p) {
+		Pair<Boolean,Integer> b = daDeBajaIngrediente(p.getNombreAntiguo());
 		if(b.getFirst()) {
-			if(p.getSecond().getCantidad() == -1)
-				this.insertarIngrediente(new TIngrediente(p.getSecond().getNombre(), b.getSecond()));
+			if(p.getIngrediente().getCantidad() == -1)
+				this.insertarIngrediente(new TIngrediente(p.getIngrediente().getNombre(), b.getSecond()));
 			else
-				this.insertarIngrediente(p.getSecond());
+				this.insertarIngrediente(p.getIngrediente());
 			return true;
 		}
 		return false;

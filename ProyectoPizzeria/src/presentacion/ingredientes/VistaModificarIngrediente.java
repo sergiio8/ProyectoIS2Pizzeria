@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 
 import negocio.ingredientes.Pair;
 import negocio.ingredientes.TIngrediente;
+import negocio.ingredientes.TModificacionIngrediente;
 import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
@@ -150,7 +151,7 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 			else nuevoNombre = nombre;
 			tNombre.setText("");
 			tCantidad.setText("");
-			Controlador.getInstance().accion(Evento.MODIFICAR_INGREDIENTE, new Pair<String,TIngrediente>(nombre, new TIngrediente(nuevoNombre,cantidad)));
+			Controlador.getInstance().accion(Evento.MODIFICAR_INGREDIENTE, new TModificacionIngrediente(nombre, new TIngrediente(nuevoNombre,cantidad)));
 			setVisible(false);
 		}
 		catch (NumberFormatException nfe) {

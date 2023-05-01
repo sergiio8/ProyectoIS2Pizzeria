@@ -127,13 +127,12 @@ public class BuscarFactura extends JDialog implements IGUI{
 			JLabel id_cliente = new JLabel("ID_cliente: " + tf.getIdCliente());
 			JLabel id_vendedor = new JLabel("ID_vendedor: " + tf.getIdVendedor());
 			JLabel fecha = new JLabel("Fecha: " + tf.getFecha());
-			//String productos = "";
 			JLabel productos_label = new JLabel("Productos: Nombre: " + tf.getProductos().get(0).getIdProducto() + ", " + tf.getProductos().get(0).getCantidad() + " uds");
 			data_box.add(id_cliente);
 			data_box.add(id_vendedor);
 			data_box.add(productos_label);
 			for (int i = 1; i < tf.getProductos().size(); ++i) {
-				String productos = "ID: " + tf.getProductos().get(i).getIdProducto() + ", " + tf.getProductos().get(i).getCantidad() + " uds";
+				String productos = "Nombre: " + tf.getProductos().get(i).getIdProducto() + ", " + tf.getProductos().get(i).getCantidad() + " uds";
 				JLabel productos_label_2 = new JLabel("                  " + productos);
 				data_box.add(productos_label_2);
 			}
