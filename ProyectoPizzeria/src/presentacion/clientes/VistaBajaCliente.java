@@ -95,10 +95,12 @@ public class VistaBajaCliente  extends JDialog implements IGUI{
 			break;
 		case BAJA_CLIENTE_KO:
 			JOptionPane.showMessageDialog(this, "ERROR: No se ha podido borrar al cliente con id " + datos.toString(), "ERROR: No se ha podido borrar el cliente", JOptionPane.ERROR_MESSAGE);
+			this.tId.setText(null);
 			setVisible(false);
 			break;
 		case BAJA_CLIENTE_OK:
 			JOptionPane.showMessageDialog(this, "Cliente con id " + datos.toString()+" ha sido borrado correctamente", "Cliente borrado correctamente", JOptionPane.INFORMATION_MESSAGE);
+			this.tId.setText(null);
 			setVisible(false);
 			break;
 		}

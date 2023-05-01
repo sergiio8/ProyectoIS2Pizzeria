@@ -115,9 +115,9 @@ public class VistaBuscarCliente  extends JDialog implements IGUI{
 			buttonsPanel.add(this.okButton);
 			buttonsPanel.add(this.cancelButton);
 			this.tId.setEnabled(true);
-			if(!tId.getText().toString().equals(null)) {
-				tId.setText(null);
-			}
+			//if(!tId.getText().toString().equals(null)) {
+			tId.setText(null);
+			//}
 			if(lNombre != null) {
 				this.nombrePanel.remove(lNombre);
 			}
@@ -132,6 +132,7 @@ public class VistaBuscarCliente  extends JDialog implements IGUI{
 		case BUSCAR_CLIENTE_RES:
 			if(datos == null) {
 				JOptionPane.showMessageDialog(this, "ERROR: Cliente no encontrado", "ERROR: Cliente no encontrado", JOptionPane.ERROR_MESSAGE);
+				this.setVisible(false);
 			}
 			
 			else {
