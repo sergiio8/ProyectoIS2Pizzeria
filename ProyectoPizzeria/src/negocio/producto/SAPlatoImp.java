@@ -66,9 +66,20 @@ public class SAPlatoImp implements SAPlato {
 		daoPIng.daDeBajaPlato(nombre);
 		return b;
 	}
+	
+	@Override
+	public String cogerIngredientes(String plato) {
+		ArrayList<String> ingredientes = cogerIngredientesLista(plato);
+		String ing = "";
+		int i = 0;
+		while(i<ingredientes.size()-1)
+			ing += ingredientes.get(i++) + ", ";
+		ing += ingredientes.get(i);
+		return ing;
+	}
 
 	@Override
-	public ArrayList<String> cogerIngredientes(String plato) {
+	public ArrayList<String> cogerIngredientesLista(String plato) {
 		DAOPlatoIngrediente daoPlatoIngrediente = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
 		return daoPlatoIngrediente.cogerIngredientes(plato);
 	}

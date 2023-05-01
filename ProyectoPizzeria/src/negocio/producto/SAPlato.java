@@ -13,7 +13,8 @@ public interface SAPlato {
 	Collection<TPlato> consultaTodos();
 	String modificar(JSONObject datos);
 	Boolean borrar(String id);
-	ArrayList<String> cogerIngredientes(String plato);
+	String cogerIngredientes(String plato);
+	ArrayList<String> cogerIngredientesLista(String nombre);
 	boolean disponible(String nombre, int cantidad);
 	void hacerPlato(String nombre, int cantidad);
 	public String comprobarDisponibilidad(ArrayList<TLineaFactura> productos);
