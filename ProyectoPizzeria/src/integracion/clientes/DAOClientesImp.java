@@ -4,11 +4,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -32,9 +34,18 @@ public class DAOClientesImp implements DAOClientes{
 			jo.put("apellido", cliente.getApellido());
 			ja.put(jo);
 		}
-		catch(Exception e1) {
+		/*catch(Exception e1) {
 			id = null;
 			System.out.print("error en fileInput de IC");
+		}*/
+		catch(IOException ie) {
+			throw new IllegalArgumentException("No se ha podido acceder al fichero JSON");
+		}
+		catch(JSONException je) {
+			throw new IllegalArgumentException("Fallo al construir JSON en base de datos");
+		}
+		catch(Exception e) {
+			throw new IllegalArgumentException("Fallo al construir el id del cliente");
 		}
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/Clientes.json", false))){

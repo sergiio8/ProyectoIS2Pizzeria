@@ -125,6 +125,9 @@ public class VistaModificarCliente extends JDialog implements IGUI{
 		// TODO Auto-generated method stub
 		switch(e) {
 		case VISTA_MODIFICAR_CLIENTE:
+			this.tAp.setText(null);
+			this.tId.setText(null);
+			this.tNombre.setText(null);
 			this.setVisible(true);
 			break;
 		case VISTA_MODIFICAR_CLIENTE_OK:

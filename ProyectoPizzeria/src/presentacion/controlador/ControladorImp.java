@@ -604,7 +604,8 @@ public class ControladorImp extends Controlador { //implementacion
 	
 	private Collection<TCliente> listarClientes(){
 		SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
-		return infoCliente.consultaTodos();
+		Collection<TCliente> c = infoCliente.consultaTodos();
+		return c;
 	}
 	private Collection<TIngrediente> listarIngredientes(){
 		SAIngrediente ingrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
