@@ -16,6 +16,7 @@ import org.json.JSONTokener;
 import integracion.factoria.FactoriaAbstractaIntegracion;
 import negocio.ingredientes.Pair;
 import negocio.ingredientes.TIngrediente;
+import negocio.ingredientes.TModificacionIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
 import negocio.producto.TPlato;
 
@@ -274,7 +275,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 			if(jo.getString("nombrePlato").equals(nombre)) {
 				TIngrediente ing = daoIng.cogerIngrediente(jo.getString("nombreIngrediente"));
 				ing.setCantidad(ing.getCantidad()-cantidad);
-				daoIng.modificaIngrediente(new Pair<String, TIngrediente>(ing.getNombre(), ing));
+				daoIng.modificaIngrediente(new TModificacionIngrediente(ing.getNombre(), ing));
 			}
 		}
 

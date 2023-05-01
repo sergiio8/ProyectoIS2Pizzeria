@@ -27,12 +27,12 @@ public class SAIngredienteImp implements SAIngrediente{
 	}
 
 	@Override
-	public boolean modificar(Pair<String,TIngrediente> p) {
+	public boolean modificar(TModificacionIngrediente p) {
 		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
 		if(ingrediente.modificaIngrediente(p)) {
-			if(!p.getFirst().equals(p.getSecond().getNombre())) {
+			if(!p.getNombreAntiguo().equals(p.getIngrediente().getNombre())) {
 				DAOPlatoIngrediente platoIngrediente = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
-				platoIngrediente.modificaIngrediente(p.getFirst(), p.getSecond().getNombre());
+				platoIngrediente.modificaIngrediente(p.getNombreAntiguo(), p.getIngrediente().getNombre());
 			}
 			return true;
 		}

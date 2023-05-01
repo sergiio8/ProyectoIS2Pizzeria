@@ -17,6 +17,7 @@ import negocio.ingredientes.Pair;
 import negocio.ingredientes.SAIngrediente;
 import negocio.ingredientes.TDatosIngrediente;
 import negocio.ingredientes.TIngrediente;
+import negocio.ingredientes.TModificacionIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
 import presentacion.Evento;
 import presentacion.factoria.FactoriaAbstractaPresentacion;
@@ -369,7 +370,7 @@ public class ControladorImp extends Controlador { //implementacion
 	
 	private void modificarIngrediente(Object datos) {
 		SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
-		boolean modificado= saIngrediente.modificar((Pair<String,TIngrediente>) datos);
+		boolean modificado= saIngrediente.modificar((TModificacionIngrediente) datos);
 		if(!modificado) {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_INGREDIENTE_VISTA).actualizar(Evento.MODIFICAR_INGREDIENTE_KO, datos);
 		}
