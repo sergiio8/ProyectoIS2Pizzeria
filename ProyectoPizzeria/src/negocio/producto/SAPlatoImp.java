@@ -105,5 +105,4 @@ public class SAPlatoImp implements SAPlato {
 		}
 		return null;
 	}
-
 }
