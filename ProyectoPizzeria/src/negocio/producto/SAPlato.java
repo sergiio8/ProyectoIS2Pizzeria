@@ -5,6 +5,8 @@ import java.util.Collection;
 
 import org.json.JSONObject;
 
+import negocio.facturas.TLineaFactura;
+
 public interface SAPlato {
 	String alta(JSONObject datos);
 	TPlato consulta(String id);
@@ -16,4 +18,6 @@ public interface SAPlato {
 	ArrayList<String> cogerIngredientes(String plato);
 	boolean disponible(String nombre, int cantidad);
 	void hacerPlato(String nombre, int cantidad);
+	public String comprobarDisponibilidad(ArrayList<TLineaFactura> productos);
+	void hacerPedido(ArrayList<TLineaFactura> lineas);
 }

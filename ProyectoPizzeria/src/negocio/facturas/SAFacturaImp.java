@@ -8,13 +8,12 @@ import integracion.factoria.FactoriaAbstractaIntegracion;
 import integracion.facturas.DAOFactura;
 import integracion.facturas.DAOFacturaImp;
 import integracion.facturas.DAOLineaFactura;
-import integracion.mesas.DAOMesas;
 import integracion.producto.DAOPlato;
 import negocio.clientes.TCliente;
-import negocio.mesas.TMesas;
 import negocio.producto.TPlato;
 
 public class SAFacturaImp implements SAFactura{
+	
     
     public SAFacturaImp() {
         
@@ -22,7 +21,6 @@ public class SAFacturaImp implements SAFactura{
 
     @Override
     public boolean crearFactura(TDatosVenta datos) {
-        boolean valida = true;
         DAOFactura daof = FactoriaAbstractaIntegracion.getInstace().crearDAOFactura();
         DAOClientes daoc = FactoriaAbstractaIntegracion.getInstace().crearDAOCliente();
         DAOPlato daop = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
@@ -45,14 +43,14 @@ public class SAFacturaImp implements SAFactura{
             }
             fact = daof.buscarFactura(id);
             if (fact == null) {
-                fact = new TFactura(id, precio_total, datos, true);
+                fact = new TFactura(id, precio_total, datos, false);
                 daof.crearFactura(fact);
             }
             else return false;
         }
         else return false;
         
-        return valida;
+        return true;
         
     }
 
@@ -70,11 +68,9 @@ public class SAFacturaImp implements SAFactura{
         
     }
 
-    @Override
-    public void anadirProducto(TLineaFactura linea, Carrito c) {
-        c.anadirProducto(linea);
-        // TODO Auto-generated method stub
-    }
-    
+	@Override
+	public void anadirProducto(TLineaFactura linea, Carrito c) {
+		c.anadirProducto(linea);
+	}
 
 }

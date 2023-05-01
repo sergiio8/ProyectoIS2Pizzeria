@@ -38,7 +38,6 @@ public class CerrarVenta extends JDialog implements IGUI{
 	JTextField text1;
 	JTextField text2;
 	JTextField text3;
-	JTextField text4;
 	JSpinner fechaSpinner;
 	
 	public CerrarVenta(Frame parent) {
@@ -85,8 +84,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 		JPanel panel4 = new JPanel();
 		JLabel fecha = new JLabel("Fecha: ");
 		panel4.add(fecha);
-		Date today = new Date();
-		SpinnerDateModel sdm = new SpinnerDateModel(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()), null, Calendar.DATE);
+		SpinnerDateModel sdm = new SpinnerDateModel(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()), null, null, Calendar.DATE);
 		this.fechaSpinner = new JSpinner(sdm);
 		this.fechaSpinner.setEditor(new JSpinner.DateEditor(fechaSpinner, "dd.MM.yyyy"));
 		panel4.add(fechaSpinner);
@@ -122,16 +120,16 @@ public class CerrarVenta extends JDialog implements IGUI{
 			Date value = (Date)fechaSpinner.getValue(); 
 			fecha = new SimpleDateFormat("dd/MM/yyyy").format(value);
 			if(ID_cliente.equals("") || ID_cliente == null) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Introduza el ID del cliente");
 			}
 			if(ID_vendedor.equals("") || ID_vendedor == null) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Introduzca el ID del vendedor");
 			}
 			if(ID_factura.equals("") || ID_factura == null) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Introduzca el ID de la factura");
 			}
 			if(fecha.equals("") || fecha == null) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Introduzca la fecha");
 			}
 			Controlador.getInstance().accion(Evento.ALTA_FACTURA, new TDatosVenta(new ArrayList<TLineaFactura>(), ID_cliente, ID_vendedor, fecha));
 			
@@ -149,6 +147,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 	public void actualizar(Evento e, Object datos) {
 		switch(e) {
 		case ALTA_FACTURA_VISTA:
+			initGUI();
 			setVisible(true);
 			break;
 		case ALTA_FACTURA_VISTA_OK:

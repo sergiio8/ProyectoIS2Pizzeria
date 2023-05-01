@@ -29,7 +29,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 public class ControladorImp extends Controlador { //implementacion
-
+	private Carrito carrito;
 	@Override
 	public void accion(Evento e, Object datos) {
 		switch(e) {
@@ -526,25 +526,16 @@ public class ControladorImp extends Controlador { //implementacion
 		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
 		TDatosVenta dt = (TDatosVenta) datos;
-		boolean stop = false;
-		for (TLineaFactura linea : carrito.getProductos()) {
-			if (!saPlato.disponible(linea.getIdProducto(), linea.getCantidad())) {
-				stop = true;
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, "El producto " + linea.getIdProducto() + " no está disponible");
-				carrito = new Carrito();
-			}
-			else if (saPlato.consulta(linea.getIdProducto()) == null) {
-				stop = true;
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, "El producto " + linea.getIdProducto() + " no existe");
-				carrito = new Carrito();
-			}
+		dt.setProductos(carrito.getProductos());
+		String solu = saPlato.comprobarDisponibilidad(dt.getProductos());
+		if (solu != null) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_WR, solu);
+			carrito = new Carrito();
 		}
-		if (!stop) {
-			dt.setProductos(carrito.getProductos());
+		else {
 	        boolean sol = saFact.crearFactura(dt);
 	        if (sol) {
-	        	for(TLineaFactura linea : carrito.getProductos())
-					saPlato.hacerPlato(linea.getIdProducto(), linea.getCantidad());
+	        	saPlato.hacerPedido(dt.getProductos());
 				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_FACTURA_VISTA).actualizar(Evento.ALTA_FACTURA_VISTA_OK, dt);
 		    }
 	        else {
@@ -587,7 +578,6 @@ public class ControladorImp extends Controlador { //implementacion
 		FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_BUSCAR_CLIENTE).actualizar(Evento.BUSCAR_CLIENTE_RES, c);
 	}
 	
-	private Carrito carrito;
 	
 	private void altaCliente(Object datos) {
 		TCliente cliente = (TCliente)datos;

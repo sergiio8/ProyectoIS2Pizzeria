@@ -54,13 +54,14 @@ public class DAOFacturaImp implements DAOFactura {
 				JSONObject obj =  ja.getJSONObject(i);
 				DAOLineaFactura daol = FactoriaAbstractaIntegracion.getInstace().crearDAOLineaFactura();
 				ArrayList<TLineaFactura> lineas = (ArrayList<TLineaFactura>) daol.mostrarLineasFactura();
+				ArrayList<TLineaFactura> lineas_def = new ArrayList<>();
 				
 				for (int j = 0; j < lineas.size(); ++j) {
-					if (!lineas.get(j).getIdFactura().equals(id)) {
-						lineas.remove(j);
+					if (lineas.get(j).getIdFactura().equals(id)) {
+						lineas_def.add(lineas.get(j));
 					}
 				}
-				TDatosVenta dt = new TDatosVenta(lineas, obj.getString("id_vendedor"), obj.getString("id_cliente"), obj.getString("fecha"));
+				TDatosVenta dt = new TDatosVenta(lineas_def, obj.getString("id_vendedor"), obj.getString("id_cliente"), obj.getString("fecha"));
 				return new TFactura(obj.getString("id"), obj.getDouble("precio"), dt, obj.getBoolean("activa"));
 			}
 			catch(Exception e) {
