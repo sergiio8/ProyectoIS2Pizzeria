@@ -468,13 +468,11 @@ public class ControladorImp extends Controlador { //implementacion
 	private void modificaPlato(Object datos) {
 		JSONObject obj = (JSONObject) datos;
 		if(!obj.getString("ingredientes").equals("")) {
-			String[] aux = obj.getString("ingredientes").split(",");
-			for(String s : aux) {
-				SAIngrediente saIng = FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
-				if(saIng.consulta(s.trim()) == null) {
-					FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_KO, "Ingrediente: "+ s +" no encontrado");
-					return;
-				}
+			SAIngrediente saIng = FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
+			String aux = saIng.consultaIngredientes(obj.getString("ingredientes"));
+			if(aux != null) {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_KO, "Ingrediente: "+ aux +" no encontrado");
+				return;
 			}
 		}
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();

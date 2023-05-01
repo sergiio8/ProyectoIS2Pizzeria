@@ -80,4 +80,15 @@ public class SAIngredienteImp implements SAIngrediente{
 		return i.cogerTodosIngredientes();
 	}
 
+	@Override
+	public String consultaIngredientes(String ingredientes) {
+		String[] aux = ingredientes.split(",");
+		for(String s : aux) {
+			if(consulta(s.trim()) == null) {
+				return s;
+			}
+		}
+		return null;
+	}
+
 }

@@ -15,8 +15,5 @@ public interface SAIngrediente {
 	//boolean usar(int cantidad,String nombre);
 	Collection<TIngrediente> consultaTodos();
 	TIngrediente consulta(String nombre);
-	//`rieba
-
-	
-	
+	public String consultaIngredientes(String ingredientes);
 }

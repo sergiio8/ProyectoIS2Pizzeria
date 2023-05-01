@@ -10,8 +10,6 @@ import integracion.ingredientes.DAOPlatoIngrediente;
 import integracion.producto.DAOPlato;
 import negocio.facturas.TLineaFactura;
 import negocio.ingredientes.TPlatoIngrediente;
-import presentacion.Evento;
-import presentacion.factoria.FactoriaAbstractaPresentacion;
 
 public class SAPlatoImp implements SAPlato {
 
@@ -82,7 +80,6 @@ public class SAPlatoImp implements SAPlato {
 	}
 
 	@Override
-	
 	public void hacerPedido(ArrayList<TLineaFactura> lineas) {
 		for (TLineaFactura linea : lineas) {
 			hacerPlato(linea.getIdProducto(), linea.getCantidad());
