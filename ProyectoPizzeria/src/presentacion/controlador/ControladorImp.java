@@ -437,15 +437,16 @@ public class ControladorImp extends Controlador { //implementacion
 		String aux = saIng.consultaIngredientes(datosPlato.getIngredientes());
 		if(aux != null) {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_KO, "Ingrediente: "+ aux +" no encontrado");
-			return;
 		}
-		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
-		String nombre = saPlato.alta(datosPlato);
-		if(nombre == "") {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_KO, "plato ya existente");
-		}
-		else {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_OK, nombre);
+		else{
+			SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
+			String nombre = saPlato.alta(datosPlato);
+			if(nombre == "") {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_KO, "Plato ya existente");
+			}
+			else {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_OK, nombre);
+			}
 		}
 	}
 	
