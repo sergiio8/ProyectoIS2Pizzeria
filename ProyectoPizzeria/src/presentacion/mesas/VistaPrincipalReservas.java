@@ -41,7 +41,7 @@ public class VistaPrincipalReservas extends JFrame implements IGUI{
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(8,15,15,15));
 		
-		JLabel titulo = new JLabel("Reservas");
+		JLabel titulo = new JLabel("Subsistema Reservas");
 		titulo.setFont(new Font("Serif", Font.PLAIN, 75));
 		titulo.setHorizontalAlignment(JLabel.CENTER);
 		//titulo.setPreferredSize(new Dimension(200, 100));

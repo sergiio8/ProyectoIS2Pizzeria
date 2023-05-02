@@ -152,7 +152,7 @@ public class VistaAltaCliente extends JDialog implements IGUI{
 		ok.addActionListener((e)->{
 			// TODO Auto-generated method stub
 			Date fecha;
-			if(tId.getText().isEmpty() || tNombre.getText().isEmpty() || tAp.getText().isEmpty()) {
+			if(tId.getText().isEmpty() || tNombre.getText().isEmpty() || tAp.getText().isEmpty() || idMesaField.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(VistaAltaCliente.this, "ERROR: Es necesario rellenar todos los datos", "ERROR: Es necesario rellenar todos los datos", JOptionPane.ERROR_MESSAGE);
 			}
 			else {

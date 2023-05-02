@@ -15,8 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import negocio.ingredientes.TDatosAltaIngrediente;
 import negocio.ingredientes.TIngrediente;
-import negocio.ingredientes.TPlatoIngrediente;
 import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
@@ -104,12 +104,7 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 				}
 				l.add(aux.trim());
 	        }
-	        
-			Controlador.getInstance().accion(Evento.ALTA_INGREDIENTE, new TIngrediente(nombre,cantidad));
-			for(String s: l) {
-				Controlador.getInstance().accion(Evento.ALTA_PLATOINGREDIENTE, new TPlatoIngrediente(s,nombre));
-			}
-			
+			Controlador.getInstance().accion(Evento.ALTA_INGREDIENTE, new TDatosAltaIngrediente(new TIngrediente(nombre,cantidad), l));
 			setVisible(false);
 		}
 		catch (NumberFormatException nfe) {
@@ -143,9 +138,7 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 			setVisible(false);
 			break;
 		case ALTA_INGREDIENTE_KO:
-			
-			JOptionPane.showMessageDialog(this, "ERROR: NO SE HA PODIDO AÑADIR EL INGREDIENTE", "ERROR: NO SE HA PODIDO AÑADIR EL INGREDIENTE", JOptionPane.ERROR_MESSAGE);
-			setVisible(false);
+			JOptionPane.showMessageDialog(this, (String) datos, "ERROR: NO SE HA PODIDO AÑADIR EL INGREDIENTE", JOptionPane.ERROR_MESSAGE);
 			break;
 		}
 	}

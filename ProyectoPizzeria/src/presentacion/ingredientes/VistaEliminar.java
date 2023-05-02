@@ -90,7 +90,6 @@ public class VistaEliminar extends JDialog implements IGUI{
 			break;
 		case BAJA_INGREDIENTE_KO:
 			JOptionPane.showMessageDialog(this, "ERROR: NO SE HA PODIDO ELIMINAR EL INGREDIENTE", "ERROR: NO SE HA PODIDO ELIMINAR EL INGREDIENTE", JOptionPane.ERROR_MESSAGE);
-			setVisible(false);
 			break;
 		}
 	}

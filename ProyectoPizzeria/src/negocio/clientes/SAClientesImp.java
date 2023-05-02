@@ -86,7 +86,7 @@ public class SAClientesImp implements SAClientes{
 			
 			TCliente cliente = daoClientes.obtenCliente(tr.getIdCliente());
 			if(cliente != null) {
-				throw new IllegalArgumentException("El cliente con id" + tr.getIdCliente() + "ya está registrado");
+				throw new IllegalArgumentException("El cliente con id" + tr.getIdCliente() + " ya está registrado");
 			}
 			
 			

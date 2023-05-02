@@ -16,6 +16,7 @@ import negocio.facturas.TDatosVenta;
 import negocio.facturas.TFactura;
 import negocio.facturas.TLineaFactura;
 import negocio.ingredientes.SAIngrediente;
+import negocio.ingredientes.TDatosAltaIngrediente;
 import negocio.ingredientes.TDatosIngrediente;
 import negocio.ingredientes.TIngrediente;
 import negocio.ingredientes.TModificacionIngrediente;
@@ -26,7 +27,6 @@ import presentacion.factoria.FactoriaPresentacion;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 public class ControladorImp extends Controlador { //implementacion
@@ -270,10 +270,26 @@ public class ControladorImp extends Controlador { //implementacion
         	TDatosIngrediente d = new TDatosIngrediente((List<TIngrediente>) listarIngredientes(), (List<TPlatoIngrediente>) listarPlatoIngrediente());
         	FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_INGREDIENTE_VISTA).actualizar(Evento.LISTAR_INGREDIENTE_VISTA,d);
         	break;
+        case BUSCAR_INGREDIENTE_VISTA:
+            FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_INGREDIENTE_VISTA).actualizar(Evento.BUSCAR_INGREDIENTE_VISTA, null);
+            break;
+        case BUSCAR_INGREDIENTE:
+        	buscarIngrediente(datos);
+        	break;
 		default:
 			break;
 	}
 }
+	private void buscarIngrediente (Object datos) {
+		SAIngrediente sa = FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
+		TIngrediente ing = sa.consulta((String) datos);
+		if(ing == null) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_INGREDIENTE_VISTA).actualizar(Evento.BUSCAR_INGREDIENTE_KO, null);
+		}else {
+			ArrayList<String> platos = sa.cogerPlatos((String) datos);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_INGREDIENTE_VISTA).actualizar(Evento.BUSCAR_INGREDIENTE_OK, new TDatosAltaIngrediente(ing, platos));
+		}
+	}
 	private Collection<TReserva> listarReservasMesa(Object datos) {
 		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
 		Collection<TReserva> reservas = saMesas.consultaTodosRMesa(Integer.parseInt(datos.toString()));
@@ -343,19 +359,33 @@ public class ControladorImp extends Controlador { //implementacion
 	
 	private void altaPlatoIngrediente(Object datos) {
 		TPlatoIngrediente pI= (TPlatoIngrediente) datos;
-		SAIngrediente saIngrediente=FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
+		SAIngrediente saIngrediente = FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
 		saIngrediente.crear(pI);
 	}
 	
 	private void altaIngrediente(Object datos) {
-		TIngrediente ingrediente= (TIngrediente) datos;
-		SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
-		String nombre= saIngrediente.crear(ingrediente);
-		if(nombre==null) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_KO, nombre);
+		TDatosAltaIngrediente d= (TDatosAltaIngrediente) datos;
+		List<String> listaPlatos = d.getListaPlatos();
+		SAPlato sa = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
+		String s = null;
+		for(String nombre : listaPlatos) {
+			TPlato aux = sa.consulta(nombre);
+			if(aux==null) s = nombre;
 		}
-		else{
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_OK, nombre);
+		if(s == null) {
+			SAIngrediente saIngrediente= FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
+			String nombre= saIngrediente.crear(d.getIngrediente());
+			for(String n : listaPlatos) {
+				accion(Evento.ALTA_PLATOINGREDIENTE, new TPlatoIngrediente(n, d.getIngrediente().getNombre()));
+			}
+			if(nombre==null) {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_KO, "No se ha podido crear el ingrediente");
+			}
+			else{
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_OK, nombre);
+			}
+		}else {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_INGREDIENTE_VISTA).actualizar(Evento.ALTA_INGREDIENTE_KO, "Plato "+ s+ " no encontrado");
 		}
 	}
 	
@@ -545,7 +575,7 @@ public class ControladorImp extends Controlador { //implementacion
 			saFact.anadirProducto(tf2, carrito);
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_OK, tf2.getIdProducto());
 		}
-		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_WR, tf2.getIdProducto());
+		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_WR, "El producto no pudo ser añadido");
 	}
 	
 	private void abrirVenta(Object datos) {
