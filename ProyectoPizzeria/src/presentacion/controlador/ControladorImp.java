@@ -14,7 +14,6 @@ import negocio.facturas.SAFactura;
 import negocio.facturas.TDatosVenta;
 import negocio.facturas.TFactura;
 import negocio.facturas.TLineaFactura;
-import negocio.ingredientes.Pair;
 import negocio.ingredientes.SAIngrediente;
 import negocio.ingredientes.TDatosIngrediente;
 import negocio.ingredientes.TIngrediente;
@@ -27,8 +26,6 @@ import presentacion.factoria.FactoriaPresentacion;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import org.json.JSONObject;
 
 public class ControladorImp extends Controlador { //implementacion
 	private Carrito carrito;
@@ -271,6 +268,8 @@ public class ControladorImp extends Controlador { //implementacion
         	TDatosIngrediente d = new TDatosIngrediente((List<TIngrediente>) listarIngredientes(), (List<TPlatoIngrediente>) listarPlatoIngrediente());
         	FactoriaAbstractaPresentacion.getInstace().createVista(Evento.LISTAR_INGREDIENTE_VISTA).actualizar(Evento.LISTAR_INGREDIENTE_VISTA,d);
         	break;
+		default:
+			break;
 	}
 }
 	private Collection<TReserva> listarReservasMesa(Object datos) {
@@ -484,7 +483,6 @@ public class ControladorImp extends Controlador { //implementacion
 		String nombre = datos.toString();
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
 		
-		
 		TPlato plato = saPlato.consulta(nombre);
 		
 		if(plato == null) {
@@ -496,15 +494,9 @@ public class ControladorImp extends Controlador { //implementacion
 		}
 	}
 	
-	private ArrayList<Pair<TPlato,ArrayList<String>>> listarPlatos() {
+	private ArrayList<TDatosPlato> listarPlatos() {
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
-		ArrayList<TPlato> platos = new ArrayList<TPlato>(saPlato.consultaTodos());
-		ArrayList<Pair<TPlato,ArrayList<String>>> datos = new ArrayList<Pair<TPlato,ArrayList<String>>>();
-		for(int i=0; i< platos.size();i++) {
-			ArrayList<String> ing = saPlato.cogerIngredientes(platos.get(i).getNombre());
-			datos.add(new Pair<TPlato,ArrayList<String>>(platos.get(i),ing));
-		}
-		return datos;
+		return saPlato.listarPlatos();
 	}
 	
 	private void altaFactura(Object datos) {
@@ -615,8 +607,5 @@ public class ControladorImp extends Controlador { //implementacion
 		Collection<TPlatoIngrediente> p=ingrediente.consultaTodito();
 		return p;
 	}
-	
-	
-		
 }
 

@@ -13,8 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.json.JSONObject;
-
 import negocio.producto.TDatosPlato;
 import negocio.producto.TPlato;
 import presentacion.Evento;
@@ -164,6 +162,8 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 		case BUSCAR_PLATO_KO:
 			JOptionPane.showMessageDialog(this, "ERROR: Plato: " + datos.toString() + " no encontrado", "ERROR: Plato no encontrado", JOptionPane.ERROR_MESSAGE);
 			setVisible(false);
+			break;
+		default:
 			break;
 		}
 		

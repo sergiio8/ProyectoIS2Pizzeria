@@ -102,13 +102,6 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 		catch(Exception e2) {
 			return false;
 		}
-		/*catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		*/
-		
-		
 		return true;
 		
 	}
@@ -196,11 +189,10 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/PlatoIngrediente.json", false))){
 			JSONObject jo = new JSONObject();
 			jo.put("ListaPlatoIngrediente", ja);
-			bw.write(jo.toString());
-				
+			bw.write(jo.toString());	
 		} 
 		catch(Exception e2) {
-				
+			return false;
 		}
 		return true;
 	}
@@ -220,7 +212,6 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 				ing.add(aux.getString("nombreIngrediente"));
 			}
 		}
-		
 		return ing;
 	}
 
@@ -233,13 +224,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 				return false;
 		return true;
 	}
-
-	@Override//LO teinee que hacer el subsistema producto
-	public TPlatoIngrediente cogerPlato(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public boolean disponible(String nombre, int cantidad) {
 		JSONArray ja = new JSONArray();

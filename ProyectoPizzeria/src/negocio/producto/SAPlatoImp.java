@@ -25,19 +25,16 @@ public class SAPlatoImp implements SAPlato {
 		}
 		return nombre;
 	}
-
+	
 	@Override
-	public TPlato consulta(String nombre) {
+	public boolean borrar(String nombre) {
 		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
-		return daoPlato.obtenPlato(nombre);
+		DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
+		boolean b = daoPlato.daDeBajaPlato(nombre);
+		daoPIng.daDeBajaPlato(nombre);
+		return b;
 	}
-
-	@Override
-	public Collection<TPlato> consultaTodos() {
-		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
-		return daoPlato.obtenTodosPlatos();
-	}
-
+	
 	@Override
 	public boolean modificar(TDatosPlato datos) {
 		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
@@ -53,12 +50,25 @@ public class SAPlatoImp implements SAPlato {
 	}
 
 	@Override
-	public boolean borrar(String nombre) {
+	public TPlato consulta(String nombre) {
 		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
-		DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
-		boolean b = daoPlato.daDeBajaPlato(nombre);
-		daoPIng.daDeBajaPlato(nombre);
-		return b;
+		return daoPlato.obtenPlato(nombre);
+	}
+
+	@Override
+	public Collection<TPlato> consultaTodos() {
+		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
+		return daoPlato.obtenTodosPlatos();
+	}
+	
+	public ArrayList<TDatosPlato> listarPlatos(){
+		ArrayList<TPlato> platos = new ArrayList<TPlato>(consultaTodos());
+		ArrayList<TDatosPlato> datos = new ArrayList<TDatosPlato>();
+		for(int i=0; i< platos.size();i++) {
+			ArrayList<String> ing = cogerIngredientes(platos.get(i).getNombre());
+			datos.add(new TDatosPlato(platos.get(i),ing));
+		}
+		return datos;
 	}
 
 	@Override
@@ -72,19 +82,8 @@ public class SAPlatoImp implements SAPlato {
 		DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
 		return daoPIng.disponible(nombre,cantidad);
 	}
-
-	@Override
-	public void hacerPedido(ArrayList<TLineaFactura> lineas) {
-		for (TLineaFactura linea : lineas) {
-			hacerPlato(linea.getIdProducto(), linea.getCantidad());
-		}
-	}
-	public void hacerPlato(String nombre, int cantidad) {
-		DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
-		daoPIng.hacerPlato(nombre,cantidad);
-		
-	}
 	
+	@Override
 	public String comprobarDisponibilidad(ArrayList<TLineaFactura> productos) {
 		for (TLineaFactura linea : productos) {
 			if (!disponible(linea.getIdProducto(), linea.getCantidad())) {
@@ -95,5 +94,18 @@ public class SAPlatoImp implements SAPlato {
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	public void hacerPlato(String nombre, int cantidad) {
+		DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
+		daoPIng.hacerPlato(nombre,cantidad);
+	}
+
+	@Override
+	public void hacerPedido(ArrayList<TLineaFactura> lineas) {
+		for (TLineaFactura linea : lineas) {
+			hacerPlato(linea.getIdProducto(), linea.getCantidad());
+		}
 	}
 }
