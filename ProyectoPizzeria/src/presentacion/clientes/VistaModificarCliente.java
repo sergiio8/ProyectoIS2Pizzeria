@@ -132,7 +132,7 @@ public class VistaModificarCliente extends JDialog implements IGUI{
 			break;
 		case VISTA_MODIFICAR_CLIENTE_OK:
 			TCliente cliente = (TCliente)datos;
-			JOptionPane.showMessageDialog(this, "El cliente con id " + cliente.getId() + "ha sido modificado", "Cliente modificado con éxito", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "El cliente con id " + cliente.getId() + " ha sido modificado", "Cliente modificado con éxito", JOptionPane.INFORMATION_MESSAGE);
 			this.setVisible(false);
 			break;
 		case VISTA_MODIFICAR_CLIENTE_KO:
