@@ -2,6 +2,7 @@ package presentacion.controlador;
 
 import negocio.clientes.SAClientes;
 import negocio.clientes.TCliente;
+import negocio.clientes.TDatosAltaCliente;
 import negocio.factoria.FactoriaAbstractaNegocio;
 import negocio.mesas.SAMesas;
 import negocio.mesas.TMesas;
@@ -25,6 +26,7 @@ import presentacion.factoria.FactoriaPresentacion;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 public class ControladorImp extends Controlador { //implementacion
@@ -557,15 +559,32 @@ public class ControladorImp extends Controlador { //implementacion
 	
 	
 	private void altaCliente(Object datos) {
-		TCliente cliente = (TCliente)datos;
+		TDatosAltaCliente d = (TDatosAltaCliente)datos;
+		TCliente cliente = d.getCliente();
+		TReserva reserva = d.getReserva();
 		SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
-		String c = infoCliente.alta(cliente);
-		if(c == null) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_ALTA_CLIENTE).actualizar(Evento.ALTA_CLIENTE_KO, cliente.getId());
+		try {
+			int res = infoCliente.altaReservaCliente(reserva);
+			if(res == -1) {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_ALTA_CLIENTE).actualizar(Evento.ALTA_RESERVA_KO, "No se ha podido registrar la reserva");
+			}
+			else {
+				String c = infoCliente.alta(cliente);
+				if (c == null) {
+					FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_ALTA_CLIENTE).actualizar(Evento.ALTA_CLIENTE_KO, cliente.getId());
+				}
+				else {
+					reserva.setId(res);
+					TDatosAltaCliente d2 = new TDatosAltaCliente(cliente, reserva);
+					FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_ALTA_CLIENTE).actualizar(Evento.ALTA_CLIENTE_OK, d2);
+					//FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_ALTA_CLIENTE).actualizar(Evento.ALTA_CLIENTE_OK, cliente.getId());
+				}
+			}
 		}
-		else {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_ALTA_CLIENTE).actualizar(Evento.ALTA_CLIENTE_OK, cliente.getId());
+		catch(IllegalArgumentException iae) {
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_ALTA_CLIENTE).actualizar(Evento.ALTA_RESERVA_KO, iae.getMessage());
 		}
+	
 	}
 	
 	private void modificarCliente (Object datos) {
@@ -589,6 +608,13 @@ public class ControladorImp extends Controlador { //implementacion
 		}
 		else {
 			FactoriaPresentacion.getInstace().createVista(Evento.VISTA_BAJA_CLIENTE).actualizar(Evento.BAJA_CLIENTE_KO, datos);
+		}
+		SAMesas info = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
+		Collection<TReserva> reservas = info.consultaTodosR();
+		for(TReserva reserva : reservas) {
+			if(reserva.getIdCliente().equals((String)datos)){
+				info.borrarR(reserva.getId());
+			}
 		}
 	}
 	
