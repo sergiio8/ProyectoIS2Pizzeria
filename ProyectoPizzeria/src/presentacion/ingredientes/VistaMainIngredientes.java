@@ -30,7 +30,7 @@ public class VistaMainIngredientes extends JFrame implements IGUI{
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(8,15,15,15));
 		
-		JLabel titulo = new JLabel("Subsistema Ingredientes");
+		JLabel titulo = new JLabel("Subsistemas Ingredientes");
 		titulo.setFont(new Font("Serif", Font.PLAIN, 75));
 		mainPanel.add(titulo, BorderLayout.NORTH);
 		
