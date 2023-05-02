@@ -9,7 +9,7 @@ import negocio.producto.TDatosPlato;
 
 public interface DAOPlatoIngrediente {
 	List<String> daDeBajaIngrediente(String name);
-	void modificaIngrediente(String nombreAntiguo, String nombreNuevo);//No se si sera necesario
+	void modificaIngrediente(String nombreAntiguo, String nombreNuevo);
 	boolean insertarPlatoIngrediente(TPlatoIngrediente platoIngrediente);
 	Collection<TPlatoIngrediente> cogerTodosIngredientes();
 	TPlatoIngrediente cogerIngrediente(String nombre);

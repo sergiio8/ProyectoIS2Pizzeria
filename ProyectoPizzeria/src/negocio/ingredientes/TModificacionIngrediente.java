@@ -1,8 +1,10 @@
 package negocio.ingredientes;
 
 public class TModificacionIngrediente {
+	
 	private String nombreAntiguo;
 	private TIngrediente ingrediente;
+	
 	public TModificacionIngrediente (String nombre,TIngrediente i) {
 		nombreAntiguo=nombre;
 		ingrediente=i;

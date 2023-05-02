@@ -22,20 +22,13 @@ public class DAOIngredienteImp implements DAOIngrediente{
 	public Pair<Boolean, Integer> daDeBajaIngrediente(String nombre) {
 		JSONArray ja = null;
 		int cantidad = -1;
-		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Ingredientes.json"))){ //idea mandar excepciones y tratarlas en controlador
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Ingredientes.json"))){
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaIngredientes");
 		}
 		catch(Exception e1) {
 			return new Pair<Boolean,Integer>(false, cantidad);
 		}
-		/*
-		catch(IOException ie) {
-			
-		}
-		catch(JSONException je) {
-			
-		}*/
 		
 		int i = 0;
 		while(i < ja.length() && !ja.getJSONObject(i).getString("nombre").equals(nombre)) {
@@ -58,14 +51,6 @@ public class DAOIngredienteImp implements DAOIngrediente{
 			}
 		}
 		
-		
-		/*catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		*/
-		
-		
 		return new Pair<Boolean,Integer>(true, cantidad);
 	}
 
@@ -86,7 +71,7 @@ public class DAOIngredienteImp implements DAOIngrediente{
 	public String insertarIngrediente(TIngrediente ingrediente) {
 		String nombre= "";
 		JSONArray ja = null;
-		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Ingredientes.json"))){ //idea mandar excepciones y tratarlas en controlador
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Ingredientes.json"))){
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaIngredientes");
 			JSONObject jo = new JSONObject();
@@ -108,12 +93,6 @@ public class DAOIngredienteImp implements DAOIngrediente{
 		catch(Exception e2) {
 			nombre="";
 		}
-		/*catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		*/
-		
 		
 		return nombre;
 	}
@@ -122,20 +101,14 @@ public class DAOIngredienteImp implements DAOIngrediente{
 	@Override
 	public Collection<TIngrediente> cogerTodosIngredientes() {
 		JSONArray ja = null;
-		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Ingredientes.json"))){ //idea mandar excepciones y tratarlas en controlador
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Ingredientes.json"))){
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaIngredientes");
 		}
 		catch(Exception e1) {
 			return null;
 		}
-		/*
-		catch(IOException ie) {
-			
-		}
-		catch(JSONException je) {
-			
-		}*/
+		
 		Collection<TIngrediente> l = new ArrayList<TIngrediente>();
 		for(int k = 0; k<ja.length(); k++) {
 		    TIngrediente ingrediente = new TIngrediente(ja.getJSONObject(k).getString("nombre"), ja.getJSONObject(k).getInt("cantidad"));
@@ -147,20 +120,13 @@ public class DAOIngredienteImp implements DAOIngrediente{
 	@Override
 	public TIngrediente cogerIngrediente(String nombre) {
 		JSONArray ja = null;
-		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Ingredientes.json"))){ //idea mandar excepciones y tratarlas en controlador
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Ingredientes.json"))){
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaIngredientes");
 		}
 		catch(Exception e1) {
 			return null;
 		}
-		/*
-		catch(IOException ie) {
-			
-		}
-		catch(JSONException je) {
-			
-		}*/
 		
 		int i = 0;
 		while(i < ja.length() && !ja.getJSONObject(i).getString("nombre").equals(nombre)) {

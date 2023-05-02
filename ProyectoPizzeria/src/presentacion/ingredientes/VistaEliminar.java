@@ -30,13 +30,6 @@ public class VistaEliminar extends JDialog implements IGUI{
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		setContentPane(mainPanel);
-		
-		/*DefaultComboBoxModel comboModel = new DefaultComboBoxModel<>();
-		Collection<TIngrediente> c = 
-		for() {
-		            _lawsModel.addElement();
-		        }
-		JComboBox _comboLaws= new JComboBox<String> (comboModel);*/
 	
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		Box contenedor = Box.createVerticalBox();

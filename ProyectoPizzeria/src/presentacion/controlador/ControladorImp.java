@@ -604,7 +604,7 @@ public class ControladorImp extends Controlador { //implementacion
 	}
 	private Collection<TPlatoIngrediente> listarPlatoIngrediente(){
 		SAIngrediente ingrediente=FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
-		Collection<TPlatoIngrediente> p=ingrediente.consultaTodito();
+		Collection<TPlatoIngrediente> p=ingrediente.consultaTodosPlatoIngrediente();
 		return p;
 	}
 }

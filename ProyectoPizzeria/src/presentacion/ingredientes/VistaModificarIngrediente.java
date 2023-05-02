@@ -1,20 +1,14 @@
 package presentacion.ingredientes;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import negocio.ingredientes.Pair;
 import negocio.ingredientes.TIngrediente;
 import negocio.ingredientes.TModificacionIngrediente;
 import presentacion.Evento;
@@ -58,10 +51,10 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 		primerPanel.add(labelNombre);
 		
 		nombreText = new JTextField(10);
-		//nombreText.setMaximumSize(new Dimension(10,10));
+		nombreText.setPreferredSize(new Dimension(1,1));
 		primerPanel.add(nombreText);
 		
-		JLabel eleccion = new JLabel("Elija los aspectos a modificar");
+		JLabel eleccion = new JLabel("Elija los aspectos a modificar:");
 		primerPanel.add(eleccion);
 		
 		JPanel panelBotones = new JPanel();
@@ -176,6 +169,7 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 			tCantidad.setVisible(false);
 			lNombre.setVisible(false);
 			tNombre.setVisible(false);
+			nombreText.setText("");
 			setVisible(true);
 			break;
 		case MODIFICAR_INGREDIENTE_OK:
