@@ -7,7 +7,7 @@ import negocio.producto.TPlato;
 
 public interface SAFactura {
 	public TFactura buscarFactura(String id);
-	public Collection<TFactura> mostrarFacturas();
+	public Collection<TFactura> listarFacturas();
 	public boolean crearFactura(TDatosVenta datos);
 	void anadirProducto(TLineaFactura linea, Carrito c);
 

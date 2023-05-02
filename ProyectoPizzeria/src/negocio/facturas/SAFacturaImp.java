@@ -62,9 +62,9 @@ public class SAFacturaImp implements SAFactura{
     }
 
     @Override
-    public Collection<TFactura> mostrarFacturas() {
+    public Collection<TFactura> listarFacturas() {
         DAOFactura daof = FactoriaAbstractaIntegracion.getInstace().crearDAOFactura();
-        Collection<TFactura> facts = daof.mostrarFacturas();
+        Collection<TFactura> facts = daof.listarFacturas();
         return facts;
         
     }

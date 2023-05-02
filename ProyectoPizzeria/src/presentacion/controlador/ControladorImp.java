@@ -533,7 +533,7 @@ public class ControladorImp extends Controlador { //implementacion
 	
 	private Collection<TFactura> listarFacturas() {
 		SAFactura saFact = FactoriaAbstractaNegocio.getInstace().crearSAFactura();
-		Collection<TFactura> facturas = saFact.mostrarFacturas();
+		Collection<TFactura> facturas = saFact.listarFacturas();
 		return facturas;
 	}
 	

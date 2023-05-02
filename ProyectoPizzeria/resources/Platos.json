@@ -1,1 +1,1 @@
-{"ListaPlatos":[{"descripcion":"pajin con patatas","tipo":"Entrante","precio":33,"ingredientes":["pajin","patatas"],"id":"pajin","nombre":"pajin"},{"descripcion":"La mejor pizza","tipo":"Pizza","precio":10,"ingredientes":["Mozzarela","tomate","albahaca"],"id":"1","nombre":"Margarita"},{"descripcion":"Un buen entrante","tipo":"Entrante","precio":7,"ingredientes":["Pan","ajo"],"id":"2","nombre":"Pan de ajo"}]}
+{"ListaPlatos":[{"descripcion":"sana y sabrosona","tipo":"Pizza","precio":17,"nombre":"mediterranea"}]}

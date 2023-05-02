@@ -110,7 +110,7 @@ public class DAOFacturaImp implements DAOFactura {
 
 
     @Override
-    public Collection<TFactura> mostrarFacturas() {
+    public Collection<TFactura> listarFacturas() {
     	Collection<TFactura> resultado = new ArrayList<TFactura>();
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Facturas.json"))){ 
