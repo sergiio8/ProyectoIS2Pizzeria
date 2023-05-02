@@ -16,7 +16,7 @@ public class SAClientesImp implements SAClientes{
 		if(c != null) {
 			TCliente cliente = infoCliente.obtenCliente(c.getId());
 			if(cliente == null) {
-				id = infoCliente.insertarCliente(cliente);
+				id = infoCliente.insertarCliente(c);
 			}
 		}
 		return id;
