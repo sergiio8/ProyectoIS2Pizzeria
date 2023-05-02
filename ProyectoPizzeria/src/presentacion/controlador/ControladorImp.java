@@ -545,7 +545,7 @@ public class ControladorImp extends Controlador { //implementacion
 			saFact.anadirProducto(tf2, carrito);
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_OK, tf2.getIdProducto());
 		}
-		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_WR, tf2.getIdProducto());
+		else FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ANADIR_PRODUCTO_VISTA).actualizar(Evento.ANADIR_PRODUCTO_VISTA_WR, "El producto no pudo ser añadido");
 	}
 	
 	private void abrirVenta(Object datos) {
