@@ -43,7 +43,6 @@ public class SAIngredienteImp implements SAIngrediente{
 	public String crear(TIngrediente nuevoIngrediente) {//Falta usar la clase ingrediente plato para cuando creas un ingrediente
 		String nombre =null;
 		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
-		
 		try {
 			TIngrediente ing= ingrediente.cogerIngrediente(nuevoIngrediente.getNombre());
 			if(ing==null) {
