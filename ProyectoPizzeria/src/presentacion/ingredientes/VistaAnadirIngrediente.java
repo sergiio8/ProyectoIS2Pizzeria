@@ -114,12 +114,15 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 		}
 		catch (NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(VistaAnadirIngrediente.this, "ERROR: Error en la cantidad introducida","ERROR: Error en la cantidad introducida", JOptionPane.ERROR_MESSAGE);
+			setVisible(false);
 		}
 		catch (IllegalArgumentException a) {
 			JOptionPane.showMessageDialog(VistaAnadirIngrediente.this, "ERROR: Error en el nombre del ingrediente","ERROR: Error en el nombre del ingrediente", JOptionPane.ERROR_MESSAGE);
+			setVisible(false);
 		}
 		catch(Exception e) {
 			JOptionPane.showMessageDialog(VistaAnadirIngrediente.this, JOptionPane.ERROR_MESSAGE);
+			setVisible(false);
 		}
 	}
 	private void volver() {
