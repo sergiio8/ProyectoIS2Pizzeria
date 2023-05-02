@@ -17,9 +17,9 @@ import javax.swing.JPanel;
 import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
-import presentacion.producto.VistaPrincipalPlatos;
 
 public class VistaMainIngredientes extends JFrame implements IGUI{
+	private static final long serialVersionUID = 1L;
 	
 	public VistaMainIngredientes() {
 		initGUI();
@@ -70,12 +70,9 @@ public class VistaMainIngredientes extends JFrame implements IGUI{
 		
 		
 		addWindowListener(new WindowListener() {
-
+			
 			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowOpened(WindowEvent e) {}
 
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -84,34 +81,19 @@ public class VistaMainIngredientes extends JFrame implements IGUI{
 			}
 
 			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowClosed(WindowEvent e) {}
 
 			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowIconified(WindowEvent e) {}
 
 			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowDeiconified(WindowEvent e) {}
 
 			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowActivated(WindowEvent e) {}
 
 			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowDeactivated(WindowEvent e) {}
 			
 		});
 		
@@ -120,20 +102,20 @@ public class VistaMainIngredientes extends JFrame implements IGUI{
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
-	void volver() {
+	private void volver() {
 		Controlador.getInstance().accion(Evento.MAIN_WINDOW, null);
 		this.dispose();
 	}
-	void listar() {
+	private void listar() {
 		Controlador.getInstance().accion(Evento.LISTAR_INGREDIENTE_VISTA, null);
 	}
-	void eliminar() {
+	private void eliminar() {
 		Controlador.getInstance().accion(Evento.BAJA_INGREDIENTE_VISTA, null);
 	}
-	void modificar() {
+	private void modificar() {
 		Controlador.getInstance().accion(Evento.MODIFICAR_INGREDIENTE_VISTA, null);
 	}
-	void crear() {
+	private void crear() {
 		Controlador.getInstance().accion(Evento.ALTA_INGREDIENTE_VISTA, null);
 	}
 	@Override

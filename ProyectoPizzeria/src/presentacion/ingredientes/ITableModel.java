@@ -1,29 +1,21 @@
 package presentacion.ingredientes;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.json.JSONObject;
-
-import negocio.ingredientes.Pair;
 import negocio.ingredientes.TDatosIngrediente;
 import negocio.ingredientes.TIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
 
-public class ITableModel extends AbstractTableModel{
-
-	/**
-	 * 
-	 */
+class ITableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 1L;
 
 	private String[] columnNames= {"Nombre","Cantidad","Platos"};
-	List<List<String>> datos;
+	private List<List<String>> datos;
 	
-	public ITableModel() {
+	ITableModel() {
 		datos = new ArrayList<>();
 	}
 	
@@ -49,7 +41,7 @@ public class ITableModel extends AbstractTableModel{
 		return datos.get(rowIndex).get(columnIndex);
 	}
 	
-	public void update(Object datos) {
+	void update(Object datos) {
 		TDatosIngrediente d = (TDatosIngrediente)datos;
 		List<TIngrediente> ingredientes = d.getIngredientes();
 		List<TPlatoIngrediente> platoIngredientes = d.getPlatoIngredientes();

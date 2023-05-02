@@ -40,7 +40,7 @@ public class SAIngredienteImp implements SAIngrediente{
 	}
 	
 	@Override
-	public String crear(TIngrediente nuevoIngrediente) {//Falta usar la clase ingrediente plato para cuando creas un ingrediente
+	public String crear(TIngrediente nuevoIngrediente) {
 		String nombre =null;
 		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
 		try {
@@ -74,7 +74,7 @@ public class SAIngredienteImp implements SAIngrediente{
 	}
 
 	@Override
-	public Collection<TPlatoIngrediente> consultaTodito() {
+	public Collection<TPlatoIngrediente> consultaTodosPlatoIngrediente() {
 		DAOPlatoIngrediente i=FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
 		return i.cogerTodosIngredientes();
 	}

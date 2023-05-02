@@ -2,24 +2,18 @@ package presentacion.ingredientes;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.JToolBar.Separator;
 
 import negocio.ingredientes.TIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
@@ -30,9 +24,10 @@ import presentacion.controlador.Controlador;
 public class VistaAnadirIngrediente extends JDialog implements IGUI{	
 	private static final long serialVersionUID = 1L;
 	
-	JTextField t1;
-	JTextField t2;
-	JTextField t3;
+	private JTextField t1;
+	private JTextField t2;
+	private JTextField t3;
+	
 	public VistaAnadirIngrediente(Frame parent){
 		initGUI(parent);
 	}
@@ -62,7 +57,7 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 		panelCrear.add(t2);
 		
 		
-		JLabel l3= new JLabel("Platos: eg: pizza, pasta");
+		JLabel l3= new JLabel("Platos: (eg: pizza, pasta)");
 		panelCrear.add(l3);
 		
 		t3= new JTextField();

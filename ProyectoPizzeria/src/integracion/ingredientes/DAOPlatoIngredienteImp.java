@@ -25,46 +25,22 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 	public List<String> daDeBajaIngrediente(String name) {
 		List<String> s = new ArrayList<String>();
 		JSONArray ja = null;
-		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){ //idea mandar excepciones y tratarlas en controlador
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
 		}
 		catch(Exception e1) {
 			
 		}
-		/*
-		catch(IOException ie) {
-			
-		}
-		catch(JSONException je) {
-			
-		}*/
-		
 
 		for(int i=0; i<ja.length();i++) {
 			if(ja.getJSONObject(i).getString("nombreIngrediente").equals(name)) {
 				s.add(ja.getJSONObject(i).getString("nombrePlato"));
-				//ja.remove(i);
-				//i--;
 			}
 		}
 		for(String n : s) {
 			daDeBajaPlato(n);
 		}
-		
-		/* Se escribe en daDeBajaPlato()
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter("ProyectoPizzeria/resources/PlatoIngrediente.json", false))){
-			JSONObject jo2 = new JSONObject();
-			jo2.put("ListaPlatoIngrediente", ja);
-			bw.write(jo2.toString());
-				
-		} 
-		catch(Exception e2) {
-				
-		}
-		
-		*/
-		
 		return s;
 
 	}
@@ -120,7 +96,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 	@Override
 	public Collection<TPlatoIngrediente> cogerTodosIngredientes() {
 		JSONArray ja = null;
-		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){ //idea mandar excepciones y tratarlas en controlador
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
 		}
@@ -146,13 +122,6 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 		catch(Exception e1) {
 			return null;
 		}
-		/*
-		catch(IOException ie) {
-			
-		}
-		catch(JSONException je) {
-			
-		}*/
 		
 		int i = 0;
 		while(i < ja.length() && !ja.getJSONObject(i).getString("nombreIngrediente").equals(nombre)) {
@@ -171,7 +140,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 	@Override
 	public boolean daDeBajaPlato(String name){
 		JSONArray ja = new JSONArray();
-		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){ //idea mandar excepciones y tratarlas en controlador
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
 		}
@@ -199,7 +168,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 	
 	public ArrayList<String> cogerIngredientes(String plato){
 		JSONArray ja = new JSONArray();
-		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){ //idea mandar excepciones y tratarlas en controlador
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
 		}
@@ -228,7 +197,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 	@Override
 	public boolean disponible(String nombre, int cantidad) {
 		JSONArray ja = new JSONArray();
-		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){ //idea mandar excepciones y tratarlas en controlador
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
 		}
@@ -247,7 +216,7 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 	@Override
 	public void hacerPlato(String nombre, int cantidad) {
 		JSONArray ja = new JSONArray();
-		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){ //idea mandar excepciones y tratarlas en controlador
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
 			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
 		}
