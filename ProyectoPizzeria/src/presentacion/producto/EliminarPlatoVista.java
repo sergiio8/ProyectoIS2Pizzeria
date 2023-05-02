@@ -16,7 +16,6 @@ import javax.swing.JTextField;
 import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
-import presentacion.mesas.VistaBorrarMesa;
 
 public class EliminarPlatoVista extends JDialog implements IGUI{
 
@@ -93,6 +92,8 @@ public class EliminarPlatoVista extends JDialog implements IGUI{
 			JOptionPane.showMessageDialog(this, "ERROR: Plato: " + datos.toString() + " no encontrado", "ERROR: BORRAR PLATO", JOptionPane.ERROR_MESSAGE);
 			initGUI();
 			setVisible(false);
+			break;
+		default:
 			break;
 		}
 		

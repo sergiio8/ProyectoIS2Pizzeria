@@ -17,8 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import org.json.JSONObject;
-
 import negocio.producto.TDatosPlato;
 import negocio.producto.TEntrante;
 import negocio.producto.TPizza;
@@ -195,6 +193,8 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: ALTA PLATO", JOptionPane.ERROR_MESSAGE);
 			initGUI();
 			setVisible(false);
+			break;
+		default:
 			break;
 		}
 	}

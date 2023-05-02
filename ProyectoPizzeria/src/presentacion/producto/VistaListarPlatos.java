@@ -67,6 +67,8 @@ public class VistaListarPlatos extends JDialog implements IGUI{
 		case LISTAR_PLATOS:
 			tableModel.update(datos);
 			setVisible(true);
+		default:
+			break;
 		}
 	}
 }

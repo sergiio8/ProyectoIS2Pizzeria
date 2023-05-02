@@ -7,22 +7,16 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import org.json.JSONObject;
 
 import negocio.producto.TDatosPlato;
 import negocio.producto.TEntrante;
-import negocio.producto.TPizza;
-import negocio.producto.TPostre;
 import presentacion.Evento;
 import presentacion.IGUI;
 import presentacion.controlador.Controlador;
@@ -152,6 +146,8 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 			JOptionPane.showMessageDialog(this, "ERROR: Plato " + datos.toString() + " no modificado", "ERROR: MODIFICAR PLATO", JOptionPane.ERROR_MESSAGE);
 			initGUI();
 			setVisible(false);
+			break;
+		default:
 			break;
 		}
 	}

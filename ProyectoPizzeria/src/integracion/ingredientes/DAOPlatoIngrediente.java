@@ -15,7 +15,6 @@ public interface DAOPlatoIngrediente {
 	TPlatoIngrediente cogerIngrediente(String nombre);
 	boolean daDeBajaPlato (String id);
 	boolean modificaPlato(TDatosPlato datos);
-	TPlatoIngrediente cogerPlato(String id);
 	ArrayList<String> cogerIngredientes(String plato);
 	boolean disponible(String nombre, int cantidad);
 	void hacerPlato(String nombre, int cantidad);
