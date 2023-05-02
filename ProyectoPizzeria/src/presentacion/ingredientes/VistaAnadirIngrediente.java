@@ -62,7 +62,7 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 		panelCrear.add(t2);
 		
 		
-		JLabel l3= new JLabel("Platos: eg:{pizza,pasta}");
+		JLabel l3= new JLabel("Platos: eg: pizza, pasta");
 		panelCrear.add(l3);
 		
 		t3= new JTextField();
@@ -83,9 +83,6 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 		panelOk.add(volver);
 		
 		mainPanel.add(panelOk, BorderLayout.SOUTH);
-		
-		
-		//Falta anadirlos todo a un panel q sea scrollbar y este al main
 
 		pack();
 		setResizable(false);
@@ -94,31 +91,23 @@ public class VistaAnadirIngrediente extends JDialog implements IGUI{
 	private void ok() {
 		String nombre;
 		int cantidad;
-		String[]platos;
 		try {
 			nombre=t1.getText();
 			if(nombre.equals("")) {
-				throw new IllegalArgumentException("Alejandro matricula YA");
+				throw new IllegalArgumentException();
 			}
 			cantidad= Integer.parseInt(t2.getText());
 			if(cantidad<0) {
 				throw new NumberFormatException();
 			}
-			/*String aux="";
-			
-	        for (int j=1; j<t3.getText().length()-1;j++) {
-	            aux+=t3.getText().charAt(j);
-	        }
-	        
-	        platos= aux.split(",");*/
 			List<String> l = new ArrayList<String>();
-			for (int j=1; j<t3.getText().length()-1;j++) {
+			for (int j=0; j<t3.getText().length();j++) {
 				String aux="";
-				while(j<t3.getText().length()-1 && t3.getText().charAt(j) != ',') {
+				while(j<t3.getText().length() && t3.getText().charAt(j) != ',') {
 					aux+=t3.getText().charAt(j);
 					j++;
 				}
-				l.add(aux);
+				l.add(aux.trim());
 	        }
 	        
 			Controlador.getInstance().accion(Evento.ALTA_INGREDIENTE, new TIngrediente(nombre,cantidad));
