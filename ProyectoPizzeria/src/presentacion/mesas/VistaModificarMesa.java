@@ -148,7 +148,7 @@ private static final long serialVersionUID = 1L;
 		case MODIFICAR_MESA_RES:
 			boolean res = Boolean.parseBoolean(datos.toString());
 			if(res) {
-				JOptionPane.showMessageDialog(this, "Mesa modificada con id: " + datos.toString(), "Mesa modificada con id: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Mesa modificada correctamente", "Mesa modificada correctamente", JOptionPane.INFORMATION_MESSAGE);
 				
 			}
 			else {

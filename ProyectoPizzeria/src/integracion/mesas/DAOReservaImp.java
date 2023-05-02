@@ -81,7 +81,7 @@ public class DAOReservaImp implements DAOReserva{
 		}
 		
 		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).getString("id") != id) {
+		while(i < ja.length() && !ja.getJSONObject(i).getString("id").equals(id)) {
 			i++;
 		}
 		if(i == ja.length()) {
@@ -118,10 +118,11 @@ public class DAOReservaImp implements DAOReserva{
 		}
 		
 		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).getString("id") != id) {
+		while(i < ja.length() && !ja.getJSONObject(i).getString("id").equals(id)) {
 			i++;
 		}
 		if(i == ja.length()) {
+			
 			return null;
 		}
 		else {
@@ -153,7 +154,7 @@ public class DAOReservaImp implements DAOReserva{
 		}
 		
 		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).getString("id") != id) {
+		while(i < ja.length() && !ja.getJSONObject(i).getString("id").equals(id)) {
 			i++;
 		}
 		if(i == ja.length()) {

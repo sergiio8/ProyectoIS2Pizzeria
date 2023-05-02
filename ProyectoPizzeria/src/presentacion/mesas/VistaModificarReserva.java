@@ -124,7 +124,6 @@ public class VistaModificarReserva extends JDialog implements IGUI{
 				if(idCliente.isEmpty()) {
 					throw new IllegalArgumentException();
 				}
-				System.out.println(idCliente);
 				fecha = (Date)this.fechaSpinner.getValue();
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(fecha);

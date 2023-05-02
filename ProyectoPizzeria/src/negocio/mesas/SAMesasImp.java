@@ -123,8 +123,10 @@ public class SAMesasImp implements SAMesas{
 				throw new IllegalArgumentException("Cliente no existente");
 			}
 			if(estaR == null) {
+				
 				throw new IllegalArgumentException("Reserva no existente");
 			}
+
 			Collection<TReserva> reservas = daoR.consultaTodosMesas(tr.getIdMesa());
 			Iterator<TReserva> it = reservas.iterator();
 			boolean exito = true;

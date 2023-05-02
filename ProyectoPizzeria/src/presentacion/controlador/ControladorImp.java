@@ -313,14 +313,14 @@ public class ControladorImp extends Controlador { //implementacion
 		try {
 			boolean res = saMesas.modificarR(tr);
 			if(res) {
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_MESA_VISTA).actualizar(Evento.MODIFICAR_RESERVA_OK, null);
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_RESERVA_VISTA).actualizar(Evento.MODIFICAR_RESERVA_OK, null);
 			}
 			else {
-				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_MESA_VISTA).actualizar(Evento.MODIFICAR_RESERVA_KO, "No se ha podido modificar la reserva");
+				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_RESERVA_VISTA).actualizar(Evento.MODIFICAR_RESERVA_KO, "No se ha podido modificar la reserva");
 			}
 		}
 		catch(IllegalArgumentException iae) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_MESA_VISTA).actualizar(Evento.MODIFICAR_RESERVA_KO, iae.getMessage());
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_RESERVA_VISTA).actualizar(Evento.MODIFICAR_RESERVA_KO, iae.getMessage());
 		}
 	}
 	
