@@ -111,12 +111,16 @@ public class VistaListarReservasPorCliente extends JDialog implements IGUI{
 			buttonsPanel.add(this.okButton);
 			buttonsPanel.add(this.cancelButton);
 			this.idClienteField.setEnabled(true);
+			this.idClienteField.setText("");
 			if(tablaPanel != null) {
-				tablaPanel.removeAll();
+				this.remove(tablaPanel);
+				tablaPanel = new JPanel();
+				this.add(tablaPanel);
 			}
 			revalidate();
 			repaint();
 			pack();
+			setLocationRelativeTo(this.getParent());
 			setVisible(true);
 			break;
 		case LISTAR_RESERVAS_CLIENTE_OK:

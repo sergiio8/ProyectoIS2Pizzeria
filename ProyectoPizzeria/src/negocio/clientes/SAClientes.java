@@ -11,7 +11,7 @@ public interface SAClientes {
 	public Collection<TCliente> consultaTodos();
 	public Boolean modificar(TCliente c);
 	public Boolean borrar (String id);
-	Integer altaReservaCliente(TReserva tr) throws IllegalArgumentException;
+	String altaReservaCliente(TReserva tr) throws IllegalArgumentException;
 	
 
 }

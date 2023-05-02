@@ -26,8 +26,8 @@ public class DAOReservaImp implements DAOReserva{
 	
 
 	@Override
-	public Integer insertaReserva(TReserva tr) throws IllegalArgumentException{
-		int id = -1;
+	public String insertaReserva(TReserva tr) throws IllegalArgumentException{
+		String id;
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Reservas.json"))){ //idea mandar excepciones y tratarlas en controlador
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
@@ -35,7 +35,7 @@ public class DAOReservaImp implements DAOReserva{
 			JSONObject jo = new JSONObject();
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(tr.getFecha());
-			id = Integer.parseInt(String.valueOf(tr.getIdMesa())+ String.valueOf(cal.get(Calendar.DAY_OF_YEAR))+ String.valueOf(cal.get(Calendar.YEAR)-1900)+ String.valueOf(cal.get(Calendar.HOUR_OF_DAY)));
+			id = String.valueOf(tr.getIdMesa())+ String.valueOf(cal.get(Calendar.DAY_OF_YEAR))+ String.valueOf(cal.get(Calendar.YEAR)-1900)+ String.valueOf(cal.get(Calendar.HOUR_OF_DAY));
 			jo.put("id", id);
 			jo.put("idMesa", tr.getIdMesa());
 			jo.put("idCliente", tr.getIdCliente());
@@ -70,7 +70,7 @@ public class DAOReservaImp implements DAOReserva{
 	}
 
 	@Override
-	public Boolean daDeBajaReserva(Integer id) {
+	public Boolean daDeBajaReserva(String id) {
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Reservas.json"))){ //idea mandar excepciones y tratarlas en controlador
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
@@ -81,7 +81,7 @@ public class DAOReservaImp implements DAOReserva{
 		}
 		
 		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).getInt("id") != id) {
+		while(i < ja.length() && ja.getJSONObject(i).getString("id") != id) {
 			i++;
 		}
 		if(i == ja.length()) {
@@ -107,7 +107,7 @@ public class DAOReservaImp implements DAOReserva{
 	}
 
 	@Override
-	public TReserva obtenReserva(Integer id) {
+	public TReserva obtenReserva(String id) {
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Reservas.json"))){ //idea mandar excepciones y tratarlas en controlador
 			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
@@ -118,7 +118,7 @@ public class DAOReservaImp implements DAOReserva{
 		}
 		
 		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).getInt("id") != id) {
+		while(i < ja.length() && ja.getJSONObject(i).getString("id") != id) {
 			i++;
 		}
 		if(i == ja.length()) {
@@ -128,7 +128,7 @@ public class DAOReservaImp implements DAOReserva{
 			Date date;
 			try {
 				date = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(ja.getJSONObject(i).getString("fecha"));
-				return new TReserva(ja.getJSONObject(i).getInt("idMesa"),ja.getJSONObject(i).getString("idCliente")  ,date,ja.getJSONObject(i).getInt("id"));
+				return new TReserva(ja.getJSONObject(i).getInt("idMesa"),ja.getJSONObject(i).getString("idCliente")  ,date,ja.getJSONObject(i).getString("id"));
 			}
 			catch(Exception e) {
 				return null;
@@ -140,7 +140,7 @@ public class DAOReservaImp implements DAOReserva{
 	@Override
 	public Boolean modificaReserva(TReserva tr) {
 
-		int id = tr.getId();
+		String id = tr.getId();
 		
 		JSONArray ja = null;
 		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/Reservas.json"))){ //idea mandar excepciones y tratarlas en controlador
@@ -153,7 +153,7 @@ public class DAOReservaImp implements DAOReserva{
 		}
 		
 		int i = 0;
-		while(i < ja.length() && ja.getJSONObject(i).getInt("id") != id) {
+		while(i < ja.length() && ja.getJSONObject(i).getString("id") != id) {
 			i++;
 		}
 		if(i == ja.length()) {
@@ -202,7 +202,7 @@ public class DAOReservaImp implements DAOReserva{
 		while(i < ja.length()) {
 			try {
 				date = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(ja.getJSONObject(i).getString("fecha"));
-				resultado.add( new TReserva(ja.getJSONObject(i).getInt("idMesa"),ja.getJSONObject(i).getString("idCliente")  ,date,ja.getJSONObject(i).getInt("id")));
+				resultado.add( new TReserva(ja.getJSONObject(i).getInt("idMesa"),ja.getJSONObject(i).getString("idCliente")  ,date,ja.getJSONObject(i).getString("id")));
 				i++;
 			} catch (Exception e) {
 
@@ -236,7 +236,7 @@ public class DAOReservaImp implements DAOReserva{
 				idCliente = ja.getJSONObject(i).getString("idCliente");
 				if(idCliente.equals(id)) {
 					date = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(ja.getJSONObject(i).getString("fecha"));
-					resultado.add( new TReserva(ja.getJSONObject(i).getInt("idMesa"),idCliente  ,date,ja.getJSONObject(i).getInt("id")));
+					resultado.add( new TReserva(ja.getJSONObject(i).getInt("idMesa"),idCliente  ,date,ja.getJSONObject(i).getString("id")));
 				}
 				i++;
 			} catch (Exception e) {
@@ -270,7 +270,7 @@ public class DAOReservaImp implements DAOReserva{
 				idMesa = ja.getJSONObject(i).getInt("idMesa");
 				if(id.equals(idMesa)) {
 					date = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(ja.getJSONObject(i).getString("fecha"));
-					resultado.add( new TReserva(idMesa,ja.getJSONObject(i).getString("idCliente")  ,date,ja.getJSONObject(i).getInt("id")));
+					resultado.add( new TReserva(idMesa,ja.getJSONObject(i).getString("idCliente")  ,date,ja.getJSONObject(i).getString("id")));
 				}
 				i++;
 			} catch (Exception e) {

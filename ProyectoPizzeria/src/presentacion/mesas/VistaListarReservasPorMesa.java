@@ -109,12 +109,16 @@ public class VistaListarReservasPorMesa extends JDialog implements IGUI{
 			buttonsPanel.add(this.okButton);
 			buttonsPanel.add(this.cancelButton);
 			this.idMesaField.setEnabled(true);
+			this.idMesaField.setText("");
 			if(tablaPanel != null) {
-				tablaPanel.removeAll();
+				this.remove(tablaPanel);
+				tablaPanel = new JPanel();
+				this.add(tablaPanel);
 			}
 			revalidate();
 			repaint();
 			pack();
+			setLocationRelativeTo(this.getParent());
 			setVisible(true);
 			break;
 		case LISTAR_RESERVAS_MESAS_OK:

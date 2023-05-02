@@ -3,12 +3,12 @@ package negocio.mesas;
 import java.util.Date;
 
 public class TReserva {
-	private int id;
+	private String id;
 	private int idMesa;
 	private String idCliente;
 	private Date fecha;
 	
-	public TReserva(int idMesa, String idCliente,Date fecha, int id) {
+	public TReserva(int idMesa, String idCliente,Date fecha, String id) {
 		this.idCliente = idCliente;
 		this.idMesa = idMesa;
 		this.fecha = fecha;
@@ -40,11 +40,11 @@ public class TReserva {
 		this.fecha = fecha;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	

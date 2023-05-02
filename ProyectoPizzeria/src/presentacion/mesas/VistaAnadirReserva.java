@@ -121,7 +121,6 @@ public class VistaAnadirReserva extends JDialog implements IGUI{
 				if(idCliente.isEmpty()) {
 					throw new IllegalArgumentException();
 				}
-				System.out.println(idCliente);
 				fecha = (Date)this.fechaSpinner.getValue();
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(fecha);
@@ -169,6 +168,8 @@ public class VistaAnadirReserva extends JDialog implements IGUI{
 	public void actualizar(Evento e, Object datos) {
 		switch(e) {
 		case ALTA_RESERVA_VISTA:
+			this.idClienteField.setText("");
+			this.idMesaField.setText("");
 			setVisible(true);
 			break;
 		case ALTA_RESERVA_OK:

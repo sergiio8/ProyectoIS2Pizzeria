@@ -291,7 +291,7 @@ public class ControladorImp extends Controlador { //implementacion
 		return reservas;
 	}
 	private void bajaReserva(Object datos) {
-		int id = Integer.parseInt(datos.toString());
+		String id = datos.toString();
 		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
 		try {
 			boolean res = saMesas.borrarR(id);
@@ -328,8 +328,8 @@ public class ControladorImp extends Controlador { //implementacion
 		TReserva tr = (TReserva) datos;
 		SAMesas saMesas = FactoriaAbstractaNegocio.getInstace().crearSAMesas();
 		try {
-			int res = saMesas.altaReserva(tr);
-			if(res == -1) {
+			String res = saMesas.altaReserva(tr);
+			if(res == null) {
 				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_RESERVA_VISTA).actualizar(Evento.ALTA_RESERVA_KO, "No se ha podido registrar la reserva");
 			}
 			else {
@@ -565,8 +565,8 @@ public class ControladorImp extends Controlador { //implementacion
 		TReserva reserva = d.getReserva();
 		SAClientes infoCliente = FactoriaAbstractaNegocio.getInstace().crearSAClientes();
 		try {
-			int res = infoCliente.altaReservaCliente(reserva);
-			if(res == -1) {
+			String res = infoCliente.altaReservaCliente(reserva);
+			if(res == null) {
 				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.VISTA_ALTA_CLIENTE).actualizar(Evento.ALTA_RESERVA_KO, "No se ha podido registrar la reserva");
 			}
 			else {

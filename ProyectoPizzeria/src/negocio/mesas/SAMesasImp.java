@@ -73,21 +73,21 @@ public class SAMesasImp implements SAMesas{
 	}
 
 	@Override
-	public Integer altaReserva(TReserva tr) throws IllegalArgumentException{
-		Integer id =-1;
+	public String altaReserva(TReserva tr) throws IllegalArgumentException{
+		String id = null;
 		
 		DAOMesas daoMesas = FactoriaAbstractaIntegracion.getInstace().crearDAOMesas();
 		DAOClientes daoClientes = FactoriaAbstractaIntegracion.getInstace().crearDAOCliente();
 		DAOReserva daoR = FactoriaAbstractaIntegracion.getInstace().crearDAOReserva();
 		if(tr != null) {
 			TMesas esta = daoMesas.obtenMesa(tr.getIdMesa());
-			//TCliente estaC = daoClientes.obtenCliente(tr.getIdCliente());
+			TCliente estaC = daoClientes.obtenCliente(tr.getIdCliente());
 			if(esta == null) {
 				throw new IllegalArgumentException("Mesa no existente");
 			}
-			/*if(estaC == null) {
+			if(estaC == null) {
 				throw new IllegalArgumentException("Cliente no existente");
-			}*/
+			}
 			Collection<TReserva> reservas = daoR.consultaTodosMesas(tr.getIdMesa());
 			Iterator<TReserva> it = reservas.iterator();
 			boolean exito = true;
@@ -146,7 +146,7 @@ public class SAMesasImp implements SAMesas{
 	}
 
 	@Override
-	public Boolean borrarR(Integer id) {
+	public Boolean borrarR(String id) {
 		DAOReserva daoR = FactoriaAbstractaIntegracion.getInstace().crearDAOReserva();
 		
 		TReserva estaR = daoR.obtenReserva(id);

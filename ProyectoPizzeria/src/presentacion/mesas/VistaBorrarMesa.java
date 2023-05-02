@@ -102,6 +102,7 @@ public class VistaBorrarMesa extends JDialog implements IGUI{
 	public void actualizar(Evento e, Object datos) {
 		switch(e) {
 		case BAJA_MESA_VISTA:
+			this.idMesaField.setText("");
 			setVisible(true);
 			break;
 		case BAJA_MESA_RES:

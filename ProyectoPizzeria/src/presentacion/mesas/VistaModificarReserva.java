@@ -111,11 +111,11 @@ public class VistaModificarReserva extends JDialog implements IGUI{
 		this.okButton = new JButton("OK");
 		this.okButton.addActionListener((e) ->{
 			int idMesa;
-			int id;
+			String id;
 			String idCliente;
 			Date fecha;
 			try {
-				id = Integer.parseInt(this.idField.getText());
+				id = this.idField.getText();
 				idMesa = Integer.parseInt(idMesaField.getText());
 				idCliente = this.idClienteField.getText();
 				if(idMesa < 1) {
@@ -172,6 +172,9 @@ public class VistaModificarReserva extends JDialog implements IGUI{
 	public void actualizar(Evento e, Object datos) {
 		switch(e) {
 		case MODIFICAR_RESERVA_VISTA:
+			this.idClienteField.setText("");
+			this.idMesaField.setText("");
+			this.idField.setText("");
 			setVisible(true);
 			break;
 		case MODIFICAR_RESERVA_OK:

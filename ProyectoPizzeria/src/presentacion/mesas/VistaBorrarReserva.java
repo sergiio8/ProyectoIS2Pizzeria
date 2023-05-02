@@ -95,6 +95,7 @@ public class VistaBorrarReserva extends JDialog implements IGUI{
 	public void actualizar(Evento e, Object datos) {
 		switch(e) {
 		case BAJA_RESERVA_VISTA:
+			this.idReservaField.setText("");
 			setVisible(true);
 			break;
 		case BAJA_RESERVA_OK:

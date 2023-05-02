@@ -117,12 +117,14 @@ public class VistaBuscarMesa extends JDialog implements IGUI{
 			buttonsPanel.add(this.okButton);
 			buttonsPanel.add(this.cancelButton);
 			this.idMesaField.setEnabled(true);
+			this.idMesaField.setText("");
 			if(localizacionLabel != null) {
 				this.locationPanel.remove(localizacionLabel);
 			}
 			revalidate();
 			repaint();
 			pack();
+			setLocationRelativeTo(this.getParent());
 			setVisible(true);
 			break;
 		case BUSCAR_MESA_RES:
@@ -144,6 +146,7 @@ public class VistaBuscarMesa extends JDialog implements IGUI{
 				revalidate();
 				repaint();
 				pack();
+				setLocationRelativeTo(this.getParent());
 			}
 			
 			

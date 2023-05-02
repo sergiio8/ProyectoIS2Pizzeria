@@ -147,6 +147,9 @@ public class VistaAnadirMesa extends JDialog implements IGUI{
 	public void actualizar(Evento e, Object datos) {
 		switch(e) {
 		case ALTA_MESA_VISTA:
+			this.idMesaField.setText("");
+			this.exteriorButton.setSelected(false);
+			this.interiorButton.setSelected(false);
 			setVisible(true);
 			break;
 		case ALTA_MESA_OK:
@@ -154,7 +157,7 @@ public class VistaAnadirMesa extends JDialog implements IGUI{
 			setVisible(false);
 			break;
 		case ALTA_MESA_KO:
-			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "ERROR: No se ha podido anadir la mesa", "ERROR: No se ha podido anadir la mesa", JOptionPane.ERROR_MESSAGE);
 			setVisible(false);
 			break;
 		}

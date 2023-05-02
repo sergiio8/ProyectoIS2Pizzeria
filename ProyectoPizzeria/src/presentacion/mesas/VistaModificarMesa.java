@@ -142,6 +142,7 @@ private static final long serialVersionUID = 1L;
 	public void actualizar(Evento e, Object datos) {
 		switch(e) {
 		case MODIFICAR_MESA_VISTA:
+			this.idMesaField.setText("");
 			setVisible(true);
 			break;
 		case MODIFICAR_MESA_RES:

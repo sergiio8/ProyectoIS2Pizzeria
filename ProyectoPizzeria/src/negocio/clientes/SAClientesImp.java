@@ -58,9 +58,9 @@ public class SAClientesImp implements SAClientes{
 	}
 
 	@Override
-	public Integer altaReservaCliente(TReserva tr) throws IllegalArgumentException {
+	public String altaReservaCliente(TReserva tr) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		Integer id =-1;
+		String id = null;
 		
 		DAOMesas daoMesas = FactoriaAbstractaIntegracion.getInstace().crearDAOMesas();
 		DAOClientes daoClientes = FactoriaAbstractaIntegracion.getInstace().crearDAOCliente();
