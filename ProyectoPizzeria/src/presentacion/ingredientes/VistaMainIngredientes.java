@@ -30,13 +30,13 @@ public class VistaMainIngredientes extends JFrame implements IGUI{
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(8,15,15,15));
 		
-		JLabel titulo = new JLabel("Subsistema Ingredientes");
+		JLabel titulo = new JLabel("Subsistemas Ingredientes");
 		titulo.setFont(new Font("Serif", Font.PLAIN, 75));
 		mainPanel.add(titulo, BorderLayout.NORTH);
 		
 		setContentPane(mainPanel);
 		
-		JPanel panel = new JPanel(new GridLayout(2,2,20,20));
+		JPanel panel = new JPanel(new GridLayout(3,2,20,20));
 		panel.setPreferredSize(new Dimension(80,150));
 		
 		JButton botonListar = new JButton("Listar ingredientes");
@@ -54,6 +54,10 @@ public class VistaMainIngredientes extends JFrame implements IGUI{
 		JButton botonCrear = new JButton("Crear ingrediente");
 		botonCrear.addActionListener((e) -> crear());
 		panel.add(botonCrear);
+		
+		JButton botonBuscar = new JButton("Buscar ingrediente");
+		botonBuscar.addActionListener((e) -> buscar());
+		panel.add(botonBuscar);
 		
 		mainPanel.add(panel, BorderLayout.CENTER);
 		
@@ -117,6 +121,9 @@ public class VistaMainIngredientes extends JFrame implements IGUI{
 	}
 	private void crear() {
 		Controlador.getInstance().accion(Evento.ALTA_INGREDIENTE_VISTA, null);
+	}
+	private void buscar() {
+		Controlador.getInstance().accion(Evento.BUSCAR_INGREDIENTE_VISTA, null);
 	}
 	@Override
 	public void actualizar(Evento e, Object datos) {

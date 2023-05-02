@@ -131,7 +131,7 @@ public class CerrarVenta extends JDialog implements IGUI{
 			if(fecha.equals("") || fecha == null) {
 				throw new IllegalArgumentException("Introduzca la fecha");
 			}
-			Controlador.getInstance().accion(Evento.ALTA_FACTURA, new TDatosVenta(new ArrayList<TLineaFactura>(), ID_cliente, ID_vendedor, fecha));
+			Controlador.getInstance().accion(Evento.ALTA_FACTURA, new TDatosVenta(new ArrayList<TLineaFactura>(), ID_vendedor, ID_cliente, fecha));
 			
 		}
 		catch(IllegalArgumentException iae) {

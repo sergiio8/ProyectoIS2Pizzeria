@@ -2,6 +2,8 @@ package negocio.ingredientes;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import negocio.producto.TPlato;
+
 
 public interface SAIngrediente {
 	boolean borrar(String name);
@@ -11,5 +13,6 @@ public interface SAIngrediente {
 	Collection<TPlatoIngrediente> consultaTodosPlatoIngrediente();
 	Collection<TIngrediente> consultaTodos();
 	TIngrediente consulta(String nombre);
+	ArrayList<String> cogerPlatos(String nombre);
 	String consultaIngredientes(ArrayList<String> ingredientes);
 }

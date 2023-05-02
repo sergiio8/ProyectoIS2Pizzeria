@@ -7,6 +7,7 @@ import integracion.factoria.FactoriaAbstractaIntegracion;
 import integracion.ingredientes.DAOIngrediente;
 import integracion.ingredientes.DAOPlatoIngrediente;
 import integracion.producto.DAOPlato;
+import negocio.producto.TPlato;
 
 public class SAIngredienteImp implements SAIngrediente{
 
@@ -43,13 +44,9 @@ public class SAIngredienteImp implements SAIngrediente{
 	public String crear(TIngrediente nuevoIngrediente) {
 		String nombre =null;
 		DAOIngrediente ingrediente= FactoriaAbstractaIntegracion.getInstace().crearDAOIngrediente();
-		try {
-			TIngrediente ing= ingrediente.cogerIngrediente(nuevoIngrediente.getNombre());
-			if(ing==null) {
-				nombre=ingrediente.insertarIngrediente(nuevoIngrediente);
-			}
-		}catch(Exception e) {
-			
+		TIngrediente ing= ingrediente.cogerIngrediente(nuevoIngrediente.getNombre());
+		if(ing==null) {
+			nombre=ingrediente.insertarIngrediente(nuevoIngrediente);
 		}
 		return nombre;
 	}
@@ -86,6 +83,12 @@ public class SAIngredienteImp implements SAIngrediente{
 				return s;
 		}
 		return null;
+	}
+
+	@Override
+	public ArrayList<String> cogerPlatos(String nombre) {
+		DAOPlatoIngrediente i=FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
+		return i.cogerPlatos(nombre);
 	}
 
 }

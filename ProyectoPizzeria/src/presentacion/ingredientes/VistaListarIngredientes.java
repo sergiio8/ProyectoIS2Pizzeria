@@ -28,11 +28,11 @@ public class VistaListarIngredientes extends JDialog implements IGUI{
 		
 		modelo = new ITableModel();
 		JTable tbl= new JTable(modelo);
-		JScrollPane scb= new JScrollPane(tbl);
+		JScrollPane scb= new JScrollPane(tbl,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		mainPanel.add(scb);
 		
 		pack();
-		setResizable(false);
 		setLocationRelativeTo(parent);
 	}
 	

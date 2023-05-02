@@ -18,6 +18,7 @@ import negocio.ingredientes.TIngrediente;
 import negocio.ingredientes.TModificacionIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
 import negocio.producto.TDatosPlato;
+import negocio.producto.TPlato;
 
 public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 
@@ -233,6 +234,25 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 		}
 
 		
+	}
+
+	@Override
+	public ArrayList<String> cogerPlatos(String ingrediente) {
+		JSONArray ja = new JSONArray();
+		try(InputStream in = new FileInputStream(new File("ProyectoPizzeria/resources/PlatoIngrediente.json"))){
+			JSONObject jsonInput = new JSONObject (new JSONTokener(in));
+			ja = jsonInput.getJSONArray("ListaPlatoIngrediente");
+		}
+		catch(Exception e1) {
+		}
+		ArrayList<String> platos = new ArrayList<String>();
+		for(int i = 0; i<ja.length(); i++) {
+			JSONObject aux = ja.getJSONObject(i);
+			if(aux.getString("nombreIngrediente").equals(ingrediente)) {
+				platos.add(aux.getString("nombrePlato"));
+			}
+		}
+		return platos;
 	}
 
 }

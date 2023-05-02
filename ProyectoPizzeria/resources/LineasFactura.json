@@ -1,1 +1,1 @@
-{"ListaLineasFactura":[{"id_factura":"1","id":"1","producto":"1","cantidad":3},{"id_factura":"1","id":"2","producto":"1","cantidad":5},{"id_factura":"1","id":"3","producto":"1","cantidad":2}]}
+{"ListaLineasFactura":[{"id_factura":"25","id":"1","producto":"mediterranea","cantidad":3},{"id_factura":"5","id":"1","producto":"mediterranea","cantidad":2},{"id_factura":"6","id":"1","producto":"mediterranea","cantidad":1},{"id_factura":"6","id":"2","producto":"mediterranea","cantidad":2},{"id_factura":"101","id":"1","producto":"mediterranea","cantidad":1}]}

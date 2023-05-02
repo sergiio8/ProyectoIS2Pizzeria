@@ -178,7 +178,6 @@ public class VistaModificarIngrediente extends JDialog implements IGUI{
 			break;
 		case MODIFICAR_INGREDIENTE_KO:
 			JOptionPane.showMessageDialog(this, "ERROR: NO SE HA PODIDO MODIFICAR EL INGREDIENTE", "ERROR: NO SE HA PODIDO MODIFICAR EL INGREDIENTE", JOptionPane.ERROR_MESSAGE);
-			setVisible(false);
 			break;
 		}
 	}

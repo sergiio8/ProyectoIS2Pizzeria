@@ -29,8 +29,9 @@ public class SAFacturaImp implements SAFactura{
         ArrayList<TLineaFactura> lineas = new ArrayList<TLineaFactura>();
         int precio_total = 0;
         String id = null;
+        TCliente c = daoc.obtenCliente(datos.getid_cliente());
         
-        if (daoc.obtenCliente(datos.getid_cliente()) != null || true) {
+        if (c != null) {
             for (TLineaFactura f : datos.getProductos()) {
                 TPlato plato = daop.obtenPlato(f.getIdProducto());
                 id = f.getIdFactura();
@@ -61,9 +62,9 @@ public class SAFacturaImp implements SAFactura{
     }
 
     @Override
-    public Collection<TFactura> mostrarFacturas() {
+    public Collection<TFactura> listarFacturas() {
         DAOFactura daof = FactoriaAbstractaIntegracion.getInstace().crearDAOFactura();
-        Collection<TFactura> facts = daof.mostrarFacturas();
+        Collection<TFactura> facts = daof.listarFacturas();
         return facts;
         
     }
