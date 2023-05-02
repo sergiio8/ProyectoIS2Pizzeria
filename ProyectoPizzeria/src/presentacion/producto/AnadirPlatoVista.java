@@ -3,6 +3,7 @@ package presentacion.producto;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -18,6 +19,7 @@ import javax.swing.JTextField;
 
 import org.json.JSONObject;
 
+import negocio.producto.TDatosPlato;
 import negocio.producto.TEntrante;
 import negocio.producto.TPizza;
 import negocio.producto.TPostre;
@@ -119,7 +121,7 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 		okButton.addActionListener((e) ->{
 			String nombre;
 			double precio;
-			String ingredientes;
+			ArrayList<String> ingredientes;
 			String descripcion;
 			try {
 				nombre = nameText.getText();
@@ -129,26 +131,26 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 				if(precio <= 0) {
 					throw new NumberFormatException();
 				}
-				ingredientes = ingredientsText.getText();
-				String[] aux = ingredientes.trim().split(",");
+				ingredientes = new ArrayList<String>();
+				String[] aux = ingredientsText.getText().trim().split(",");
 				if(aux == null || aux[0].equals(""))
 					throw new IllegalArgumentException("El plato debe tener ingredientes");
+				for(String s : aux)
+					ingredientes.add(s.trim());
 				descripcion = descriptionText.getText();
-				JSONObject jo = new JSONObject();
-				jo.put("ingredientes", ingredientes);
 				if(descripcion == null || descripcion.equals(""))
 					throw new IllegalArgumentException("El plato debe tener descripcion");
 				if(entranteButton.isSelected()) {
-					jo.put("plato", new TEntrante(nombre,precio,descripcion));
-					Controlador.getInstance().accion(Evento.ALTA_PLATO,jo);
+					TDatosPlato datos = new TDatosPlato(new TEntrante(nombre,precio,descripcion), ingredientes);
+					Controlador.getInstance().accion(Evento.ALTA_PLATO,datos);
 				}
 				else if(pizzaButton.isSelected()) {
-					jo.put("plato", new TPizza(nombre,precio,descripcion));
-					Controlador.getInstance().accion(Evento.ALTA_PLATO, jo);
+					TDatosPlato datos = new TDatosPlato(new TPizza(nombre,precio,descripcion), ingredientes);
+					Controlador.getInstance().accion(Evento.ALTA_PLATO, datos);
 				}
 				else if(postreButton.isSelected()) {
-					jo.put("plato", new TPostre(nombre,precio,descripcion));
-					Controlador.getInstance().accion(Evento.ALTA_PLATO, jo);
+					TDatosPlato datos = new TDatosPlato(new TPostre(nombre,precio,descripcion), ingredientes);
+					Controlador.getInstance().accion(Evento.ALTA_PLATO, datos);
 				}
 				else {
 					throw new IllegalArgumentException("Indique el tipo del plato");
@@ -185,12 +187,12 @@ public class AnadirPlatoVista extends JDialog implements IGUI{
 			setVisible(true);
 			break;
 		case ALTA_PLATO_OK:
-			JOptionPane.showMessageDialog(this, "Plato anadido con nombre: " + datos.toString(), "Plato anadido con nombre: " + datos.toString(), JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Plato anadido con nombre: " + datos.toString(), "Alta Plato", JOptionPane.INFORMATION_MESSAGE);
 			initGUI();
 			setVisible(false);
 			break;
 		case ALTA_PLATO_KO:
-			JOptionPane.showMessageDialog(this, "ERROR: ALTA PLATO", "ERROR: " + datos.toString(), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "ERROR: " + datos.toString(), "ERROR: ALTA PLATO", JOptionPane.ERROR_MESSAGE);
 			initGUI();
 			setVisible(false);
 			break;

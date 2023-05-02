@@ -14,11 +14,10 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import integracion.factoria.FactoriaAbstractaIntegracion;
-import negocio.ingredientes.Pair;
 import negocio.ingredientes.TIngrediente;
 import negocio.ingredientes.TModificacionIngrediente;
 import negocio.ingredientes.TPlatoIngrediente;
-import negocio.producto.TPlato;
+import negocio.producto.TDatosPlato;
 
 public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 
@@ -226,12 +225,12 @@ public class DAOPlatoIngredienteImp implements DAOPlatoIngrediente {
 	}
 
 	@Override
-	public boolean modificaPlato(JSONObject datos) {
-		String nombre = ((TPlato)datos.get("plato")).getNombre();
+	public boolean modificaPlato(TDatosPlato datos) {
+		String nombre = datos.getPlato().getNombre();
 		daDeBajaPlato(nombre);
-		String[] aux = datos.getString("ingredientes").trim().split(",");
-		for(String ing : aux)
-			insertarPlatoIngrediente(new TPlatoIngrediente(nombre, ing.trim()));
+		for(String ing : datos.getIngredientes())
+			if(!insertarPlatoIngrediente(new TPlatoIngrediente(nombre, ing)))
+				return false;
 		return true;
 	}
 

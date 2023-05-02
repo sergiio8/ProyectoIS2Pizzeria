@@ -3,8 +3,6 @@ package negocio.producto;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.json.JSONObject;
-
 import integracion.factoria.FactoriaAbstractaIntegracion;
 import integracion.ingredientes.DAOPlatoIngrediente;
 import integracion.producto.DAOPlato;
@@ -14,22 +12,17 @@ import negocio.ingredientes.TPlatoIngrediente;
 public class SAPlatoImp implements SAPlato {
 
 	@Override
-	public String alta(JSONObject datos) {
+	public String alta(TDatosPlato datos) {
 		String nombre = "";
 		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
-		
-		if(datos != null) {
-			TPlato plato = (TPlato)datos.get("plato");
-			if(daoPlato.obtenPlato(plato.getNombre()) == null) {
-				nombre = daoPlato.insertaPlato(plato);
-				DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
-				String[] aux = datos.getString("ingredientes").trim().split(",");
-				for(String s : aux) {
-					daoPIng.insertarPlatoIngrediente(new TPlatoIngrediente(nombre, s.trim()));
-				}
+		TPlato plato = datos.getPlato();
+		if(daoPlato.obtenPlato(plato.getNombre()) == null) {
+			nombre = daoPlato.insertaPlato(plato);
+			DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
+			for(String s : datos.getIngredientes()) {
+				daoPIng.insertarPlatoIngrediente(new TPlatoIngrediente(nombre, s));
 			}
 		}
-		
 		return nombre;
 	}
 
@@ -46,40 +39,30 @@ public class SAPlatoImp implements SAPlato {
 	}
 
 	@Override
-	public String modificar(JSONObject datos) {
+	public boolean modificar(TDatosPlato datos) {
 		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
-		
-		String nombre = daoPlato.modificaPlato((TPlato)datos.get("plato"));
-		if(!datos.getString("ingredientes").trim().equals("")) {
-			DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
-			daoPIng.modificaPlato(datos);
+		if(daoPlato.modificaPlato(datos.getPlato())) {
+			if(!datos.getIngredientes().isEmpty()) {
+				DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
+				if(!daoPIng.modificaPlato(datos))
+					return false;
+			}
+			return true;
 		}
-		return  nombre;
-		
+		return false;
 	}
 
 	@Override
-	public Boolean borrar(String nombre) {
+	public boolean borrar(String nombre) {
 		DAOPlato daoPlato = FactoriaAbstractaIntegracion.getInstace().crearDAOPlato();
 		DAOPlatoIngrediente daoPIng = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
 		boolean b = daoPlato.daDeBajaPlato(nombre);
 		daoPIng.daDeBajaPlato(nombre);
 		return b;
 	}
-	
-	@Override
-	public String cogerIngredientes(String plato) {
-		ArrayList<String> ingredientes = cogerIngredientesLista(plato);
-		String ing = "";
-		int i = 0;
-		while(i<ingredientes.size()-1)
-			ing += ingredientes.get(i++) + ", ";
-		ing += ingredientes.get(i);
-		return ing;
-	}
 
 	@Override
-	public ArrayList<String> cogerIngredientesLista(String plato) {
+	public ArrayList<String> cogerIngredientes(String plato) {
 		DAOPlatoIngrediente daoPlatoIngrediente = FactoriaAbstractaIntegracion.getInstace().crearDAOPlatoIngrediente();
 		return daoPlatoIngrediente.cogerIngredientes(plato);
 	}

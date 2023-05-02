@@ -2,6 +2,7 @@ package presentacion.producto;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -14,6 +15,7 @@ import javax.swing.JTextField;
 
 import org.json.JSONObject;
 
+import negocio.producto.TDatosPlato;
 import negocio.producto.TPlato;
 import presentacion.Evento;
 import presentacion.IGUI;
@@ -128,8 +130,8 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 			break;
 		case BUSCAR_PLATO_OK:
 			JOptionPane.showMessageDialog(this, "Plato encontrado", "Plato encontrado", JOptionPane.INFORMATION_MESSAGE);
-			JSONObject obj = (JSONObject)datos;
-			TPlato tp = (TPlato) obj.get("plato");
+			TDatosPlato datosPlato = (TDatosPlato)datos;
+			TPlato tp = datosPlato.getPlato();
 			nameText.setEnabled(false);
 			
 			typeLabel = new JLabel("Tipo: " + tp.getTipo());
@@ -137,7 +139,15 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 			priceLabel = new JLabel("Precio: " + tp.getPrecio());
 			pricePanel.add(priceLabel);
 			
-			ingredientsLabel = new JLabel("Ingredientes: " + obj.getString("ingredientes"));
+			String ingredientes = "";
+			int i;
+			ArrayList<String> aux = datosPlato.getIngredientes();
+			for(i=0; i<aux.size()-1; i++) {
+				ingredientes += aux.get(i) + ", ";
+			}
+			ingredientes += aux.get(i);
+			
+			ingredientsLabel = new JLabel("Ingredientes: " + ingredientes);
 			ingredientsPanel.add(ingredientsLabel);
 			
 			descriptionLabel = new JLabel("Descripcion: " + tp.getDescripcion());
@@ -152,7 +162,7 @@ public class BuscarPlatoVista extends JDialog implements IGUI{
 			pack();
 			break;
 		case BUSCAR_PLATO_KO:
-			JOptionPane.showMessageDialog(this, "ERROR: Plato no encontrado", "ERROR: Plato no encontrado", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "ERROR: Plato: " + datos.toString() + " no encontrado", "ERROR: Plato no encontrado", JOptionPane.ERROR_MESSAGE);
 			setVisible(false);
 			break;
 		}

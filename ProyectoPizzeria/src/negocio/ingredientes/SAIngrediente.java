@@ -1,4 +1,5 @@
 package negocio.ingredientes;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -15,5 +16,5 @@ public interface SAIngrediente {
 	//boolean usar(int cantidad,String nombre);
 	Collection<TIngrediente> consultaTodos();
 	TIngrediente consulta(String nombre);
-	public String consultaIngredientes(String ingredientes);
+	public String consultaIngredientes(ArrayList<String> ingredientes);
 }

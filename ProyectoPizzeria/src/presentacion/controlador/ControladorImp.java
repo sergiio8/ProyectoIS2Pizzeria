@@ -7,6 +7,7 @@ import negocio.mesas.SAMesas;
 import negocio.mesas.TMesas;
 import negocio.mesas.TReserva;
 import negocio.producto.SAPlato;
+import negocio.producto.TDatosPlato;
 import negocio.producto.TPlato;
 import negocio.facturas.Carrito;
 import negocio.facturas.SAFactura;
@@ -430,15 +431,15 @@ public class ControladorImp extends Controlador { //implementacion
 	}
 	
 	private void altaPlato(Object datos) {
-		JSONObject obj = (JSONObject) datos;
+		TDatosPlato datosPlato = (TDatosPlato) datos;
 		SAIngrediente saIng = FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
-		String aux = saIng.consultaIngredientes(obj.getString("ingredientes"));
+		String aux = saIng.consultaIngredientes(datosPlato.getIngredientes());
 		if(aux != null) {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_KO, "Ingrediente: "+ aux +" no encontrado");
 			return;
 		}
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
-		String nombre = saPlato.alta((JSONObject)datos);
+		String nombre = saPlato.alta(datosPlato);
 		if(nombre == "") {
 			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.ALTA_PLATO_VISTA).actualizar(Evento.ALTA_PLATO_KO, "plato ya existente");
 		}
@@ -450,32 +451,32 @@ public class ControladorImp extends Controlador { //implementacion
 	private void bajaPlato(Object datos) {
 		String nombre = datos.toString();
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
-		boolean resultado = saPlato.borrar(nombre);
-		if (resultado) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_PLATO_VISTA).actualizar(Evento.BAJA_PLATO_OK, resultado);
+		if (saPlato.borrar(nombre)) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_PLATO_VISTA).actualizar(Evento.BAJA_PLATO_OK, nombre);
 		}
 		else {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_PLATO_VISTA).actualizar(Evento.BAJA_PLATO_KO, resultado);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BAJA_PLATO_VISTA).actualizar(Evento.BAJA_PLATO_KO, nombre);
 		}
 	}
 
 	private void modificaPlato(Object datos) {
-		JSONObject obj = (JSONObject) datos;
-		if(!obj.getString("ingredientes").equals("")) {
+		TDatosPlato datosPlato = (TDatosPlato) datos;
+		ArrayList<String> ingredientes = datosPlato.getIngredientes();
+		if(!ingredientes.isEmpty()) {
 			SAIngrediente saIng = FactoriaAbstractaNegocio.getInstace().crearSAIngrediente();
-			String aux = saIng.consultaIngredientes(obj.getString("ingredientes"));
+			String aux = saIng.consultaIngredientes(ingredientes);
 			if(aux != null) {
 				FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_KO, "Ingrediente: "+ aux +" no encontrado");
 				return;
 			}
 		}
 		SAPlato saPlato = FactoriaAbstractaNegocio.getInstace().crearSAPlato();
-		String nombre = saPlato.modificar(obj);
-		if(nombre == "") {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_KO, nombre);
+		String nombre = datosPlato.getPlato().getNombre();
+		if(saPlato.modificar(datosPlato)) {
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_OK, nombre);
 		}
 		else {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_OK, nombre);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.MODIFICAR_PLATO_VISTA).actualizar(Evento.MODIFICAR_PLATO_KO, nombre);
 		}
 	}
 	
@@ -487,14 +488,11 @@ public class ControladorImp extends Controlador { //implementacion
 		TPlato plato = saPlato.consulta(nombre);
 		
 		if(plato == null) {
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_PLATO_VISTA).actualizar(Evento.BUSCAR_PLATO_KO, plato);
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_PLATO_VISTA).actualizar(Evento.BUSCAR_PLATO_KO, nombre);
 		}
 		else {
-			String ingredientes = saPlato.cogerIngredientes(nombre);
-			JSONObject jo = new JSONObject();
-			jo.put("plato", plato);
-			jo.put("ingredientes", ingredientes);
-			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_PLATO_VISTA).actualizar(Evento.BUSCAR_PLATO_OK, jo);
+			TDatosPlato datosPlato = new TDatosPlato(plato,saPlato.cogerIngredientes(nombre));
+			FactoriaAbstractaPresentacion.getInstace().createVista(Evento.BUSCAR_PLATO_VISTA).actualizar(Evento.BUSCAR_PLATO_OK, datosPlato);
 		}
 	}
 	
@@ -503,7 +501,7 @@ public class ControladorImp extends Controlador { //implementacion
 		ArrayList<TPlato> platos = new ArrayList<TPlato>(saPlato.consultaTodos());
 		ArrayList<Pair<TPlato,ArrayList<String>>> datos = new ArrayList<Pair<TPlato,ArrayList<String>>>();
 		for(int i=0; i< platos.size();i++) {
-			ArrayList<String> ing = saPlato.cogerIngredientesLista(platos.get(i).getNombre());
+			ArrayList<String> ing = saPlato.cogerIngredientes(platos.get(i).getNombre());
 			datos.add(new Pair<TPlato,ArrayList<String>>(platos.get(i),ing));
 		}
 		return datos;

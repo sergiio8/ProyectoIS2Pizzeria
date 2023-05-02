@@ -3,18 +3,15 @@ package negocio.producto;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.json.JSONObject;
-
 import negocio.facturas.TLineaFactura;
 
 public interface SAPlato {
-	String alta(JSONObject datos);
+	String alta(TDatosPlato datos);
 	TPlato consulta(String id);
 	Collection<TPlato> consultaTodos();
-	String modificar(JSONObject datos);
-	Boolean borrar(String id);
-	String cogerIngredientes(String plato);
-	ArrayList<String> cogerIngredientesLista(String nombre);
+	boolean modificar(TDatosPlato datos);
+	boolean borrar(String id);
+	ArrayList<String> cogerIngredientes(String plato);
 	boolean disponible(String nombre, int cantidad);
 	void hacerPlato(String nombre, int cantidad);
 	public String comprobarDisponibilidad(ArrayList<TLineaFactura> productos);

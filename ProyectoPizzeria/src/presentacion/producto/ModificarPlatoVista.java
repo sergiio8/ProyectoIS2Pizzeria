@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 
 import org.json.JSONObject;
 
+import negocio.producto.TDatosPlato;
 import negocio.producto.TEntrante;
 import negocio.producto.TPizza;
 import negocio.producto.TPostre;
@@ -95,7 +96,7 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 		okButton.addActionListener((e) ->{
 			String nombre;
 			double precio;
-			String ingredientes;
+			ArrayList<String> ingredientes;
 			String descripcion;
 			try {
 				nombre = nameText.getText();
@@ -104,12 +105,16 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 				else precio = 0;
 				if(precio < 0)
 					throw new NumberFormatException();
-				ingredientes = ingredientsText.getText().trim();
+				ingredientes = new ArrayList<String>();
+				String ing = ingredientsText.getText().trim();
+				if(!ing.equals("")) {
+					String[] aux = ing.split(",");
+					for(String s : aux)
+						ingredientes.add(s.trim());
+				}
 				descripcion = descriptionText.getText().trim();
-				JSONObject jo = new JSONObject();
-				jo.put("plato", new TEntrante(nombre,precio,descripcion));
-				jo.put("ingredientes", ingredientes);
-				Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, jo);			
+				TDatosPlato datos = new TDatosPlato(new TEntrante(nombre,precio,descripcion), ingredientes);
+				Controlador.getInstance().accion(Evento.MODIFICAR_PLATO, datos);			
 			}
 			catch(NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(ModificarPlatoVista.this, "ERROR: El precio del plato debe ser un numero positivo", "ERROR: El precio del plato debe ser un numero positivo", JOptionPane.ERROR_MESSAGE);
@@ -139,12 +144,12 @@ public class ModificarPlatoVista extends JDialog implements IGUI {
 			setVisible(true);
 			break;
 		case MODIFICAR_PLATO_OK:
-			JOptionPane.showMessageDialog(this, "Plato modificado", "Plato modificado correctamente", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this,"Plato: " + datos.toString() + " modificado correctamente", "Plato modificado", JOptionPane.INFORMATION_MESSAGE);
 			initGUI();
 			setVisible(false);
 			break;
 		case MODIFICAR_PLATO_KO:
-			JOptionPane.showMessageDialog(this, "ERROR: MODIFICAR PLATO", "ERROR: Plato " + datos.toString() + "no encontrado", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "ERROR: Plato " + datos.toString() + " no modificado", "ERROR: MODIFICAR PLATO", JOptionPane.ERROR_MESSAGE);
 			initGUI();
 			setVisible(false);
 			break;

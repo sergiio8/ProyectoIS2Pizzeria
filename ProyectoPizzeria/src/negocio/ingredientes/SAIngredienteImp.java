@@ -81,12 +81,10 @@ public class SAIngredienteImp implements SAIngrediente{
 	}
 
 	@Override
-	public String consultaIngredientes(String ingredientes) {
-		String[] aux = ingredientes.split(",");
-		for(String s : aux) {
-			if(consulta(s.trim()) == null) {
+	public String consultaIngredientes(ArrayList<String> ingredientes) {
+		for(String s : ingredientes) {
+			if(consulta(s) == null)
 				return s;
-			}
 		}
 		return null;
 	}
